@@ -1,0 +1,23 @@
+PODS:
+  - Alamofire (4.8.2)
+  - ApiClient (1.0.0):
+    - Alamofire
+
+DEPENDENCIES:
+  - ApiClient (from `../`)
+
+SPEC REPOS:
+  https://github.com/cocoapods/specs.git:
+    - Alamofire
+
+EXTERNAL SOURCES:
+  ApiClient:
+    :path: "../"
+
+SPEC CHECKSUMS:
+  Alamofire: ae5c501addb7afdbb13687d7f2f722c78734c2d3
+  ApiClient: 537ada6e2937e27066f1a413e62394f65bf01a5e
+
+PODFILE CHECKSUM: ac8dde9520c4ec25de63880d7ad838745fc1f1dc
+
+COCOAPODS: 1.7.1

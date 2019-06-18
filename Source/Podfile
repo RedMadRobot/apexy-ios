@@ -1,0 +1,8 @@
+platform :ios, '10.0'
+
+target 'ApiClient' do
+  use_frameworks!
+
+  pod 'Alamofire'
+
+end
