@@ -38,3 +38,12 @@ public struct APIError: Decodable, Error {
         self.description = description
     }
 }
+
+// MARK: - Genral Eror Code
+
+extension APIError.Code {
+    
+    /// Некорректный токен.
+    public static let tokenInvalid = APIError.Code("token_invalid")
+    
+}
