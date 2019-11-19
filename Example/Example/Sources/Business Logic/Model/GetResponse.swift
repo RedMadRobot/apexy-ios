@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Структура получаемя в ответе на запрос
+/// Response model.
 public struct GetResponse: Decodable {
     
     public let args: [String: String]

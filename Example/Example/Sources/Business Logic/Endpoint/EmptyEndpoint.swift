@@ -7,7 +7,7 @@
 
 import ApiClient
 
-/// Эндпойт для запросов с ответом без тела.
+/// Empty Body Request Enpoint.
 protocol EmptyEndpoint: Endpoint where Content == Void {}
 
 extension EmptyEndpoint {
