@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Ошибка API.
+/// Error from API.
 public struct APIError: Decodable, Error {
 
     /// Код ошибки.
@@ -23,13 +23,12 @@ public struct APIError: Decodable, Error {
         }
     }
 
-    /// Код ошибки.
+    /// Error code.
     public let code: Code
 
-    /// Описание ошибки.
+    /// Error description.
     public let description: String?
 
-    
     public init(
         code: Code,
         description: String? = nil) {
@@ -39,11 +38,11 @@ public struct APIError: Decodable, Error {
     }
 }
 
-// MARK: - Genral Eror Code
+// MARK: - General Error Code
 
 extension APIError.Code {
     
-    /// Некорректный токен.
+    /// Invalid Token Error.
     public static let tokenInvalid = APIError.Code("token_invalid")
     
 }

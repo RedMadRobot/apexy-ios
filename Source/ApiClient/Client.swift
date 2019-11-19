@@ -10,36 +10,37 @@ import Foundation
 
 public typealias APIResult<Value> = Swift.Result<Value, Error>
 
-/// Клиент для работы со Smart home API.
+/// API Client.
 public final class Client {
 
+    /// A closure used to observe result of every response from the server.
     public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
 
-    /// Менеджер сетевой сессии.
+    /// Session network manager.
     private let sessionManager: Alamofire.SessionManager
 
-    /// Очередь ответов сервера.
+    /// The queue on which the network response handler is dispatched.
     private let responseQueue = DispatchQueue(
         label: "ApiClient.responseQueue",
         qos: .utility)
 
-    /// Очередь колбеков с результатом.
+    /// The queue on which the completion handler is dispatched.
     private let completionQueue: DispatchQueue
 
-    /// Наблюдатель за всеми ответами API.
+    /// This closure to be called after each response from the server for the request.
     private let responseObserver: ResponseObserver?
 
-    /// Адаптер запросов.
+    /// Look more at Alamofire.RequestAdapter.
     public let requestAdapter: RequestAdapter
 
-    /// Создать нового клиента API.
+    /// Creates new 'Client' instance.
     ///
     /// - Parameters:
-    ///   - requestAdapter: Адаптер запросов.
-    ///   - configuration: Конфигурация сетевой сессии.
-    ///   - completionQueue: Очередь колбеков с результатом.
-    ///   - publicKeys: Список доменов и публичных ключей для SSL-пиннинга
-    ///   - responseObserver: Наблюдатель за всеми ответами API.
+    ///   - requestAdapter: Alamofire Request Adapter.
+    ///   - configuration: The configuration used to construct the managed session.
+    ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
+    ///   - publicKeys:  Dictionary with 1..n public keys used for SSL-pinning: ["example1.com": [PK1], "example2": [PK2, PK3]].
+    ///   - responseObserver: The closure to be called after each response.
     public init(
         requestAdapter: RequestAdapter,
         configuration: URLSessionConfiguration,
@@ -63,14 +64,14 @@ public final class Client {
         self.responseObserver = responseObserver
     }
     
-    /// Создать нового клиента API.
+    /// Creates new 'Client' instance.
     ///
     /// - Parameters:
-    ///   - baseURL: Базовый `URL` API.
-    ///   - configuration: Конфигурация сетевой сессии.
-    ///   - completionQueue: Очередь колбеков с результатом.
-    ///   - publicKeys: Список доменов и публичных ключей для SSL-пиннинга
-    ///   - responseObserver: Наблюдатель за всеми ответами API.
+    ///   - baseURL: Base `URL`.
+    ///   - configuration: The configuration used to construct the managed session.
+    ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
+    ///   - publicKeys: Dictionary with 1..n public keys used for SSL-pinning: ["example1.com": [PK1], "example2": [PK2, PK3]].
+    ///   - responseObserver: The closure to be called after each response.
     public convenience init(
         baseURL: URL,
         configuration: URLSessionConfiguration,
@@ -85,12 +86,12 @@ public final class Client {
             responseObserver: responseObserver)
     }
 
-    /// Отправить запрос к API.
+    /// Send request to specified endpoint.
     ///
     /// - Parameters:
-    ///   - endpoint: Конечная точка запроса.
-    ///   - completionHandler: Обработчик результата запроса.
-    /// - Returns: Прогресс выполнения запроса.
+    ///   - endpoint: endpoint of remote content.
+    ///   - completionHandler: The completion closure to be executed when request is completed.
+    /// - Returns: The progress of fetching the response data from the server for the request.
     public func request<T>(
         _ endpoint: T,
         completionHandler: @escaping (APIResult<T.Content>) -> Void
@@ -126,7 +127,7 @@ public final class Client {
 
 // MARK: - Helper
 
-/// Обёртка над протоколом `URLRequestConvertible` из `Alamofire`.
+/// Wrapper for `URLRequestConvertible` from `Alamofire`.
 private struct AnyRequest: Alamofire.URLRequestConvertible {
     let create: () throws -> URLRequest
 

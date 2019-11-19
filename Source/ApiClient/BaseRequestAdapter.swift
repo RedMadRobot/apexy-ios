@@ -8,17 +8,17 @@
 import Alamofire
 import Foundation
 
-/// Адаптер запросов к API.
+/// Implementation of Alamofire.RequestAdapter.
 open class BaseRequestAdapter: Alamofire.RequestAdapter {
 
-    /// Базовый `URL` API.
+    /// Contains Base `URL`.
     ///
-    /// - Warning: Возможность обновления только для отдлаки.
+    /// - Warning: declared as open variable for debug purposes only.
     open var baseURL: URL
 
-    /// Создать адаптер с базовым `URL`.
+    /// Creates a `BaseRequestAdapter` instance with specified Base `URL`.
     ///
-    /// - Parameter baseURL: Базовый `URL`
+    /// - Parameter baseURL: Base `URL` for adapter.
     public init(baseURL: URL) {
         self.baseURL = baseURL
     }

@@ -7,7 +7,7 @@
 
 import Foundation
 
-/// Протокол GET запроса
+/// Protocol for GET request.
 protocol GetEndpoint: BaseEndpoint {
     
     /// url запроса без base url

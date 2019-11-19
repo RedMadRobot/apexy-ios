@@ -7,7 +7,7 @@
 
 import ApiClient
 
-/// Пример GET запроса
+/// Example of GET request.
 public struct SampleGetEndpoint: GetEndpoint {
     
     public typealias Content = GetResponse
