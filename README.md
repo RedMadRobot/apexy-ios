@@ -101,7 +101,7 @@ public struct BookListEndpoint: JsonEndpoint {
     public typealias Content = [Book]
 
     public func makeRequest() throws -> URLRequest {
-        return URLRequest(url: URL(string: "Books")!)
+        return URLRequest(url: URL(string: "books")!)
     }
 }
 ```
@@ -118,7 +118,7 @@ public struct BookEndpoint: JsonEndpoint {
     }
 
     public func makeRequest() throws -> URLRequest {
-        let url = URL(string: "Books")!.appendingPathComponent(id)
+        let url = URL(string: "books")!.appendingPathComponent(id)
         return URLRequest(url: url)
     }
 }
@@ -133,7 +133,7 @@ public struct UpdateBookEndpoint: JsonEndpoint {
     public let Book: Book
 
     public func makeRequest() throws -> URLRequest {
-        let url = URL(string: "Books")!.appendingPathComponent(Book.id)
+        let url = URL(string: "books")!.appendingPathComponent(Book.id)
         return HTTP.put(url, json: try JSONEncoder().encode(Book))
     }
 }
@@ -152,7 +152,7 @@ public struct DeleteBookEndpoint: VoidEndpoint {
     }
 
     public func makeRequest() throws -> URLRequest {
-        let url = URL(string: "Books")!.appendingPathComponent(id)
+        let url = URL(string: "books")!.appendingPathComponent(id)
         return HTTP.delete(url)
     }
 }
@@ -172,11 +172,11 @@ public struct DeleteBookEndpoint: VoidEndpoint {
 - Household
 - HouseholdAPI
   - Model
-    - `Book`
-  - `Endpoint`
+    - Book
+  - Endpoint
     - `JsonEndpoint`
     - `VoidEndpoint`
-    - `Book`
+    - Book
       - `BookListEndpoint`
       - `BookEndpoint`
       - `UpdateBookEndpoint`
@@ -184,25 +184,16 @@ public struct DeleteBookEndpoint: VoidEndpoint {
   - Common
     - `APIError`
 - HouseholdAPITests
-  - `Endpoint`
+  - Endpoint
     - `Book`
       - `BookListEndpointTests`
       - `BookEndpointTests`
       - `UpdateBookEndpointTests`
       - `DeleteBookEndpointTests`
 
-## Nested response
+## Дополнительные материалы
 
-TODO:
-
-## Tests
-
-TODO:
-
-## Error handling
-
-TODO:
-
-## Reactive programming
-
-TODO:
+- [Вложенные ответы](nested_response.md)
+- [Тестирование]
+- [Обработка ошибок]
+- [Реактивное программирование]
