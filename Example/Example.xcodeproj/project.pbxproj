@@ -23,6 +23,7 @@
 		0246DD3422B8D808007AD11C /* SampleGetEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3022B8D808007AD11C /* SampleGetEndpoint.swift */; };
 		0246DD3622B8D84B007AD11C /* GetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3522B8D84B007AD11C /* GetResponse.swift */; };
 		0246DD3822B8E469007AD11C /* SampleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3722B8E469007AD11C /* SampleService.swift */; };
+		0267EA0C249A248E00C3587A /* DataUploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA0B249A248E00C3587A /* DataUploadEndpoint.swift */; };
 		3ECF3735D15313D7D619DF90 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782EE8D761A194141918D755 /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -45,6 +46,7 @@
 		0246DD3022B8D808007AD11C /* SampleGetEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleGetEndpoint.swift; sourceTree = "<group>"; };
 		0246DD3522B8D84B007AD11C /* GetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetResponse.swift; sourceTree = "<group>"; };
 		0246DD3722B8E469007AD11C /* SampleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleService.swift; sourceTree = "<group>"; };
+		0267EA0B249A248E00C3587A /* DataUploadEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataUploadEndpoint.swift; sourceTree = "<group>"; };
 		782EE8D761A194141918D755 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F4FED3076FBFFBA568F1F1 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C27585F025B2B9A73C5B5135 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 				0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */,
 				0246DD2E22B8D808007AD11C /* GetEndpoint.swift */,
 				0246DD3022B8D808007AD11C /* SampleGetEndpoint.swift */,
+				0267EA0B249A248E00C3587A /* DataUploadEndpoint.swift */,
 			);
 			path = Endpoint;
 			sourceTree = "<group>";
@@ -321,6 +324,7 @@
 				0246DD3122B8D808007AD11C /* EmptyEndpoint.swift in Sources */,
 				0246DD0822B8D50B007AD11C /* AppDelegate.swift in Sources */,
 				0246DD3622B8D84B007AD11C /* GetResponse.swift in Sources */,
+				0267EA0C249A248E00C3587A /* DataUploadEndpoint.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

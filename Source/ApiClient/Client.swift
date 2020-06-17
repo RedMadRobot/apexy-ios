@@ -115,6 +115,41 @@ public final class Client {
 
         return progress(for: request)
     }
+    
+    public func upload<T>(
+        _ endpoint: T,
+        completionHandler: @escaping (APIResult<T.Content>) -> Void
+    ) -> Progress where T: UploadEndpoint {
+        
+        let anyRequest = AnyRequest(create: endpoint.makeRequest)
+        let request: UploadRequest
+        
+        switch endpoint.dataToUpload {
+        case .data(let data):
+            request = sessionManager.upload(data, with: anyRequest)
+        case .file(let url):
+            request = sessionManager.upload(url, with: anyRequest)
+        case .stream(let stream):
+            request = sessionManager.upload(stream, with: anyRequest)
+        }
+        
+        request.responseData(
+            queue: responseQueue,
+            completionHandler: { (response: DataResponse<Data>) in
+
+                let result = APIResult<T.Content>(catching: { () throws -> T.Content in
+                    let data = try response.result.unwrap()
+                    return try endpoint.content(from: response.response, with: data)
+                })
+
+                self.completionQueue.async {
+                    self.responseObserver?(response.request, response.response, response.data, result.error)
+                    completionHandler(result)
+                }
+            })
+
+        return progress(for: request)
+    }
 
     // MARK: - Private
 

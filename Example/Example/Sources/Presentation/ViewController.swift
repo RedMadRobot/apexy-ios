@@ -34,6 +34,20 @@ class ViewController: UIViewController {
         }
     }
     
+    @IBAction private func upload() {
+        activityIndicator.startAnimating()
+        sampleService.uploadData() { [weak self] result in
+            guard let self = self else { return }
+            self.activityIndicator.stopAnimating()
+            switch result {
+            case .success:
+                self.urlLabel.text = "ok"
+            case .failure(let error):
+                self.urlLabel.text = error.localizedDescription
+            }
+        }
+    }
+    
     private func fillForm(model: GetResponse) {
         urlLabel.text = model.url
         argsLabel.text = "\(model.args)"

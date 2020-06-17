@@ -12,6 +12,9 @@ protocol SampleService {
     
     @discardableResult
     func obtainData(query: String, completion: @escaping (Result<GetResponse, Error>) -> Void) -> Progress
+    
+    @discardableResult
+    func uploadData(completion: @escaping (Result<Void, Error>) -> Void) -> Progress
 }
 
 
@@ -28,4 +31,8 @@ final class SampleServiceImpl: SampleService {
         return apiClient.request(endpoint, completionHandler: completion)
     }
     
+    func uploadData(completion: @escaping (Result<Void, Error>) -> Void) -> Progress {
+        let endpoint = DataUploadEndpoint()
+        return apiClient.request(endpoint, completionHandler: completion)
+    }
 }
