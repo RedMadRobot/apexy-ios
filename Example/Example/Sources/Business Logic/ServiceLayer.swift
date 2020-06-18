@@ -16,15 +16,19 @@ final class ServiceLayer {
     
     private(set) lazy var apiClient: Client = {
         return ApiClient.Client(
-            baseURL: URL(string: "https://postman-echo.com/")!,
+            baseURL: URL(string: "https://library.mock-object.redmadserver.com/api/v1/")!,
             configuration: .ephemeral,
             responseObserver: { [weak self] request, response, data, error in
                 self?.validateSession(responseError: error)
             })
     }()
     
-    private(set) lazy var sampleService: SampleService = {
-        return SampleServiceImpl(apiClient: apiClient)
+    private(set) lazy var bookService: BookService = {
+        return BookServiceImpl(apiClient: apiClient)
+    }()
+    
+    private(set) lazy var fileService: FileService = {
+        return FileServiceImpl(apiClient: apiClient)
     }()
     
     

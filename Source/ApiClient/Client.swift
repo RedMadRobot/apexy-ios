@@ -148,7 +148,9 @@ public final class Client {
                 }
             })
 
-        return progress(for: request)
+        let progress = request.uploadProgress
+        progress.cancellationHandler = { [weak request] in request?.cancel() }
+        return progress
     }
 
     // MARK: - Private

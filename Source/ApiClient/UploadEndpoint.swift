@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Type of uploadable content
 public enum Uploadable {
     case data(Data)
     case file(URL)
