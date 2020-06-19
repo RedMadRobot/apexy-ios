@@ -158,7 +158,40 @@ public struct DeleteBookEndpoint: VoidEndpoint {
 }
 ```
 
-## Files
+### Отправка данных на сервер
+
+Для отправки файлов или больших объемов данных вы можете использовать `UploadEndpoint`. В поле `dataToUpload` необходимо передать загружаемые данные, это может быть файл `.file(URL)`,  данные `.data(Data)` или поток `.stream(InputStream)`.
+
+```swift
+public struct FileUploadEndpoint: UploadEndpoint {
+    
+    public typealias Content = Void
+    
+    public var dataToUpload: Uploadable {
+        return .file(fileUrl)
+    }
+    
+    private let fileUrl: URL
+    
+    
+    init(fileUrl: URL) {
+        self.fileUrl = fileUrl
+    }
+    
+    public func content(from response: URLResponse?, with body: Data) throws {
+        // ...
+    }
+    
+    public func makeRequest() throws -> URLRequest {
+        var request = URLRequest(url: URL(string: "upload")!)
+        request.httpMethod = "POST"
+        request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
+        return request
+    }
+}
+```
+
+## Организация сетевого слоя
 
 Если приложение называется `Household`, то модуль с сетью будет называться `HouseholdAPI`.
 
