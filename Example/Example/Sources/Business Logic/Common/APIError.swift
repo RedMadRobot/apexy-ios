@@ -10,7 +10,6 @@ import Foundation
 /// Error from API.
 public struct APIError: Decodable, Error {
 
-    /// Код ошибки.
     public struct Code: RawRepresentable, Decodable, Equatable {
         public var rawValue: String
 

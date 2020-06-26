@@ -8,7 +8,8 @@
 
 import Foundation
 
-// Реализация медленной записи данных в Stream, для отслеживания прогресса загрузки
+/// This class contains an implementation of slow writing data to a stream.
+/// It is used only for example of tracking network upload progress.
 final class Streamer: NSObject, StreamDelegate {
 
     struct Streams {

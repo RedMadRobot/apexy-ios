@@ -10,10 +10,10 @@ import Foundation
 /// Protocol for GET request.
 protocol GetEndpoint: BaseEndpoint {
     
-    /// url запроса без base url
+    /// request url, contains only path part without base url
     var url: URL { get }
     
-    /// Параметры запроса
+    /// request query parameters 
     var queryParameters: [String: String]? { get }
 }
 

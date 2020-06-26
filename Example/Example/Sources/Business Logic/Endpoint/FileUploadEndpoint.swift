@@ -8,19 +8,20 @@
 
 import ApiClient
 
+/// Endpoint for uploading a file
 public struct FileUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
     
     public var dataToUpload: Uploadable {
-        return .file(fileUrl)
+        return .file(fileURL)
     }
     
-    private let fileUrl: URL
+    private let fileURL: URL
     
     
-    init(fileUrl: URL) {
-        self.fileUrl = fileUrl
+    init(fileURL: URL) {
+        self.fileURL = fileURL
     }
     
     public func content(from response: URLResponse?, with body: Data) throws {

@@ -8,6 +8,7 @@
 
 import ApiClient
 
+/// Endpoint for uploading a data form a stream
 public struct StreamUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
@@ -33,7 +34,7 @@ public struct StreamUploadEndpoint: UploadEndpoint {
         request.httpMethod = "POST"
         request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
         
-        // Для отслеживания прогресса загрузки необходимо установить значение Content-Length
+        // To track upload progress, it is important to set the Content-Length value.
         request.setValue("\(size)", forHTTPHeaderField: "Content-Length")
         return request
     }

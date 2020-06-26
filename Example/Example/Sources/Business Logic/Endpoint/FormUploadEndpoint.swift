@@ -9,7 +9,7 @@
 import ApiClient
 import Alamofire
 
-/// Endpoint для отправки данных в формате `multipart/form-data`
+/// Endpoint for sending data with `multipart/form-data` format
 public struct FormUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
@@ -22,8 +22,9 @@ public struct FormUploadEndpoint: UploadEndpoint {
     private let contentType: String
     private let contentLength: UInt64
     
-    /// При создании объекта `FormUploadEndpoint` выполняется кодирование данных в формат `multipart/form-data`,
-    /// при большом объеме данных этот процесс может занять некоторое время, лучше выполнять не на главной очереди.
+    /// When creating the `FormUploadEndpoint` object, Form is encoded into the `multipart/form-data` format,
+    /// with a large amount of data, this process may take some time;
+    /// it is recommended to perform it on the private queue.
     init(form: Form) throws {
         let multipartFormData = MultipartFormData.make(with: form)
         data = try multipartFormData.encode()

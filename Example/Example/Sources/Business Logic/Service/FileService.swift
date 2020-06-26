@@ -27,7 +27,7 @@ final class FileServiceImpl: FileService {
     }
     
     func upload(file: URL, completion: @escaping (Result<Void, Error>) -> Void) -> Progress {
-        let endpoint = FileUploadEndpoint(fileUrl: file)
+        let endpoint = FileUploadEndpoint(fileURL: file)
         return apiClient.upload(endpoint, completionHandler: completion)
     }
     
