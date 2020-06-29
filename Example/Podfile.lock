@@ -1,10 +1,10 @@
 PODS:
-  - Alamofire (4.9.1)
+  - Alamofire (5.2.1)
   - ApiClient (1.0.0):
-    - Alamofire
+    - Alamofire (~> 5.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire
   - ApiClient (from `../`)
 
 SPEC REPOS:
@@ -16,9 +16,9 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: 85e8a02c69d6020a0d734f6054870d7ecb75cf18
-  ApiClient: fe35672d2d3e6a9b2ab2df84aa75c898c1968e6c
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  ApiClient: 5a25757975a7f3ba9d2f9667b480c63e21a01fde
 
-PODFILE CHECKSUM: 56216e46a59fb70749c832f8d124ebc5b13ae689
+PODFILE CHECKSUM: c6666778c0f52cea3e1a6faa20f5c558802b44f6
 
 COCOAPODS: 1.9.3
