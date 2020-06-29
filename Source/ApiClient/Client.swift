@@ -17,7 +17,7 @@ public final class Client {
     public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
 
     /// Session network manager.
-    private let sessionManager: Alamofire.SessionManager
+    private let sessionManager: Alamofire.Session
 
     /// The queue on which the network response handler is dispatched.
     private let responseQueue = DispatchQueue(
@@ -30,37 +30,39 @@ public final class Client {
     /// This closure to be called after each response from the server for the request.
     private let responseObserver: ResponseObserver?
 
-    /// Look more at Alamofire.RequestAdapter.
-    public let requestAdapter: RequestAdapter
+    /// Look more at Alamofire.RequestInterceptor.
+    public let requestInterceptor: RequestInterceptor
 
     /// Creates new 'Client' instance.
     ///
     /// - Parameters:
-    ///   - requestAdapter: Alamofire Request Adapter.
+    ///   - requestInterceptor: Alamofire Request Interceptor.
     ///   - configuration: The configuration used to construct the managed session.
     ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
     ///   - publicKeys:  Dictionary with 1..n public keys used for SSL-pinning: ["example1.com": [PK1], "example2": [PK2, PK3]].
     ///   - responseObserver: The closure to be called after each response.
     public init(
-        requestAdapter: RequestAdapter,
+        requestInterceptor: RequestInterceptor,
         configuration: URLSessionConfiguration,
         completionQueue: DispatchQueue = .main,
         publicKeys: [String: [SecKey]] = [:],
         responseObserver: ResponseObserver? = nil) {
 
-        let securityManager = ServerTrustPolicyManager(policies: publicKeys.mapValues { keys in
-            return ServerTrustPolicy.pinPublicKeys(
-                publicKeys: keys,
-                validateCertificateChain: true,
-                validateHost: true)
-        })
+        var securityManager: ServerTrustManager?
+        /// All requests will cancelled if `ServerTrustManager` will initialized with empty evaluators
+        if !publicKeys.isEmpty {
+            let evaluators = publicKeys.mapValues { keys in
+                return PublicKeysTrustEvaluator(keys: keys, performDefaultValidation: true, validateHost: true)
+            }
+            securityManager = ServerTrustManager(evaluators: evaluators)
+        }
 
         self.completionQueue = completionQueue
-        self.requestAdapter = requestAdapter
-        self.sessionManager = SessionManager(
+        self.requestInterceptor = requestInterceptor
+        self.sessionManager = Session(
             configuration: configuration,
-            serverTrustPolicyManager: securityManager)
-        self.sessionManager.adapter = requestAdapter
+            interceptor: requestInterceptor,
+            serverTrustManager: securityManager)
         self.responseObserver = responseObserver
     }
     
@@ -79,7 +81,7 @@ public final class Client {
         publicKeys: [String: [SecKey]] = [:],
         responseObserver: ResponseObserver? = nil) {
         self.init(
-            requestAdapter: BaseRequestAdapter(baseURL: baseURL),
+            requestInterceptor: BaseRequestInterceptor(baseURL: baseURL),
             configuration: configuration,
             completionQueue: completionQueue,
             publicKeys: publicKeys,
@@ -100,10 +102,10 @@ public final class Client {
         let anyRequest = AnyRequest(create: endpoint.makeRequest)
         let request = sessionManager.request(anyRequest).responseData(
             queue: responseQueue,
-            completionHandler: { (response: DataResponse<Data>) in
+            completionHandler: { (response: DataResponse<Data, AFError>) in
 
                 let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                    let data = try response.result.unwrap()
+                    let data = try response.result.get()
                     return try endpoint.content(from: response.response, with: data)
                 })
 
@@ -120,7 +122,7 @@ public final class Client {
 
     private func progress(for request: Alamofire.Request) -> Progress {
         let progress = Progress()
-        progress.cancellationHandler = request.cancel
+        progress.cancellationHandler = { request.cancel() }
         return progress
     }
 }
