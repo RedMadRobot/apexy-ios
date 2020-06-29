@@ -116,21 +116,34 @@ public final class Client {
         return progress(for: request)
     }
     
+    /// Upload data to specified endpoint.
+    ///
+    /// - Parameters:
+    ///   - endpoint: The remote endpoint and data to upload.
+    ///   - completionHandler: The completion closure to be executed when request is completed.
+    /// - Returns: The progress of uploading data to the server.
     public func upload<T>(
         _ endpoint: T,
         completionHandler: @escaping (APIResult<T.Content>) -> Void
     ) -> Progress where T: UploadEndpoint {
         
-        let anyRequest = AnyRequest(create: endpoint.makeRequest)
-        let request: UploadRequest
+        let urlRequest: URLRequest
+        let body: UploadEndpointBody
+        do {
+            (urlRequest, body) = try endpoint.makeRequest()
+        } catch {
+            completionHandler(.failure(error))
+            return Progress()
+        }
         
-        switch endpoint.dataToUpload {
+        let request: UploadRequest
+        switch body {
         case .data(let data):
-            request = sessionManager.upload(data, with: anyRequest)
+            request = sessionManager.upload(data, with: urlRequest)
         case .file(let url):
-            request = sessionManager.upload(url, with: anyRequest)
+            request = sessionManager.upload(url, with: urlRequest)
         case .stream(let stream):
-            request = sessionManager.upload(stream, with: anyRequest)
+            request = sessionManager.upload(stream, with: urlRequest)
         }
         
         request.responseData(

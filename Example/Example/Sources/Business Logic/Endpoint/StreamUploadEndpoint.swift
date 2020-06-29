@@ -13,10 +13,6 @@ public struct StreamUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
     
-    public var dataToUpload: Uploadable {
-        return .stream(stream)
-    }
-    
     private let stream: InputStream
     private let size: Int
     
@@ -29,13 +25,13 @@ public struct StreamUploadEndpoint: UploadEndpoint {
         try ResponseValidator.validate(response, with: body)
     }
     
-    public func makeRequest() throws -> URLRequest {
+    public func makeRequest() throws -> (URLRequest, UploadEndpointBody) {
         var request = URLRequest(url: URL(string: "upload")!)
         request.httpMethod = "POST"
         request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
         
         // To track upload progress, it is important to set the Content-Length value.
         request.setValue("\(size)", forHTTPHeaderField: "Content-Length")
-        return request
+        return (request, .stream(stream))
     }
 }

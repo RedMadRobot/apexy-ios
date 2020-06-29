@@ -13,12 +13,7 @@ public struct FileUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
     
-    public var dataToUpload: Uploadable {
-        return .file(fileURL)
-    }
-    
     private let fileURL: URL
-    
     
     init(fileURL: URL) {
         self.fileURL = fileURL
@@ -28,10 +23,10 @@ public struct FileUploadEndpoint: UploadEndpoint {
         try ResponseValidator.validate(response, with: body)
     }
     
-    public func makeRequest() throws -> URLRequest {
+    public func makeRequest() throws -> (URLRequest, UploadEndpointBody) {
         var request = URLRequest(url: URL(string: "upload")!)
         request.httpMethod = "POST"
         request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
-        return request
+        return (request, .file(fileURL))
     }
 }

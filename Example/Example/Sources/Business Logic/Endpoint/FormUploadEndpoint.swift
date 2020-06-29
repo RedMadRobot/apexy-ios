@@ -14,34 +14,25 @@ public struct FormUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
     
-    public var dataToUpload: Uploadable {
-        return .data(data)
-    }
-    
-    private let data: Data
-    private let contentType: String
-    private let contentLength: UInt64
-    
-    /// When creating the `FormUploadEndpoint` object, Form is encoded into the `multipart/form-data` format,
-    /// with a large amount of data, this process may take some time;
-    /// it is recommended to perform it on the private queue.
-    init(form: Form) throws {
-        let multipartFormData = MultipartFormData.make(with: form)
-        data = try multipartFormData.encode()
-        contentLength = multipartFormData.contentLength
-        contentType = multipartFormData.contentType
+    private let form: Form
+
+    init(form: Form) {
+        self.form = form
     }
     
     public func content(from response: URLResponse?, with body: Data) throws {
         try ResponseValidator.validate(response, with: body)
     }
     
-    public func makeRequest() throws -> URLRequest {
+    public func makeRequest() throws -> (URLRequest, UploadEndpointBody) {
+        let multipartFormData = MultipartFormData.make(with: form)
+        let data = try multipartFormData.encode()
+        
         var request = URLRequest(url: URL(string: "form")!)
         request.httpMethod = "POST"
-        request.setValue(contentType, forHTTPHeaderField: "Content-Type")
-        request.setValue("\(contentLength)", forHTTPHeaderField: "Content-Length")
-        return request
+        request.setValue(multipartFormData.contentType, forHTTPHeaderField: "Content-Type")
+        request.setValue("\(multipartFormData.contentLength)", forHTTPHeaderField: "Content-Length")
+        return (request, .data(data))
     }
 }
 
