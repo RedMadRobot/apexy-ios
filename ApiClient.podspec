@@ -14,5 +14,5 @@ Pod::Spec.new do |s|
 
   s.swift_version = "5.0"
   s.source_files  = "Source/ApiClient/**/*.swift"
-  s.dependency "Alamofire"
+  s.dependency "Alamofire", '~>5.0'
 end
