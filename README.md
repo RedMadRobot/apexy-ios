@@ -160,16 +160,12 @@ public struct DeleteBookEndpoint: VoidEndpoint {
 
 ### Отправка данных на сервер
 
-Для отправки файлов или больших объемов данных вы можете использовать `UploadEndpoint`. В поле `dataToUpload` необходимо передать загружаемые данные, это может быть файл `.file(URL)`,  данные `.data(Data)` или поток `.stream(InputStream)`.
+Для отправки файлов или больших объемов данных вы можете использовать `UploadEndpoint`. В методе `makeRequest()` необходимо вернуть `URLRequest` и загружаемые данные, это может быть файл `.file(URL)`, данные `.data(Data)` или поток `.stream(InputStream)`. Для выполнения запроса вызовите метод `Client.upload(endpoint:, completionHandler:)`. С помощью объекта `Progress` вы сможете отслеживать прогресс загрузки данных либо отменить запрос.
 
 ```swift
 public struct FileUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
-    
-    public var dataToUpload: Uploadable {
-        return .file(fileUrl)
-    }
     
     private let fileUrl: URL
     
@@ -182,11 +178,11 @@ public struct FileUploadEndpoint: UploadEndpoint {
         // ...
     }
     
-    public func makeRequest() throws -> URLRequest {
+    public func makeRequest() throws -> (URLRequest, UploadEndpointBody) {
         var request = URLRequest(url: URL(string: "upload")!)
         request.httpMethod = "POST"
         request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
-        return request
+        return (request, .file(fileUrl))
     }
 }
 ```

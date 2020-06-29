@@ -1,5 +1,5 @@
 //
-//  BaseEndpoint.swift
+//  JsonEndpoint.swift
 //
 //  Created by Alexander Ignatev on 08/02/2019.
 //  Copyright © 2019 RedMadRobot. All rights reserved.
@@ -10,9 +10,9 @@ import ApiClient
 /// Base Endpoint for application remote resource.
 ///
 /// Contains shared logic for all endpoints in app.
-protocol BaseEndpoint: Endpoint where Content: Decodable {}
+protocol JsonEndpoint: Endpoint where Content: Decodable {}
 
-extension BaseEndpoint {
+extension JsonEndpoint {
 
     /// Request body encoder.
     internal var encoder: JSONEncoder { return JSONEncoder.default }

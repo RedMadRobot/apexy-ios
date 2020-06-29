@@ -18,8 +18,7 @@
 		0246DD2B22B8D7C2007AD11C /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2722B8D7C2007AD11C /* HTTPError.swift */; };
 		0246DD2C22B8D7C2007AD11C /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2822B8D7C2007AD11C /* Codable.swift */; };
 		0246DD3122B8D808007AD11C /* EmptyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */; };
-		0246DD3222B8D808007AD11C /* GetEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2E22B8D808007AD11C /* GetEndpoint.swift */; };
-		0246DD3322B8D808007AD11C /* BaseEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2F22B8D808007AD11C /* BaseEndpoint.swift */; };
+		0246DD3322B8D808007AD11C /* JsonEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */; };
 		0246DD3422B8D808007AD11C /* BooksEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3022B8D808007AD11C /* BooksEndpoint.swift */; };
 		0246DD3622B8D84B007AD11C /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3522B8D84B007AD11C /* Book.swift */; };
 		0246DD3822B8E469007AD11C /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3722B8E469007AD11C /* FileService.swift */; };
@@ -46,8 +45,7 @@
 		0246DD2722B8D7C2007AD11C /* HTTPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		0246DD2822B8D7C2007AD11C /* Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
 		0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyEndpoint.swift; sourceTree = "<group>"; };
-		0246DD2E22B8D808007AD11C /* GetEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetEndpoint.swift; sourceTree = "<group>"; };
-		0246DD2F22B8D808007AD11C /* BaseEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEndpoint.swift; sourceTree = "<group>"; };
+		0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonEndpoint.swift; sourceTree = "<group>"; };
 		0246DD3022B8D808007AD11C /* BooksEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksEndpoint.swift; sourceTree = "<group>"; };
 		0246DD3522B8D84B007AD11C /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		0246DD3722B8E469007AD11C /* FileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
@@ -203,9 +201,8 @@
 		0267EA12249B4C4C00C3587A /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				0246DD2F22B8D808007AD11C /* BaseEndpoint.swift */,
+				0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */,
 				0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */,
-				0246DD2E22B8D808007AD11C /* GetEndpoint.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -345,11 +342,10 @@
 				0246DD2A22B8D7C2007AD11C /* ResponseValidator.swift in Sources */,
 				0267EA1B249CAE8C00C3587A /* FormUploadEndpoint.swift in Sources */,
 				0246DD0A22B8D50B007AD11C /* ViewController.swift in Sources */,
-				0246DD3222B8D808007AD11C /* GetEndpoint.swift in Sources */,
 				0267EA1D249CAEB400C3587A /* Form.swift in Sources */,
 				0246DD2922B8D7C2007AD11C /* APIError.swift in Sources */,
 				0246DD2022B8D6EE007AD11C /* ServiceLayer.swift in Sources */,
-				0246DD3322B8D808007AD11C /* BaseEndpoint.swift in Sources */,
+				0246DD3322B8D808007AD11C /* JsonEndpoint.swift in Sources */,
 				0246DD2C22B8D7C2007AD11C /* Codable.swift in Sources */,
 				0267EA11249B4B5600C3587A /* StreamUploadEndpoint.swift in Sources */,
 				0246DD3822B8E469007AD11C /* FileService.swift in Sources */,

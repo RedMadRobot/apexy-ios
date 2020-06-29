@@ -27,7 +27,7 @@ class ViewController: UIViewController {
 
     @IBAction private func performRequest() {
         activityView.isHidden = false
-        progress = bookService.obtainBooks() { [weak self] result in
+        progress = bookService.fetchBooks() { [weak self] result in
             guard let self = self else { return }
             self.activityView.isHidden = true
             switch result {

@@ -8,7 +8,7 @@
 import ApiClient
 
 /// Example of GET request.
-public struct BookListEndpoint: BaseEndpoint {
+public struct BookListEndpoint: JsonEndpoint {
     
     public typealias Content = [Book]
 

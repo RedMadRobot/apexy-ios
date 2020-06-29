@@ -23,13 +23,9 @@ final class ServiceLayer {
             })
     }()
     
-    private(set) lazy var bookService: BookService = {
-        return BookServiceImpl(apiClient: apiClient)
-    }()
+    private(set) lazy var bookService: BookService = BookServiceImpl(apiClient: apiClient)
     
-    private(set) lazy var fileService: FileService = {
-        return FileServiceImpl(apiClient: apiClient)
-    }()
+    private(set) lazy var fileService: FileService = FileServiceImpl(apiClient: apiClient)
     
     
     // MARK: - Private methods

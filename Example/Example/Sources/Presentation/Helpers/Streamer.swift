@@ -40,14 +40,13 @@ final class Streamer: NSObject, StreamDelegate {
     func run() {
         counter = 0
         timer = Timer.scheduledTimer(
-            timeInterval: 0.5,
-            target: self,
-            selector: #selector(timerFired),
-            userInfo: nil,
-            repeats: true)
+            withTimeInterval: 0.5,
+            repeats: true) { [weak self] _ in
+                self?.timerFired()
+            }
     }
     
-    @objc private func timerFired() {
+    private func timerFired() {
         if counter == chunksCount {
             boundStreams.output.close()
             timer?.invalidate()

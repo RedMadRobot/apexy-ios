@@ -11,7 +11,7 @@ import ApiClient
 protocol BookService {
     
     @discardableResult
-    func obtainBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress
+    func fetchBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress
 }
 
 
@@ -23,7 +23,7 @@ final class BookServiceImpl: BookService {
         self.apiClient = apiClient
     }
     
-    func obtainBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress {
+    func fetchBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress {
         let endpoint = BookListEndpoint()
         return apiClient.request(endpoint, completionHandler: completion)
     }
