@@ -5,10 +5,11 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
+import ApiClient
 import Foundation
 
 /// Protocol for GET request.
-protocol GetEndpoint: BaseEndpoint {
+protocol GetEndpoint: BaseEndpoint, URLRequestBuildable {
     
     /// url запроса без base url
     var url: URL { get }
@@ -24,17 +25,8 @@ extension GetEndpoint {
     }
     
     public func makeRequest() throws -> URLRequest {
-        
-        var components = URLComponents(
-            url: url,
-            resolvingAgainstBaseURL: true)!
-        
-        let queryItems: [URLQueryItem]? = queryParameters?.map({ URLQueryItem(name: $0.key, value: $0.value) })
-        components.queryItems = queryItems
-        
-        let request = URLRequest(url: components.url!)
-
-        return request
+        let queryItems = queryParameters?.map({ URLQueryItem(name: $0.key, value: $0.value) })
+        return get(url, queryItems: queryItems)
     }
     
 }
