@@ -97,18 +97,18 @@ extension VoidEndpoint {
 
 `BookListEndpoint` - получения списка книг.
 ```swift
-public struct BookListEndpoint: JsonEndpoint {
+public struct BookListEndpoint: JsonEndpoint, URLRequestBuildable {
     public typealias Content = [Book]
 
     public func makeRequest() throws -> URLRequest {
-        return URLRequest(url: URL(string: "books")!)
+        return get(URL(string: "books")!)
     }
 }
 ```
 
 `BookEndpoint` - получения книги по `ID`.
 ```swift
-public struct BookEndpoint: JsonEndpoint {
+public struct BookEndpoint: JsonEndpoint, URLRequestBuildable {
     public typealias Content = Book
 
     public let id: Book.ID
@@ -119,7 +119,7 @@ public struct BookEndpoint: JsonEndpoint {
 
     public func makeRequest() throws -> URLRequest {
         let url = URL(string: "books")!.appendingPathComponent(id)
-        return URLRequest(url: url)
+        return get(url)
     }
 }
 ```
@@ -127,14 +127,14 @@ public struct BookEndpoint: JsonEndpoint {
 `UpdateBookEndpoint` - обновление книги.
 
 ```swift
-public struct UpdateBookEndpoint: JsonEndpoint {
+public struct UpdateBookEndpoint: JsonEndpoint, URLRequestBuildable {
     public typealias Content = Book
 
     public let Book: Book
 
     public func makeRequest() throws -> URLRequest {
         let url = URL(string: "books")!.appendingPathComponent(Book.id)
-        return HTTP.put(url, json: try JSONEncoder().encode(Book))
+        return put(url, body: .json(try JSONEncoder().encode("Book")))
     }
 }
 ```
@@ -144,7 +144,7 @@ public struct UpdateBookEndpoint: JsonEndpoint {
 `DeleteBookEndpoint` - удаление книги по `ID`.
 
 ```swift
-public struct DeleteBookEndpoint: VoidEndpoint {
+public struct DeleteBookEndpoint: VoidEndpoint, URLRequestBuildable {
     public let id: Book.ID
 
     public init(id: Book.ID) {
@@ -153,7 +153,7 @@ public struct DeleteBookEndpoint: VoidEndpoint {
 
     public func makeRequest() throws -> URLRequest {
         let url = URL(string: "books")!.appendingPathComponent(id)
-        return HTTP.delete(url)
+        return delete(url)
     }
 }
 ```

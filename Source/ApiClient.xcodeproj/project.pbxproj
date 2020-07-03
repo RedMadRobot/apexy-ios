@@ -12,6 +12,8 @@
 		0246DCF822B8CABA007AD11C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DCF722B8CABA007AD11C /* Endpoint.swift */; };
 		4EB4EB876755E45A3FCE1D27 /* Pods_ApiClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ECF1E51B23AC3D9F79E4BD /* Pods_ApiClient.framework */; };
 		CCEA10C724A0EB640039F327 /* BaseRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEA10C624A0EB640039F327 /* BaseRequestInterceptor.swift */; };
+		CCFD0F5624AB35E2001A3488 /* URLRequestBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFD0F5524AB35E2001A3488 /* URLRequestBuildable.swift */; };
+		CCFD0F5824AB465E001A3488 /* HTTPBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFD0F5724AB465D001A3488 /* HTTPBody.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +26,8 @@
 		61ECF1E51B23AC3D9F79E4BD /* Pods_ApiClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApiClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C748D968637613CC4DE5C540 /* Pods-ApiClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApiClient.debug.xcconfig"; path = "Target Support Files/Pods-ApiClient/Pods-ApiClient.debug.xcconfig"; sourceTree = "<group>"; };
 		CCEA10C624A0EB640039F327 /* BaseRequestInterceptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRequestInterceptor.swift; sourceTree = "<group>"; };
+		CCFD0F5524AB35E2001A3488 /* URLRequestBuildable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuildable.swift; sourceTree = "<group>"; };
+		CCFD0F5724AB465D001A3488 /* HTTPBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBody.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +65,9 @@
 			children = (
 				0246DCF422B8CA7C007AD11C /* Client.swift */,
 				0246DCF722B8CABA007AD11C /* Endpoint.swift */,
+				CCFD0F5724AB465D001A3488 /* HTTPBody.swift */,
 				CCEA10C624A0EB640039F327 /* BaseRequestInterceptor.swift */,
+				CCFD0F5524AB35E2001A3488 /* URLRequestBuildable.swift */,
 				0246DCF622B8CA7F007AD11C /* Supporting Files */,
 			);
 			path = ApiClient;
@@ -198,9 +204,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CCFD0F5624AB35E2001A3488 /* URLRequestBuildable.swift in Sources */,
 				0246DCF822B8CABA007AD11C /* Endpoint.swift in Sources */,
 				0246DCF522B8CA7C007AD11C /* Client.swift in Sources */,
 				CCEA10C724A0EB640039F327 /* BaseRequestInterceptor.swift in Sources */,
+				CCFD0F5824AB465E001A3488 /* HTTPBody.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

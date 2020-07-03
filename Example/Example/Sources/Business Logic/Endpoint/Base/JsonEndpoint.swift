@@ -10,7 +10,7 @@ import ApiClient
 /// Base Endpoint for application remote resource.
 ///
 /// Contains shared logic for all endpoints in app.
-protocol JsonEndpoint: Endpoint where Content: Decodable {}
+protocol JsonEndpoint: Endpoint, URLRequestBuildable where Content: Decodable {}
 
 extension JsonEndpoint {
 

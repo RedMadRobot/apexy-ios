@@ -13,7 +13,7 @@ public struct BookListEndpoint: JsonEndpoint {
     public typealias Content = [Book]
 
     public func makeRequest() throws -> URLRequest {
-        return URLRequest(url: URL(string: "books")!)
+        return get(URL(string: "books")!)
     }
 
 }
