@@ -1,7 +1,7 @@
 PODS:
   - Alamofire (5.2.1)
   - ApiClient (1.0.0):
-    - Alamofire
+    - Alamofire (~> 5.0)
 
 DEPENDENCIES:
   - ApiClient (from `../`)
@@ -16,7 +16,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
-  ApiClient: 95166f97bdc267ade3493cb55f49dd692e9c4b5d
+  ApiClient: 1ca7bbb20d5b21551461fefa215e36dd3cecef76
 
 PODFILE CHECKSUM: ac8dde9520c4ec25de63880d7ad838745fc1f1dc
 
