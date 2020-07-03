@@ -18,11 +18,16 @@
 		0246DD2B22B8D7C2007AD11C /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2722B8D7C2007AD11C /* HTTPError.swift */; };
 		0246DD2C22B8D7C2007AD11C /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2822B8D7C2007AD11C /* Codable.swift */; };
 		0246DD3122B8D808007AD11C /* EmptyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */; };
-		0246DD3222B8D808007AD11C /* GetEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2E22B8D808007AD11C /* GetEndpoint.swift */; };
-		0246DD3322B8D808007AD11C /* BaseEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2F22B8D808007AD11C /* BaseEndpoint.swift */; };
-		0246DD3422B8D808007AD11C /* SampleGetEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3022B8D808007AD11C /* SampleGetEndpoint.swift */; };
-		0246DD3622B8D84B007AD11C /* GetResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3522B8D84B007AD11C /* GetResponse.swift */; };
-		0246DD3822B8E469007AD11C /* SampleService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3722B8E469007AD11C /* SampleService.swift */; };
+		0246DD3322B8D808007AD11C /* JsonEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */; };
+		0246DD3422B8D808007AD11C /* BooksEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3022B8D808007AD11C /* BooksEndpoint.swift */; };
+		0246DD3622B8D84B007AD11C /* Book.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3522B8D84B007AD11C /* Book.swift */; };
+		0246DD3822B8E469007AD11C /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3722B8E469007AD11C /* FileService.swift */; };
+		0267EA0C249A248E00C3587A /* FileUploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA0B249A248E00C3587A /* FileUploadEndpoint.swift */; };
+		0267EA0F249A6FD600C3587A /* Streamer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA0E249A6FD600C3587A /* Streamer.swift */; };
+		0267EA11249B4B5600C3587A /* StreamUploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA10249B4B5600C3587A /* StreamUploadEndpoint.swift */; };
+		0267EA14249B4CFD00C3587A /* BookService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA13249B4CFD00C3587A /* BookService.swift */; };
+		0267EA1B249CAE8C00C3587A /* FormUploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA1A249CAE8C00C3587A /* FormUploadEndpoint.swift */; };
+		0267EA1D249CAEB400C3587A /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA1C249CAEB400C3587A /* Form.swift */; };
 		3ECF3735D15313D7D619DF90 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 782EE8D761A194141918D755 /* Pods_Example.framework */; };
 /* End PBXBuildFile section */
 
@@ -40,11 +45,16 @@
 		0246DD2722B8D7C2007AD11C /* HTTPError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HTTPError.swift; sourceTree = "<group>"; };
 		0246DD2822B8D7C2007AD11C /* Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
 		0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyEndpoint.swift; sourceTree = "<group>"; };
-		0246DD2E22B8D808007AD11C /* GetEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetEndpoint.swift; sourceTree = "<group>"; };
-		0246DD2F22B8D808007AD11C /* BaseEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseEndpoint.swift; sourceTree = "<group>"; };
-		0246DD3022B8D808007AD11C /* SampleGetEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleGetEndpoint.swift; sourceTree = "<group>"; };
-		0246DD3522B8D84B007AD11C /* GetResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GetResponse.swift; sourceTree = "<group>"; };
-		0246DD3722B8E469007AD11C /* SampleService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SampleService.swift; sourceTree = "<group>"; };
+		0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonEndpoint.swift; sourceTree = "<group>"; };
+		0246DD3022B8D808007AD11C /* BooksEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksEndpoint.swift; sourceTree = "<group>"; };
+		0246DD3522B8D84B007AD11C /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
+		0246DD3722B8E469007AD11C /* FileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		0267EA0B249A248E00C3587A /* FileUploadEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadEndpoint.swift; sourceTree = "<group>"; };
+		0267EA0E249A6FD600C3587A /* Streamer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Streamer.swift; sourceTree = "<group>"; };
+		0267EA10249B4B5600C3587A /* StreamUploadEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamUploadEndpoint.swift; sourceTree = "<group>"; };
+		0267EA13249B4CFD00C3587A /* BookService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookService.swift; sourceTree = "<group>"; };
+		0267EA1A249CAE8C00C3587A /* FormUploadEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormUploadEndpoint.swift; sourceTree = "<group>"; };
+		0267EA1C249CAEB400C3587A /* Form.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Form.swift; sourceTree = "<group>"; };
 		782EE8D761A194141918D755 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F4FED3076FBFFBA568F1F1 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		C27585F025B2B9A73C5B5135 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -111,6 +121,7 @@
 		0246DD1B22B8D650007AD11C /* Presentation */ = {
 			isa = PBXGroup;
 			children = (
+				0267EA0D249A6FB400C3587A /* Helpers */,
 				0246DD0922B8D50B007AD11C /* ViewController.swift */,
 				0246DD0B22B8D50B007AD11C /* Main.storyboard */,
 			);
@@ -141,10 +152,11 @@
 		0246DD2122B8D71F007AD11C /* Endpoint */ = {
 			isa = PBXGroup;
 			children = (
-				0246DD2F22B8D808007AD11C /* BaseEndpoint.swift */,
-				0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */,
-				0246DD2E22B8D808007AD11C /* GetEndpoint.swift */,
-				0246DD3022B8D808007AD11C /* SampleGetEndpoint.swift */,
+				0267EA12249B4C4C00C3587A /* Base */,
+				0246DD3022B8D808007AD11C /* BooksEndpoint.swift */,
+				0267EA0B249A248E00C3587A /* FileUploadEndpoint.swift */,
+				0267EA10249B4B5600C3587A /* StreamUploadEndpoint.swift */,
+				0267EA1A249CAE8C00C3587A /* FormUploadEndpoint.swift */,
 			);
 			path = Endpoint;
 			sourceTree = "<group>";
@@ -152,7 +164,8 @@
 		0246DD2222B8D727007AD11C /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				0246DD3522B8D84B007AD11C /* GetResponse.swift */,
+				0246DD3522B8D84B007AD11C /* Book.swift */,
+				0267EA1C249CAEB400C3587A /* Form.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -160,7 +173,8 @@
 		0246DD2322B8D72C007AD11C /* Service */ = {
 			isa = PBXGroup;
 			children = (
-				0246DD3722B8E469007AD11C /* SampleService.swift */,
+				0267EA13249B4CFD00C3587A /* BookService.swift */,
+				0246DD3722B8E469007AD11C /* FileService.swift */,
 			);
 			path = Service;
 			sourceTree = "<group>";
@@ -174,6 +188,23 @@
 				0246DD2622B8D7C2007AD11C /* ResponseValidator.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		0267EA0D249A6FB400C3587A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0267EA0E249A6FD600C3587A /* Streamer.swift */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		0267EA12249B4C4C00C3587A /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */,
+				0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		39A043209B6F4E5DEA2E65D8 /* Frameworks */ = {
@@ -309,18 +340,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				0246DD2A22B8D7C2007AD11C /* ResponseValidator.swift in Sources */,
+				0267EA1B249CAE8C00C3587A /* FormUploadEndpoint.swift in Sources */,
 				0246DD0A22B8D50B007AD11C /* ViewController.swift in Sources */,
-				0246DD3222B8D808007AD11C /* GetEndpoint.swift in Sources */,
+				0267EA1D249CAEB400C3587A /* Form.swift in Sources */,
 				0246DD2922B8D7C2007AD11C /* APIError.swift in Sources */,
 				0246DD2022B8D6EE007AD11C /* ServiceLayer.swift in Sources */,
-				0246DD3322B8D808007AD11C /* BaseEndpoint.swift in Sources */,
+				0246DD3322B8D808007AD11C /* JsonEndpoint.swift in Sources */,
 				0246DD2C22B8D7C2007AD11C /* Codable.swift in Sources */,
-				0246DD3822B8E469007AD11C /* SampleService.swift in Sources */,
+				0267EA11249B4B5600C3587A /* StreamUploadEndpoint.swift in Sources */,
+				0246DD3822B8E469007AD11C /* FileService.swift in Sources */,
 				0246DD2B22B8D7C2007AD11C /* HTTPError.swift in Sources */,
-				0246DD3422B8D808007AD11C /* SampleGetEndpoint.swift in Sources */,
+				0246DD3422B8D808007AD11C /* BooksEndpoint.swift in Sources */,
 				0246DD3122B8D808007AD11C /* EmptyEndpoint.swift in Sources */,
 				0246DD0822B8D50B007AD11C /* AppDelegate.swift in Sources */,
-				0246DD3622B8D84B007AD11C /* GetResponse.swift in Sources */,
+				0246DD3622B8D84B007AD11C /* Book.swift in Sources */,
+				0267EA14249B4CFD00C3587A /* BookService.swift in Sources */,
+				0267EA0C249A248E00C3587A /* FileUploadEndpoint.swift in Sources */,
+				0267EA0F249A6FD600C3587A /* Streamer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

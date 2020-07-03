@@ -117,6 +117,56 @@ public final class Client {
 
         return progress(for: request)
     }
+    
+    /// Upload data to specified endpoint.
+    ///
+    /// - Parameters:
+    ///   - endpoint: The remote endpoint and data to upload.
+    ///   - completionHandler: The completion closure to be executed when request is completed.
+    /// - Returns: The progress of uploading data to the server.
+    public func upload<T>(
+        _ endpoint: T,
+        completionHandler: @escaping (APIResult<T.Content>) -> Void
+    ) -> Progress where T: UploadEndpoint {
+        
+        let urlRequest: URLRequest
+        let body: UploadEndpointBody
+        do {
+            (urlRequest, body) = try endpoint.makeRequest()
+        } catch {
+            completionHandler(.failure(error))
+            return Progress()
+        }
+        
+        let request: UploadRequest
+        switch body {
+        case .data(let data):
+            request = sessionManager.upload(data, with: urlRequest)
+        case .file(let url):
+            request = sessionManager.upload(url, with: urlRequest)
+        case .stream(let stream):
+            request = sessionManager.upload(stream, with: urlRequest)
+        }
+        
+        request.responseData(
+            queue: responseQueue,
+            completionHandler: { (response: DataResponse<Data, AFError>) in
+
+                let result = APIResult<T.Content>(catching: { () throws -> T.Content in
+                    let data = try response.result.get()
+                    return try endpoint.content(from: response.response, with: data)
+                })
+
+                self.completionQueue.async {
+                    self.responseObserver?(response.request, response.response, response.data, result.error)
+                    completionHandler(result)
+                }
+            })
+
+        let progress = request.uploadProgress
+        progress.cancellationHandler = { [weak request] in request?.cancel() }
+        return progress
+    }
 
     // MARK: - Private
 

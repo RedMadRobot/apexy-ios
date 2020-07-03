@@ -8,7 +8,7 @@
 import ApiClient
 
 /// Empty Body Request Enpoint.
-protocol EmptyEndpoint: Endpoint where Content == Void {}
+protocol EmptyEndpoint: Endpoint, URLRequestBuildable where Content == Void {}
 
 extension EmptyEndpoint {
 
