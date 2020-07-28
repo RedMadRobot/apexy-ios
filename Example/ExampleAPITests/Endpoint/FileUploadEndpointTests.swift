@@ -15,9 +15,7 @@ final class FileUploadEndpointTests: XCTestCase {
         let fileURL = URL(string: "path/to/file")!
         let endpoint = FileUploadEndpoint(fileURL: fileURL)
         
-        let urlRequest = try endpoint.makeRequest()
-        let request = urlRequest.0
-        let body = urlRequest.1
+        let (request, body) = try endpoint.makeRequest()
         
         assertPOST(request)
         assertURL(request, "upload")

@@ -17,8 +17,6 @@ final class BookListEndpointTests: XCTestCase {
         
         assertGET(urlRequest)
         assertURL(urlRequest, "books")
-        
-        XCTAssertNil(urlRequest.httpBody)
     }
 
 }
