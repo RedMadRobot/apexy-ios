@@ -1,6 +1,6 @@
 //
 //  FileUploadEndpoint.swift
-//  Example
+//  ExampleAPI
 //
 //  Created by Anton Glezman on 17.06.2020.
 //  Copyright © 2020 RedMadRobot. All rights reserved.
@@ -15,7 +15,7 @@ public struct FileUploadEndpoint: UploadEndpoint {
     
     private let fileURL: URL
     
-    init(fileURL: URL) {
+    public init(fileURL: URL) {
         self.fileURL = fileURL
     }
     

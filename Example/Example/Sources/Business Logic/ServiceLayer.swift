@@ -7,6 +7,7 @@
 //
 
 import ApiClient
+import ExampleAPI
 
 final class ServiceLayer {
     

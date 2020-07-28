@@ -7,6 +7,9 @@
 //
 
 import ApiClient
+import ExampleAPI
+
+typealias Book = ExampleAPI.Book
 
 protocol BookService {
     

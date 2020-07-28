@@ -1,6 +1,6 @@
 //
 //  StreamUploadEndpoint.swift
-//  Example
+//  ExampleAPI
 //
 //  Created by Anton Glezman on 18.06.2020.
 //  Copyright © 2020 RedMadRobot. All rights reserved.
@@ -16,7 +16,7 @@ public struct StreamUploadEndpoint: UploadEndpoint {
     private let stream: InputStream
     private let size: Int
     
-    init(stream: InputStream, size: Int) {
+    public init(stream: InputStream, size: Int) {
         self.stream = stream
         self.size = size
     }
