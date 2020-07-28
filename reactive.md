@@ -1,8 +1,8 @@
-# Реактивное программирование
+# Reactive programming
 
-## Расширение APIClient для работы с RxSwift
+## APIClient extension for integrating with RxSwift
 
-Если вы хотите использовать APIClient с RxSwift добавьте к себе в проект следующее расширение.
+If you want to use APIClient with RxSwift copy the following extension to your project.
 
 ```swift
 extension Client {
@@ -24,10 +24,10 @@ extension Client {
 }
 ```
 
-Как использовать на примере `BookServiceImpl` (смотри Example проект).
+How to use by example `BookService` (see Example project).
 
 ```swift
-final class BookServiceImpl: BookService {
+final class BookService {
     ...
     func fetchBooks() -> Single<[Book]> {
         let endpoint = BookListEndpoint()
@@ -51,9 +51,9 @@ bookService.fetchBooks()
     }).disposed(by: bag)
 ```
 
-## Расширение APIClient для работы с Combine
+## APIClient extension for integrating with Combine
 
-Если вы хотите использовать APIClient с Combine добавьте к себе в проект следующее расширение.
+If you want to use APIClient with Combine copy the following extension to your project.
 
 ```swift
 extension Client {
@@ -79,10 +79,10 @@ extension Client {
 }
 ```
 
-Как использовать на примере `BookServiceImpl` (смотри Example проект).
+How to use by example `BookService` (see Example project).
 
 ```swift
-final class BookServiceImpl: BookService {
+final class BookService {
     ...
     func fetchBooks() -> AnyPublisher<[Book], Error> {
         let endpoint = BookListEndpoint()
@@ -94,12 +94,12 @@ final class BookServiceImpl: BookService {
 
 ```swift
 bookService.fetchBooks().sink(receiveCompletion: { [weak self] completion in
+    self?.activityView.isHidden = true
     switch completion {
     case .finished:
-        self?.activityView.isHidden = true
+        break
     case .failure(let error):
         self?.resultLabel.text = error.localizedDescription
-        break
     }
 }, receiveValue: { [weak self] books in
     self?.show(books: books)
