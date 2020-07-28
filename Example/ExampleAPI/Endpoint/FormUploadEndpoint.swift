@@ -16,7 +16,7 @@ public struct FormUploadEndpoint: UploadEndpoint {
     
     private let form: Form
 
-    init(form: Form) {
+    public init(form: Form) {
         self.form = form
     }
     

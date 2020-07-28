@@ -22,7 +22,7 @@
 		0F2295E924D021FA00EF4F8F /* ExampleAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0F2295D324D021FA00EF4F8F /* ExampleAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		0F2295F424D022B000EF4F8F /* JsonEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */; };
 		0F2295F524D022B300EF4F8F /* EmptyEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */; };
-		0F2295F624D022B300EF4F8F /* BooksEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3022B8D808007AD11C /* BooksEndpoint.swift */; };
+		0F2295F624D022B300EF4F8F /* BookListEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD3022B8D808007AD11C /* BookListEndpoint.swift */; };
 		0F2295F724D022B300EF4F8F /* FileUploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA0B249A248E00C3587A /* FileUploadEndpoint.swift */; };
 		0F2295F824D022B300EF4F8F /* StreamUploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA10249B4B5600C3587A /* StreamUploadEndpoint.swift */; };
 		0F2295F924D022B300EF4F8F /* FormUploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0267EA1A249CAE8C00C3587A /* FormUploadEndpoint.swift */; };
@@ -32,6 +32,11 @@
 		0F2295FE24D0230100EF4F8F /* Codable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2822B8D7C2007AD11C /* Codable.swift */; };
 		0F2295FF24D0230100EF4F8F /* HTTPError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2722B8D7C2007AD11C /* HTTPError.swift */; };
 		0F22960024D0230100EF4F8F /* ResponseValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD2622B8D7C2007AD11C /* ResponseValidator.swift */; };
+		0F22960324D025AD00EF4F8F /* BookListEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F22960224D025AD00EF4F8F /* BookListEndpointTests.swift */; };
+		0F22960624D0262700EF4F8F /* Asserts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F22960524D0262700EF4F8F /* Asserts.swift */; };
+		0F22960824D0269600EF4F8F /* FileUploadEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F22960724D0269600EF4F8F /* FileUploadEndpointTests.swift */; };
+		0F22960A24D028DA00EF4F8F /* StreamUploadEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F22960924D028DA00EF4F8F /* StreamUploadEndpointTests.swift */; };
+		0F22960C24D0296E00EF4F8F /* FormUploadEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F22960B24D0296E00EF4F8F /* FormUploadEndpointTests.swift */; };
 		5FF60B41F402D76899FF26AE /* Pods_ExampleAPITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 064E43A6463F7D099D01BCF5 /* Pods_ExampleAPITests.framework */; };
 		836046CB6429BD1F7D6F655D /* Pods_ExampleAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA7535BDA3ACD587FD267044 /* Pods_ExampleAPI.framework */; };
 		F2BAEAE9CB7A6279442D5B8E /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3FE8B9ACB9E16BFD955859B2 /* Pods_Example.framework */; };
@@ -90,7 +95,7 @@
 		0246DD2822B8D7C2007AD11C /* Codable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Codable.swift; sourceTree = "<group>"; };
 		0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmptyEndpoint.swift; sourceTree = "<group>"; };
 		0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JsonEndpoint.swift; sourceTree = "<group>"; };
-		0246DD3022B8D808007AD11C /* BooksEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BooksEndpoint.swift; sourceTree = "<group>"; };
+		0246DD3022B8D808007AD11C /* BookListEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BookListEndpoint.swift; sourceTree = "<group>"; };
 		0246DD3522B8D84B007AD11C /* Book.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Book.swift; sourceTree = "<group>"; };
 		0246DD3722B8E469007AD11C /* FileService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
 		0267EA0B249A248E00C3587A /* FileUploadEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadEndpoint.swift; sourceTree = "<group>"; };
@@ -105,6 +110,11 @@
 		0F2295D624D021FA00EF4F8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0F2295DB24D021FA00EF4F8F /* ExampleAPITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ExampleAPITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F2295E424D021FA00EF4F8F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0F22960224D025AD00EF4F8F /* BookListEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BookListEndpointTests.swift; sourceTree = "<group>"; };
+		0F22960524D0262700EF4F8F /* Asserts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Asserts.swift; sourceTree = "<group>"; };
+		0F22960724D0269600EF4F8F /* FileUploadEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileUploadEndpointTests.swift; sourceTree = "<group>"; };
+		0F22960924D028DA00EF4F8F /* StreamUploadEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StreamUploadEndpointTests.swift; sourceTree = "<group>"; };
+		0F22960B24D0296E00EF4F8F /* FormUploadEndpointTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormUploadEndpointTests.swift; sourceTree = "<group>"; };
 		148C97B8CE69D9085843498E /* Pods-ExampleAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleAPI.debug.xcconfig"; path = "Target Support Files/Pods-ExampleAPI/Pods-ExampleAPI.debug.xcconfig"; sourceTree = "<group>"; };
 		3FE8B9ACB9E16BFD955859B2 /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		752058CCC4A4383815E2DD21 /* Pods-Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.release.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.release.xcconfig"; sourceTree = "<group>"; };
@@ -227,7 +237,7 @@
 			isa = PBXGroup;
 			children = (
 				0267EA12249B4C4C00C3587A /* Base */,
-				0246DD3022B8D808007AD11C /* BooksEndpoint.swift */,
+				0246DD3022B8D808007AD11C /* BookListEndpoint.swift */,
 				0267EA0B249A248E00C3587A /* FileUploadEndpoint.swift */,
 				0267EA10249B4B5600C3587A /* StreamUploadEndpoint.swift */,
 				0267EA1A249CAE8C00C3587A /* FormUploadEndpoint.swift */,
@@ -287,6 +297,7 @@
 		0F2295E124D021FA00EF4F8F /* ExampleAPITests */ = {
 			isa = PBXGroup;
 			children = (
+				0F22960424D0261B00EF4F8F /* Common */,
 				0F2295F324D0223C00EF4F8F /* Endpoint */,
 				0F2295E424D021FA00EF4F8F /* Info.plist */,
 			);
@@ -305,8 +316,20 @@
 		0F2295F324D0223C00EF4F8F /* Endpoint */ = {
 			isa = PBXGroup;
 			children = (
+				0F22960224D025AD00EF4F8F /* BookListEndpointTests.swift */,
+				0F22960724D0269600EF4F8F /* FileUploadEndpointTests.swift */,
+				0F22960924D028DA00EF4F8F /* StreamUploadEndpointTests.swift */,
+				0F22960B24D0296E00EF4F8F /* FormUploadEndpointTests.swift */,
 			);
 			path = Endpoint;
+			sourceTree = "<group>";
+		};
+		0F22960424D0261B00EF4F8F /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				0F22960524D0262700EF4F8F /* Asserts.swift */,
+			);
+			path = Common;
 			sourceTree = "<group>";
 		};
 		39A043209B6F4E5DEA2E65D8 /* Frameworks */ = {
@@ -424,6 +447,7 @@
 					};
 					0F2295DA24D021FA00EF4F8F = {
 						CreatedOnToolsVersion = 11.6;
+						LastSwiftMigration = 1160;
 						TestTargetID = 0246DD0322B8D50B007AD11C;
 					};
 				};
@@ -588,7 +612,7 @@
 				0F2295F724D022B300EF4F8F /* FileUploadEndpoint.swift in Sources */,
 				0F2295F424D022B000EF4F8F /* JsonEndpoint.swift in Sources */,
 				0F2295F824D022B300EF4F8F /* StreamUploadEndpoint.swift in Sources */,
-				0F2295F624D022B300EF4F8F /* BooksEndpoint.swift in Sources */,
+				0F2295F624D022B300EF4F8F /* BookListEndpoint.swift in Sources */,
 				0F2295FE24D0230100EF4F8F /* Codable.swift in Sources */,
 				0F2295FD24D0230100EF4F8F /* APIError.swift in Sources */,
 			);
@@ -598,6 +622,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F22960C24D0296E00EF4F8F /* FormUploadEndpointTests.swift in Sources */,
+				0F22960824D0269600EF4F8F /* FileUploadEndpointTests.swift in Sources */,
+				0F22960324D025AD00EF4F8F /* BookListEndpointTests.swift in Sources */,
+				0F22960624D0262700EF4F8F /* Asserts.swift in Sources */,
+				0F22960A24D028DA00EF4F8F /* StreamUploadEndpointTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -862,6 +891,7 @@
 			baseConfigurationReference = E62185494F66E2DFAB21598B /* Pods-ExampleAPITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2P2M2XMCMX;
 				INFOPLIST_FILE = ExampleAPITests/Info.plist;
@@ -873,6 +903,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.redmadrobot.ExampleAPITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Example.app/Example";
@@ -884,6 +915,7 @@
 			baseConfigurationReference = 968208653F0B609EF9EFB464 /* Pods-ExampleAPITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2P2M2XMCMX;
 				INFOPLIST_FILE = ExampleAPITests/Info.plist;
