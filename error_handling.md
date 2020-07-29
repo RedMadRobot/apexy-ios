@@ -69,7 +69,7 @@ If a network error occurs it will be passed to `completionHandler` when calling 
 
 ## Handling API errors
 
-Usually an API specification contains a description of the error format. Here is an example:
+Usually, an API specification contains a description of the error format. Here is an example:
 ```json
 {
     "error": {
@@ -92,7 +92,7 @@ struct APIError: Decodable, Error {
 }
 ```
 
-To check a response from the server for an API error, create `ResponseValidator` as shown in the example below.
+To check the response from the server for an API error, create `ResponseValidator` as shown in the example below.
 
 ```swift
 enum ResponseValidator {
@@ -115,7 +115,7 @@ In the example above, when calling the `validate` method, an attempt is made to 
 
 ## Handling HTTP Errors
 
-HTTP error has a status code, URL and a description. Let's create a structure describing an HTTP error.
+HTTP error has a status code, URL, and description. Let's create a structure describing an HTTP error.
 
 ```swift
 public struct HTTPError: Error {
