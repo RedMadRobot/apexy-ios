@@ -15,4 +15,16 @@ Pod::Spec.new do |s|
   s.swift_version = "5.0"
   s.source_files  = "Source/ApiClient/**/*.swift"
   s.dependency "Alamofire", '~>5.0'
+
+  s.subspec 'RxSwift' do |sp|
+    sp.source_files = 'Source/ApiClient+RxSwift/*.swift'
+    sp.dependency "RxSwift"
+  end
+
+  s.subspec 'Combine' do |sp|
+    sp.source_files = 'Source/ApiClient+Combine/*.swift'
+  end
+
+  s.default_subspecs = :none
+
 end

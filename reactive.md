@@ -2,7 +2,9 @@
 
 ## APIClient extension for integrating with RxSwift
 
-If you want to use APIClient with RxSwift copy the following extension to your project.
+If you want to use APIClient with RxSwift copy the following extension to your project or add `ApiClient/RxSwift` pod to your `Podfile`.
+
+`pod 'ApiClient/RxSwift'`
 
 ```swift
 extension Client {
@@ -53,7 +55,9 @@ bookService.fetchBooks()
 
 ## APIClient extension for integrating with Combine
 
-If you want to use APIClient with Combine copy the following extension to your project.
+If you want to use APIClient with Combine copy the following extension to your project or add `ApiClient/Combine` pod to your `Podfile`.
+
+`pod 'ApiClient/Combine'`
 
 ```swift
 extension Client {
