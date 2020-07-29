@@ -1,20 +1,20 @@
 # API Client
 
-Библиотека для организации сетевого слоя в проекте.
+The library for organizing a network layer in a project.
 
-- Не зависит от реализации работы с сетью. Может быть использована `URLSession` или `Alamofire`.
-- Выделяйте объекты для работы с сетью в отдельный модуль, таргет или библиотеку, чтобы они находились изолировано в своём `namespace`.
-- Разбивайте запросы на отдельные структуры. Классы не запрещаются, но делайте их неизменяемыми. `enum` могут подойти, если разные запросы имеют одинаковый ответ на них.
+- The library doesn't depend on the implementation of how to work with the network. You can use `URLSession` or `Alamofire`.
+- Separate the objects to work with the network in a separate module, target or library, so that they are isolated in their `namespace`.
+- Break down requests into separate structures. Classes are not forbidden, but make them non-mutable. Use `enum` if different requests have the same response.
 
 ## Endpoint
 
-`Endpoint` - один из базовых протоколов организации работы с REST API. Является совокупностью запроса и обработки ответа.
+`Endpoint` - one of the basic protocols for organizing work with REST API. It is a set of request and response processing.
 
-> Обязательно не мутабельный.
+> Must not be mutable.
 
-1. Создает `URLRequest` для отправки запроса.
-2. Валидирует ответ на наличие ошибок API.
-3. Преобразует ответ в нужный тип (`Data`, `String`, `Decodable`).
+1. Creates `URLRequest` for sending the request.
+2. Validates a server response for API errors.
+3. Converts a server response to the right type (`Data`, `String`, `Decodable`).
 
 ```swift
 public struct Book: Codable, Identifiable {
@@ -55,18 +55,18 @@ client.request(endpoint) { (result: Result<Book, Error>)
 
 ## APIClient
 
-`APIClient` - объект с одним методом способный выполнить `Endpoint`.
-- Легко мокается, так как у него один метод.
-- Легко отправить через него несколько разных `Endpoint`.
+`APIClient` - an object with only one method for executing `Endpoint`.
+- It's easy to mock, because it has only one method.
+- It's easy to send several `Endpoint`.
 - Легко оборачивается в декораторы или адаптеры. Например можно обернуть в `RxSwift` или `Combine` и вам не придется делать обертки для каждого запроса.
 
-Разделение на `APIClient` и `Endpoint` позволяет разделить асинхронынй код в `APIClient` от синхронного кода в `Endpoint`. Таким образом сайд эффекты изолированы в одном месте `APIClient`, а чистые функции в немутабельных `Endpoint`.
+The separation into `APIClient` and `Endpoint` allows you to separate the asynchronous code in `APIClient` from the synchronous code in `Endpoint`. Thus, the side effects are isolated in `APIClient`, and the pure functions in the non-mutable `Endpoint`.
 
 ## Getting Started
 
-Так как большинство запросов будут получать JSON, то на уровне модуля нужно сделать базовые протоколы. Они будут содержать в себе общую логику запросов для конкретной API.
+Since most requests will receive JSON, it is necessary to make basic protocols at the module level. They will contain common requests logic for a specific API.
 
-`JsonEndpoint` - базовый протокол для запросов ожидающих JSON в теле ответа.
+`JsonEndpoint` - basic protocol for requests waiting for JSON in the response body.
 
 ```swift
 public protocol JsonEndpoint: Endpoint where Content: Decodable {}
@@ -82,7 +82,7 @@ extension JsonEndpoint {
 }
 ```
 
-`VoidEndpoint` базовый протокол для запросов не ожидающих тела ответа.
+`VoidEndpoint` basic protocol for requests not waiting for a response body.
 ```swift
 public protocol VoidEndpoint: Endpoint where Content == Void {}
 
@@ -95,7 +95,7 @@ extension VoidEndpoint {
 }
 ```
 
-`BookListEndpoint` - получения списка книг.
+`BookListEndpoint` - get a list of books.
 ```swift
 public struct BookListEndpoint: JsonEndpoint, URLRequestBuildable {
     public typealias Content = [Book]
@@ -106,7 +106,7 @@ public struct BookListEndpoint: JsonEndpoint, URLRequestBuildable {
 }
 ```
 
-`BookEndpoint` - получения книги по `ID`.
+`BookEndpoint` - get a book by `ID`.
 ```swift
 public struct BookEndpoint: JsonEndpoint, URLRequestBuildable {
     public typealias Content = Book
@@ -124,7 +124,7 @@ public struct BookEndpoint: JsonEndpoint, URLRequestBuildable {
 }
 ```
 
-`UpdateBookEndpoint` - обновление книги.
+`UpdateBookEndpoint` - update a book.
 
 ```swift
 public struct UpdateBookEndpoint: JsonEndpoint, URLRequestBuildable {
@@ -139,9 +139,9 @@ public struct UpdateBookEndpoint: JsonEndpoint, URLRequestBuildable {
 }
 ```
 
-> Для удобства конструирования `URLRequest` вы можете использовать функции из `HTTP`.
+> For the convenience of `URLRequest` building you can use functions from `HTTP`.
 
-`DeleteBookEndpoint` - удаление книги по `ID`.
+`DeleteBookEndpoint` - delete a book by `ID`.
 
 ```swift
 public struct DeleteBookEndpoint: VoidEndpoint, URLRequestBuildable {
@@ -158,9 +158,9 @@ public struct DeleteBookEndpoint: VoidEndpoint, URLRequestBuildable {
 }
 ```
 
-### Отправка данных на сервер
+### Sending a large amount of data to the server
 
-Для отправки файлов или больших объемов данных вы можете использовать `UploadEndpoint`. В методе `makeRequest()` необходимо вернуть `URLRequest` и загружаемые данные, это может быть файл `.file(URL)`, данные `.data(Data)` или поток `.stream(InputStream)`. Для выполнения запроса вызовите метод `Client.upload(endpoint:, completionHandler:)`. С помощью объекта `Progress` вы сможете отслеживать прогресс загрузки данных либо отменить запрос.
+You can use `UploadEndpoint` to send files or large amounts of data. In the `makeRequest()` method you need to return `URLRequest` and the data you are uploading, it can be a file `.file(URL)`, a data `.data(Data)` or a stream `.stream(InputStream)`. To execute the request, call the `Client.upload(endpoint: completionHandler:)` method. Use `Progress` object to track the progress of the data upload or cancel the request.
 
 ```swift
 public struct FileUploadEndpoint: UploadEndpoint {
@@ -187,16 +187,16 @@ public struct FileUploadEndpoint: UploadEndpoint {
 }
 ```
 
-## Организация сетевого слоя
+## Network Layer Organization
 
-Если приложение называется `Household`, то модуль с сетью будет называться `HouseholdAPI`.
+If your application is called `Household`, the network module will be called `HouseholdAPI`.
 
-Разбивайте сетевой слой на папки:
-- `Model` папка с модельками сетевого уровня. То что отправляем и то что получаем в ответах.
-- `Endpoint` папка с запросами.
-- `Common` общие хелперы. Например `APIError`.
+Split the network layer into folders:
+- `Model` a folder with network-level models. That's what we send to the server and what we get in the response.
+- `Endpoint` a folder with requests.
+- `Common` a folder with common helpers e.g. `APIError`.
 
-### Итоговая структура файлов и папок.
+### The final file and folder structure
 
 - Household
 - HouseholdAPI
@@ -220,9 +220,9 @@ public struct FileUploadEndpoint: UploadEndpoint {
       - `UpdateBookEndpointTests`
       - `DeleteBookEndpointTests`
 
-## Дополнительные материалы
+## Additional resources
 
-- [Вложенные ответы](nested_response.md)
-- [Тестирование]
-- [Обработка ошибок]
-- [Реактивное программирование](reactive.md)
+- [Nested response](nested_response.md)
+- [Testing]
+- [Error handling]
+- [Reactive programming](reactive.md)
