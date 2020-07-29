@@ -1,12 +1,12 @@
-# Nested Responses
+# Вложенные ответы
 
-A server almost always returns JSON objects nested in other objects.
+Почти всегда сервер возвращает json объекты вложенные в другие объекты.  
 
-Consider a pair of requests and two cases where a server can return nested responses.
+Рассмотрим пару запросов и два случая, когда сервер может может возвращать ответ вложенным.
 
-Requests:
-- `GET books/` Returns a list of books as an array of `Book`.
-- `GET books/{book_id}` Returns a `Book` by `id`.
+Запросы:
+- `GET books/` Получение списка книг. Ожидаем массив книг `Book`.
+- `GET books/{book_id}` Получение книги по `id` Ожидаем просто книгу `Book`.
 
 ```swift
 public struct Book: Codable, Identifiable {
@@ -15,9 +15,9 @@ public struct Book: Codable, Identifiable {
 }
 ```
 
-## Nested responses with the same key
+## Вложенные ответы с одинаковым ключом
 
-In the first case, a server will wrap the response objects in `data`.
+В первом случае сервер будет оборачивать объекты ответов в `data`.
 
 ```json
 {
@@ -27,7 +27,7 @@ In the first case, a server will wrap the response objects in `data`.
 
 `GET books/`
 
-The request to receive all the books will return an array wrapped in `data`.
+На запрос получения всех книг вернется массив обернутый в `data`.
 
 ```json
 {
@@ -40,9 +40,10 @@ The request to receive all the books will return an array wrapped in `data`.
 }
 ```
 
+
 `GET books/{book_id}`
 
-The request to recereive a book by `id` will return one book wrapped in `data`
+На запрос получения книги по `id` вернется одна книга обернутая в `data`.
 
 ```json
 {
@@ -53,7 +54,7 @@ The request to recereive a book by `id` will return one book wrapped in `data`
 }
 ```
 
-To hide the `data` wrapper, let's create `JsonEndpoint`, which will get us the necessary `Content`.
+Чтобы скрыть обертку `data`, создадим `JsonEndpoint`, который будет доставать необходимый нам `Content`.
 
 ```swift
 protocol JsonEndpoint: Endpoint where Content: Decodable {}
@@ -72,7 +73,7 @@ private struct ResponseData<Content>: Decodable where Content: Decodable {
 }
 ```
 
-As a result, our requests hide the nesting of the response.
+В итоге наши запросы скрывают вложенность ответа.
 
 - `BookListEndpoint.Contnet = [Book]`
 - `BookEndpoint.Contnet = Book`
@@ -89,13 +90,13 @@ public struct BookListEndpoint: JsonEndpoint {
 }
 ```
 
-## Nested responses with different keys
+## Вложенные ответы с разными ключами
 
-In the second more complex case, the server will send responses nested with different keys.
+Во втором более сложном случае сервер будет отправлять ответы вложенные в разные ключи.
 
 `GET books/`
 
-The request to receive all books will return an array wrapped in `book_list`.
+На запрос получения всех книг вернется массив обернутый в `book_list`.
 
 ```json
 {
@@ -110,7 +111,7 @@ The request to receive all books will return an array wrapped in `book_list`.
 
 `GET books/{book_id}`
 
-The request to receive a book by id will return a book wrapped in `book`.
+На запрос получения книги по `id` вернется одна книга обернутая в `book`.
 
 ```json
 {
@@ -121,7 +122,7 @@ The request to receive a book by id will return a book wrapped in `book`.
 }
 ```
 
-To unwrap responses, create `JsonEndpoint` with the `content(from:)` method which will unwrap the responses.
+Для разворачивания ответов создадим `JsonEndpoint` c методом `content(from:)`, который будет разворачивать ответы.
 
 ```swift
 protocol JsonEndpoint: Endpoint where Content: Decodable {
@@ -141,7 +142,7 @@ extension JsonEndpoint {
 }
 ```
 
-Thus, the request to receive all the books will look like this.
+Таким образом запрос получения всех книг будет оформлен так.
 
 ```swift
 struct BookListResponse: Decodable {
@@ -161,9 +162,9 @@ public struct BookListEndpoint: JsonEndpoint {
 }
 ```
 
-> Notice that `BookListResponse` and `content(from:)` remains `internal` and hide the features of the response format.
+> Обратите внимание, что `BookListResponse` и `content(from:)` остались `internal` и скрывают особенности формата ответа.
 
-The request to get a book by `id` will look like this.
+Для получения книги по `id` запрос будет таким.
 
 ```swift
 struct BookResponse: Decodable {
@@ -190,6 +191,6 @@ public struct BookEndpoint: JsonEndpoint {
 }
 ```
 
-# Conclusion
+# Заключение
 
-In the end, I would note that these two cases can be combined, and it will allow you to work without a boilerplate with complex APIs.
+В конце я бы отметил, что эти два случая могут комбинироваться, и это позволит вам работать без бойлерплейта со сложными API.
