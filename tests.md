@@ -1,7 +1,7 @@
 # Testing ApiClient
 
 ## What to test?
-You can test all the Endpoints and models which contains business logic.
+You can test all the Endpoints and models which contain business logic.
 
 ### Endpoint
 In the case of Endpoint, test how it creates the URLRequest object (method `makeRequest`):
@@ -34,12 +34,12 @@ final class BookListEndpointTests: XCTestCase {
 This test checks that:
 * HTTP method equals to "GET"
 * HTTP body doesn't exist
-* url equals to "books"
+* URL equals to "books"
 
 ### Model
 If a model object contains business logic, then this object must be tested. For example, if a model object has computed properties where data is formatted.
 
-You can also test decoding of a model object in the case of complex transformations, for example, converting a string to a date.
+You can also test the decoding of a model object in the case of complex transformations, for example, converting a string to a date.
 
 ```swift
 /// An abstract access code that has an expiration date
