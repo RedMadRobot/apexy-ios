@@ -58,7 +58,7 @@ client.request(endpoint) { (result: Result<Book, Error>)
 `APIClient` - an object with only one method for executing `Endpoint`.
 - It's easy to mock, because it has only one method.
 - It's easy to send several `Endpoint`.
-- Легко оборачивается в декораторы или адаптеры. Например можно обернуть в `RxSwift` или `Combine` и вам не придется делать обертки для каждого запроса.
+- Easily wraps into decorators or adapters. For example, you can wrap in `RxSwift` or `Combine` and you don't have to make wrappers for each request.
 
 The separation into `APIClient` and `Endpoint` allows you to separate the asynchronous code in `APIClient` from the synchronous code in `Endpoint`. Thus, the side effects are isolated in `APIClient`, and the pure functions in the non-mutable `Endpoint`.
 
