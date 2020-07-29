@@ -26,7 +26,7 @@ final class BookListEndpointTests: XCTestCase {
         let urlRequest = try endpoint.makeRequest()
         
         XCTAssertEqual(urlRequest.httpMethod, "GET")
-        XCTAssertEqual(urlRequest.httpBody, nil)
+        XCTAssertNil(urlRequest.httpBody)
         XCTAssertEqual(urlRequest.url?.absoluteString, "books")
     }
 }
