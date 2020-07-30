@@ -2,29 +2,9 @@
 
 ## APIClient extension for integrating with RxSwift
 
-If you want to use APIClient with RxSwift copy the following extension to your project or add `ApiClient/RxSwift` pod to your `Podfile`.
+If you want to use APIClient with RxSwift add `ApiClient/RxSwift` pod to your `Podfile`.
 
 `pod 'ApiClient/RxSwift'`
-
-```swift
-extension Client {
-    
-    func request<T>(_ endpoint: T) -> Single<T.Content> where T: Endpoint {
-        Single.create { single in
-            let progress = self.request(endpoint) { (result: Result<T.Content, Error>) in
-                switch result {
-                case .success(let content):
-                    single(.success(content))
-                case .failure(let error):
-                    single(.error(error))
-                }
-            }
-            return Disposables.create(with: progress.cancel)
-        }
-    }
-    
-}
-```
 
 How to use by example `BookService` (see Example project).
 
@@ -55,33 +35,9 @@ bookService.fetchBooks()
 
 ## APIClient extension for integrating with Combine
 
-If you want to use APIClient with Combine copy the following extension to your project or add `ApiClient/Combine` pod to your `Podfile`.
+If you want to use APIClient with Combine add `ApiClient/Combine` pod to your `Podfile`.
 
 `pod 'ApiClient/Combine'`
-
-```swift
-extension Client {
-    
-    func request<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: Endpoint {
-        let subject = PassthroughSubject<T.Content, Error>()
-        
-        let progress = self.request(endpoint) { (result: Result<T.Content, Error>) in
-                switch result {
-                case .success(let content):
-                    subject.send(content)
-                    subject.send(completion: .finished)
-                case .failure(let error):
-                    subject.send(completion: .failure(error))
-            }
-        }
-        
-        return subject.handleEvents(receiveCancel: {
-            progress.cancel()
-            subject.send(completion: .finished)
-        }).eraseToAnyPublisher()
-    }
-}
-```
 
 How to use by example `BookService` (see Example project).
 

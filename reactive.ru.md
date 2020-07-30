@@ -2,27 +2,9 @@
 
 ## Расширение APIClient для работы с RxSwift
 
-Если вы хотите использовать APIClient с RxSwift добавьте к себе в проект следующее расширение.
+Если вы хотите использовать APIClient с RxSwift добавьте `ApiClient/RxSwift` в Podfile.
 
-```swift
-extension Client {
-    
-    func request<T>(_ endpoint: T) -> Single<T.Content> where T: Endpoint {
-        Single.create { single in
-            let progress = self.request(endpoint) { (result: Result<T.Content, Error>) in
-                switch result {
-                case .success(let content):
-                    single(.success(content))
-                case .failure(let error):
-                    single(.error(error))
-                }
-            }
-            return Disposables.create(with: progress.cancel)
-        }
-    }
-    
-}
-```
+`pod 'ApiClient/RxSwift'`
 
 Как использовать на примере `BookService` (смотри Example проект).
 
@@ -53,31 +35,9 @@ bookService.fetchBooks()
 
 ## Расширение APIClient для работы с Combine
 
-Если вы хотите использовать APIClient с Combine добавьте к себе в проект следующее расширение.
+Если вы хотите использовать APIClient с Combine добавьте `ApiClient/Combine` в Podfile.
 
-```swift
-extension Client {
-    
-    func request<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: Endpoint {
-        let subject = PassthroughSubject<T.Content, Error>()
-        
-        let progress = self.request(endpoint) { (result: Result<T.Content, Error>) in
-                switch result {
-                case .success(let content):
-                    subject.send(content)
-                    subject.send(completion: .finished)
-                case .failure(let error):
-                    subject.send(completion: .failure(error))
-            }
-        }
-        
-        return subject.handleEvents(receiveCancel: {
-            progress.cancel()
-            subject.send(completion: .finished)
-        }).eraseToAnyPublisher()
-    }
-}
-```
+`pod 'ApiClient/Combine'`
 
 Как использовать на примере `BookService` (смотри Example проект).
 

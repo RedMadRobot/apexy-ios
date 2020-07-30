@@ -9,12 +9,12 @@ public extension Client {
         let subject = PassthroughSubject<T.Content, Error>()
         
         let progress = self.request(endpoint) { (result: Result<T.Content, Error>) in
-                switch result {
-                case .success(let content):
-                    subject.send(content)
-                    subject.send(completion: .finished)
-                case .failure(let error):
-                    subject.send(completion: .failure(error))
+            switch result {
+            case .success(let content):
+                subject.send(content)
+                subject.send(completion: .finished)
+            case .failure(let error):
+                subject.send(completion: .failure(error))
             }
         }
         
