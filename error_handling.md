@@ -52,10 +52,10 @@ public struct BookListEndpoint: BaseEndpoint {
 }
 ```
 
-В `BaseEndpoint` считается что ответ от сервера всегда будет приходить в поле data.
+In `BaseEndpoint` it is assumed that the response from the server will always come to the data field.
 ```json
 {
-    "data": { декодируемый объект }
+    "data": { decodable object }
 }
 ```
 
