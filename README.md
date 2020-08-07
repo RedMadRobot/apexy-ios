@@ -224,5 +224,5 @@ Split the network layer into folders:
 
 - [Nested response](nested_response.md)
 - [Testing](tests.md)
-- [Error handling]
+- [Error handling](error_handling.md)
 - [Reactive programming](reactive.md)
