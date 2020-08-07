@@ -223,6 +223,6 @@ public struct FileUploadEndpoint: UploadEndpoint {
 ## Дополнительные материалы
 
 - [Вложенные ответы](nested_response.md)
-- [Тестирование]
+- [Тестирование](tests.md)
 - [Обработка ошибок]
 - [Реактивное программирование](reactive.md)
