@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0246DCE822B8C9C8007AD11C"
-               BuildableName = "Apexy.framework"
-               BlueprintName = "Apexy"
-               ReferencedContainer = "container:Apexy.xcodeproj">
+               BlueprintIdentifier = "ApexyRxSwift"
+               BuildableName = "ApexyRxSwift"
+               BlueprintName = "ApexyRxSwift"
+               ReferencedContainer = "container:">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -50,10 +50,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0246DCE822B8C9C8007AD11C"
-            BuildableName = "Apexy.framework"
-            BlueprintName = "Apexy"
-            ReferencedContainer = "container:Apexy.xcodeproj">
+            BlueprintIdentifier = "ApexyRxSwift"
+            BuildableName = "ApexyRxSwift"
+            BlueprintName = "ApexyRxSwift"
+            ReferencedContainer = "container:">
          </BuildableReference>
       </MacroExpansion>
    </ProfileAction>
