@@ -19,5 +19,6 @@ let package = Package(
     ],
     targets: [
         .target(name: "Apexy", dependencies: ["Alamofire"]),
+        .testTarget(name: "ApexyTests", dependencies: ["Apexy"])
     ]
 )
