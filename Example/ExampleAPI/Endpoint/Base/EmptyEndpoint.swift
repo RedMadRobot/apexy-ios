@@ -5,7 +5,7 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
-import ApiClient
+import Apexy
 
 /// Empty Body Request Enpoint.
 protocol EmptyEndpoint: Endpoint, URLRequestBuildable where Content == Void {}

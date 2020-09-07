@@ -6,7 +6,7 @@
 //  Copyright © 2020 RedMadRobot. All rights reserved.
 //
 
-import ApiClient
+import Apexy
 
 /// Endpoint for uploading a data form a stream
 public struct StreamUploadEndpoint: UploadEndpoint {

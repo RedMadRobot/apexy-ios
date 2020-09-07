@@ -1,10 +1,10 @@
 # Реактивное программирование
 
-## Расширение APIClient для работы с RxSwift
+## Расширение Apexy для работы с RxSwift
 
-Если вы хотите использовать APIClient с RxSwift добавьте `ApiClient/RxSwift` в Podfile.
+Если вы хотите использовать Apexy с RxSwift добавьте `Apexy/RxSwift` в Podfile.
 
-`pod 'ApiClient/RxSwift'`
+`pod 'Apexy/RxSwift'`
 
 Как использовать на примере `BookService` (смотри Example проект).
 
@@ -33,11 +33,11 @@ bookService.fetchBooks()
     }).disposed(by: bag)
 ```
 
-## Расширение APIClient для работы с Combine
+## Расширение Apexy для работы с Combine
 
-Если вы хотите использовать APIClient с Combine добавьте `ApiClient/Combine` в Podfile.
+Если вы хотите использовать Apexy с Combine добавьте `Apexy/Combine` в Podfile.
 
-`pod 'ApiClient/Combine'`
+`pod 'Apexy/Combine'`
 
 Как использовать на примере `BookService` (смотри Example проект).
 

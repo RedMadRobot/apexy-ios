@@ -5,7 +5,7 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
-import ApiClient
+import Apexy
 
 /// Base Endpoint for application remote resource.
 ///

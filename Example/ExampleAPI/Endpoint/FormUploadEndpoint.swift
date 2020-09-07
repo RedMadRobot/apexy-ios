@@ -6,7 +6,7 @@
 //  Copyright © 2020 RedMadRobot. All rights reserved.
 //
 
-import ApiClient
+import Apexy
 import Alamofire
 
 /// Endpoint for sending data with `multipart/form-data` format

@@ -5,7 +5,7 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
-import ApiClient
+import Apexy
 
 /// Example of GET request.
 public struct BookListEndpoint: JsonEndpoint {
