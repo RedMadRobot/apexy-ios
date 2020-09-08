@@ -38,7 +38,7 @@ final class ClientTests: XCTestCase {
             }
             exp.fulfill()
         }
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 1)
     }
     
     func testClientUpload() {
@@ -61,7 +61,7 @@ final class ClientTests: XCTestCase {
             }
             exp.fulfill()
         })
-        wait(for: [exp], timeout: 0.1)
+        wait(for: [exp], timeout: 1)
     }
     
     @available(OSX 10.15, *)
