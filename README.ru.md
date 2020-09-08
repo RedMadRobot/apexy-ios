@@ -1,4 +1,4 @@
-# API Client
+# Client
 
 Библиотека для организации сетевого слоя в проекте.
 
@@ -45,7 +45,7 @@ public struct BookEndpoint: Endpoint {
     }
 }
 
-let client = APIClient ...
+let client = Client ...
 
 let endpoint = BookEndpoint(id: "1")
 client.request(endpoint) { (result: Result<Book, Error>)
@@ -53,14 +53,14 @@ client.request(endpoint) { (result: Result<Book, Error>)
 }
 ```
 
-## APIClient
+## Client
 
-`APIClient` - объект с одним методом способный выполнить `Endpoint`.
+`Client` - объект с одним методом способный выполнить `Endpoint`.
 - Легко мокается, так как у него один метод.
 - Легко отправить через него несколько разных `Endpoint`.
 - Легко оборачивается в декораторы или адаптеры. Например можно обернуть в `RxSwift` или `Combine` и вам не придется делать обертки для каждого запроса.
 
-Разделение на `APIClient` и `Endpoint` позволяет разделить асинхронынй код в `APIClient` от синхронного кода в `Endpoint`. Таким образом сайд эффекты изолированы в одном месте `APIClient`, а чистые функции в немутабельных `Endpoint`.
+Разделение на `Client` и `Endpoint` позволяет разделить асинхронынй код в `Client` от синхронного кода в `Endpoint`. Таким образом сайд эффекты изолированы в одном месте `Client`, а чистые функции в немутабельных `Endpoint`.
 
 ## Getting Started
 
@@ -222,7 +222,7 @@ public struct FileUploadEndpoint: UploadEndpoint {
 
 ## Дополнительные материалы
 
-- [Вложенные ответы](nested_response.ru.md)
-- [Тестирование](tests.ru.md)
-- [Обработка ошибок](error_handling.ru.md)
-- [Реактивное программирование](reactive.ru.md)
+- [Вложенные ответы](Documentation/nested_response.ru.md)
+- [Тестирование](Documentation/tests.ru.md)
+- [Обработка ошибок](Documentation/error_handling.ru.md)
+- [Реактивное программирование](Documentation/reactive.ru.md)

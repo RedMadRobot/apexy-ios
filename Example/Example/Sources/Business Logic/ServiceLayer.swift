@@ -6,7 +6,7 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
-import ApiClient
+import Apexy
 import ExampleAPI
 
 final class ServiceLayer {
@@ -16,7 +16,7 @@ final class ServiceLayer {
     static let shared = ServiceLayer()
     
     private(set) lazy var apiClient: Client = {
-        return ApiClient.Client(
+        return Apexy.Client(
             baseURL: URL(string: "https://library.mock-object.redmadserver.com/api/v1/")!,
             configuration: .ephemeral,
             responseObserver: { [weak self] request, response, data, error in

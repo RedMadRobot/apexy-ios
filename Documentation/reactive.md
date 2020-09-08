@@ -1,10 +1,10 @@
 # Reactive programming
 
-## APIClient extension for integrating with RxSwift
+## Apexy extension for integrating with RxSwift
 
-If you want to use APIClient with RxSwift add `ApiClient/RxSwift` pod to your `Podfile`.
+If you want to use Apexy with RxSwift add `Apexy/RxSwift` pod to your `Podfile`.
 
-`pod 'ApiClient/RxSwift'`
+`pod 'Apexy/RxSwift'`
 
 How to use by example `BookService` (see Example project).
 
@@ -33,11 +33,11 @@ bookService.fetchBooks()
     }).disposed(by: bag)
 ```
 
-## APIClient extension for integrating with Combine
+## Apexy extension for integrating with Combine
 
-If you want to use APIClient with Combine add `ApiClient/Combine` pod to your `Podfile`.
+If you want to use Apexy with Combine add `Apexy/Combine` pod to your `Podfile`.
 
-`pod 'ApiClient/Combine'`
+`pod 'Apexy/Combine'`
 
 How to use by example `BookService` (see Example project).
 

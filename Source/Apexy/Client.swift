@@ -21,7 +21,7 @@ public final class Client {
 
     /// The queue on which the network response handler is dispatched.
     private let responseQueue = DispatchQueue(
-        label: "ApiClient.responseQueue",
+        label: "Apexy.responseQueue",
         qos: .utility)
 
     /// The queue on which the completion handler is dispatched.

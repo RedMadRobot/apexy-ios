@@ -8,7 +8,7 @@ target 'ExampleAPI' do
   use_frameworks!
   
   pod 'Alamofire'
-  pod 'ApiClient', :path => "../"
+  pod 'Apexy', :path => "../"
 
   target 'ExampleAPITests' do
     inherit! :search_paths

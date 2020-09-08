@@ -18,7 +18,7 @@ class ViewController: UIViewController {
 
     private var observation: NSKeyValueObservation?
     private var progress: Progress?
-    private var streamer = Streamer()
+    private var streamer: Streamer?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,7 +55,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func uploadStream() {
-        streamer = Streamer()
+        let streamer = Streamer()
+        self.streamer = streamer
         activityView.isHidden = false
         progress = fileService.upload(
             stream: streamer.boundStreams.input,
@@ -67,6 +68,7 @@ class ViewController: UIViewController {
                     self.resultLabel.text = "ok"
                 case .failure(let error):
                     self.resultLabel.text = error.localizedDescription
+                    self.streamer = nil
                 }
             }
         streamer.run()

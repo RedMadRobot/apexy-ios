@@ -1,6 +1,6 @@
 platform :ios, '10.0'
 
-target 'ApiClient' do
+target 'Apexy' do
   use_frameworks!
 
   pod 'Alamofire'

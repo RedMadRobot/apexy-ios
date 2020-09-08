@@ -1,4 +1,4 @@
-# API Client
+# Apexy
 
 The library for organizing a network layer in a project.
 
@@ -45,7 +45,7 @@ public struct BookEndpoint: Endpoint {
     }
 }
 
-let client = APIClient ...
+let client = Client ...
 
 let endpoint = BookEndpoint(id: "1")
 client.request(endpoint) { (result: Result<Book, Error>)
@@ -53,14 +53,14 @@ client.request(endpoint) { (result: Result<Book, Error>)
 }
 ```
 
-## APIClient
+## Client
 
-`APIClient` - an object with only one method for executing `Endpoint`.
+`Client` - an object with only one method for executing `Endpoint`.
 - It's easy to mock, because it has only one method.
 - It's easy to send several `Endpoint`.
 - Easily wraps into decorators or adapters. For example, you can wrap in `RxSwift` or `Combine` and you don't have to make wrappers for each request.
 
-The separation into `APIClient` and `Endpoint` allows you to separate the asynchronous code in `APIClient` from the synchronous code in `Endpoint`. Thus, the side effects are isolated in `APIClient`, and the pure functions in the non-mutable `Endpoint`.
+The separation into `Client` and `Endpoint` allows you to separate the asynchronous code in `Client` from the synchronous code in `Endpoint`. Thus, the side effects are isolated in `Client`, and the pure functions in the non-mutable `Endpoint`.
 
 ## Getting Started
 
@@ -222,7 +222,7 @@ Split the network layer into folders:
 
 ## Additional resources
 
-- [Nested response](nested_response.md)
-- [Testing](tests.md)
-- [Error handling](error_handling.md)
-- [Reactive programming](reactive.md)
+- [Nested response](Documentation/nested_response.md)
+- [Testing](Documentation/tests.md)
+- [Error handling](Documentation/error_handling.md)
+- [Reactive programming](Documentation/reactive.md)

@@ -1,24 +1,24 @@
 PODS:
-  - Alamofire (5.2.1)
-  - ApiClient (1.0.0):
+  - Alamofire (5.2.2)
+  - Apexy (1.0.0):
     - Alamofire (~> 5.0)
 
 DEPENDENCIES:
   - Alamofire
-  - ApiClient (from `../`)
+  - Apexy (from `../`)
 
 SPEC REPOS:
   trunk:
     - Alamofire
 
 EXTERNAL SOURCES:
-  ApiClient:
+  Apexy:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
-  ApiClient: 266f46858f559f98bdcd65bf2c60aed05e0fb319
+  Alamofire: 814429acc853c6c54ff123fc3d2ef66803823ce0
+  Apexy: bbe62eb41b05c19af2b6d6589f7efabdc1e7847d
 
-PODFILE CHECKSUM: 2b50c484e792fb6de0d09bf209450a112152ec2b
+PODFILE CHECKSUM: a26cf4f99e3c0da10735058814efd7d1f39053a9
 
 COCOAPODS: 1.9.3

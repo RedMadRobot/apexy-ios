@@ -7,27 +7,29 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0246DCEE22B8C9C8007AD11C /* ApiClient.h in Headers */ = {isa = PBXBuildFile; fileRef = 0246DCEC22B8C9C8007AD11C /* ApiClient.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0246DCEE22B8C9C8007AD11C /* Apexy.h in Headers */ = {isa = PBXBuildFile; fileRef = 0246DCEC22B8C9C8007AD11C /* Apexy.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0246DCF522B8CA7C007AD11C /* Client.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DCF422B8CA7C007AD11C /* Client.swift */; };
 		0246DCF822B8CABA007AD11C /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DCF722B8CABA007AD11C /* Endpoint.swift */; };
-		4EB4EB876755E45A3FCE1D27 /* Pods_ApiClient.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61ECF1E51B23AC3D9F79E4BD /* Pods_ApiClient.framework */; };
+		0F6F55D8250618C700BC0FD6 /* UploadEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F6F55D7250618C700BC0FD6 /* UploadEndpoint.swift */; };
+		AE01EFED2F3CD0F511520A7E /* Pods_Apexy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 692BC377640C188088FD09E5 /* Pods_Apexy.framework */; };
 		CCEA10C724A0EB640039F327 /* BaseRequestInterceptor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCEA10C624A0EB640039F327 /* BaseRequestInterceptor.swift */; };
 		CCFD0F5624AB35E2001A3488 /* URLRequestBuildable.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFD0F5524AB35E2001A3488 /* URLRequestBuildable.swift */; };
 		CCFD0F5824AB465E001A3488 /* HTTPBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCFD0F5724AB465D001A3488 /* HTTPBody.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0246DCE922B8C9C8007AD11C /* ApiClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ApiClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		0246DCEC22B8C9C8007AD11C /* ApiClient.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ApiClient.h; sourceTree = "<group>"; };
+		0246DCE922B8C9C8007AD11C /* Apexy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Apexy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0246DCEC22B8C9C8007AD11C /* Apexy.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Apexy.h; sourceTree = "<group>"; };
 		0246DCED22B8C9C8007AD11C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0246DCF422B8CA7C007AD11C /* Client.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Client.swift; sourceTree = "<group>"; };
 		0246DCF722B8CABA007AD11C /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
-		52BF16768B26BC1CC215D4A4 /* Pods-ApiClient.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApiClient.release.xcconfig"; path = "Target Support Files/Pods-ApiClient/Pods-ApiClient.release.xcconfig"; sourceTree = "<group>"; };
-		61ECF1E51B23AC3D9F79E4BD /* Pods_ApiClient.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ApiClient.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C748D968637613CC4DE5C540 /* Pods-ApiClient.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ApiClient.debug.xcconfig"; path = "Target Support Files/Pods-ApiClient/Pods-ApiClient.debug.xcconfig"; sourceTree = "<group>"; };
+		0F6F55D7250618C700BC0FD6 /* UploadEndpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UploadEndpoint.swift; sourceTree = "<group>"; };
+		692BC377640C188088FD09E5 /* Pods_Apexy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Apexy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B4B36EB776E8532715447CC4 /* Pods-Apexy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apexy.release.xcconfig"; path = "Target Support Files/Pods-Apexy/Pods-Apexy.release.xcconfig"; sourceTree = "<group>"; };
 		CCEA10C624A0EB640039F327 /* BaseRequestInterceptor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRequestInterceptor.swift; sourceTree = "<group>"; };
 		CCFD0F5524AB35E2001A3488 /* URLRequestBuildable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLRequestBuildable.swift; sourceTree = "<group>"; };
 		CCFD0F5724AB465D001A3488 /* HTTPBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPBody.swift; sourceTree = "<group>"; };
+		F26020ACD624B0818829F45B /* Pods-Apexy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Apexy.debug.xcconfig"; path = "Target Support Files/Pods-Apexy/Pods-Apexy.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,7 +37,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				4EB4EB876755E45A3FCE1D27 /* Pods_ApiClient.framework in Frameworks */,
+				AE01EFED2F3CD0F511520A7E /* Pods_Apexy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -45,7 +47,7 @@
 		0246DCDF22B8C9C8007AD11C = {
 			isa = PBXGroup;
 			children = (
-				0246DCEB22B8C9C8007AD11C /* ApiClient */,
+				0246DCEB22B8C9C8007AD11C /* Apexy */,
 				0246DCEA22B8C9C8007AD11C /* Products */,
 				BB6F3EA18BA19B5C495F1C3D /* Pods */,
 				BAD2E6F820832874EE0BF561 /* Frameworks */,
@@ -55,28 +57,29 @@
 		0246DCEA22B8C9C8007AD11C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				0246DCE922B8C9C8007AD11C /* ApiClient.framework */,
+				0246DCE922B8C9C8007AD11C /* Apexy.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0246DCEB22B8C9C8007AD11C /* ApiClient */ = {
+		0246DCEB22B8C9C8007AD11C /* Apexy */ = {
 			isa = PBXGroup;
 			children = (
+				CCEA10C624A0EB640039F327 /* BaseRequestInterceptor.swift */,
 				0246DCF422B8CA7C007AD11C /* Client.swift */,
 				0246DCF722B8CABA007AD11C /* Endpoint.swift */,
 				CCFD0F5724AB465D001A3488 /* HTTPBody.swift */,
-				CCEA10C624A0EB640039F327 /* BaseRequestInterceptor.swift */,
+				0F6F55D7250618C700BC0FD6 /* UploadEndpoint.swift */,
 				CCFD0F5524AB35E2001A3488 /* URLRequestBuildable.swift */,
 				0246DCF622B8CA7F007AD11C /* Supporting Files */,
 			);
-			path = ApiClient;
+			path = Apexy;
 			sourceTree = "<group>";
 		};
 		0246DCF622B8CA7F007AD11C /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				0246DCEC22B8C9C8007AD11C /* ApiClient.h */,
+				0246DCEC22B8C9C8007AD11C /* Apexy.h */,
 				0246DCED22B8C9C8007AD11C /* Info.plist */,
 			);
 			path = "Supporting Files";
@@ -85,7 +88,7 @@
 		BAD2E6F820832874EE0BF561 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				61ECF1E51B23AC3D9F79E4BD /* Pods_ApiClient.framework */,
+				692BC377640C188088FD09E5 /* Pods_Apexy.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -93,8 +96,8 @@
 		BB6F3EA18BA19B5C495F1C3D /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				C748D968637613CC4DE5C540 /* Pods-ApiClient.debug.xcconfig */,
-				52BF16768B26BC1CC215D4A4 /* Pods-ApiClient.release.xcconfig */,
+				F26020ACD624B0818829F45B /* Pods-Apexy.debug.xcconfig */,
+				B4B36EB776E8532715447CC4 /* Pods-Apexy.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -106,16 +109,16 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0246DCEE22B8C9C8007AD11C /* ApiClient.h in Headers */,
+				0246DCEE22B8C9C8007AD11C /* Apexy.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
-		0246DCE822B8C9C8007AD11C /* ApiClient */ = {
+		0246DCE822B8C9C8007AD11C /* Apexy */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 0246DCF122B8C9C8007AD11C /* Build configuration list for PBXNativeTarget "ApiClient" */;
+			buildConfigurationList = 0246DCF122B8C9C8007AD11C /* Build configuration list for PBXNativeTarget "Apexy" */;
 			buildPhases = (
 				757C8A959E96673503CD6C2A /* [CP] Check Pods Manifest.lock */,
 				0246DCE422B8C9C8007AD11C /* Headers */,
@@ -127,9 +130,9 @@
 			);
 			dependencies = (
 			);
-			name = ApiClient;
-			productName = ApiClient;
-			productReference = 0246DCE922B8C9C8007AD11C /* ApiClient.framework */;
+			name = Apexy;
+			productName = Apexy;
+			productReference = 0246DCE922B8C9C8007AD11C /* Apexy.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -147,7 +150,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 0246DCE322B8C9C8007AD11C /* Build configuration list for PBXProject "ApiClient" */;
+			buildConfigurationList = 0246DCE322B8C9C8007AD11C /* Build configuration list for PBXProject "Apexy" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -159,7 +162,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				0246DCE822B8C9C8007AD11C /* ApiClient */,
+				0246DCE822B8C9C8007AD11C /* Apexy */,
 			);
 		};
 /* End PBXProject section */
@@ -190,7 +193,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-ApiClient-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Apexy-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -205,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CCFD0F5624AB35E2001A3488 /* URLRequestBuildable.swift in Sources */,
+				0F6F55D8250618C700BC0FD6 /* UploadEndpoint.swift in Sources */,
 				0246DCF822B8CABA007AD11C /* Endpoint.swift in Sources */,
 				0246DCF522B8CA7C007AD11C /* Client.swift in Sources */,
 				CCEA10C724A0EB640039F327 /* BaseRequestInterceptor.swift in Sources */,
@@ -339,7 +343,7 @@
 		};
 		0246DCF222B8C9C8007AD11C /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = C748D968637613CC4DE5C540 /* Pods-ApiClient.debug.xcconfig */;
+			baseConfigurationReference = F26020ACD624B0818829F45B /* Pods-Apexy.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -349,14 +353,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ApiClient/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Apexy/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.redmadrobot.ApiClient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redmadrobot.Apexy;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -367,7 +371,7 @@
 		};
 		0246DCF322B8C9C8007AD11C /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 52BF16768B26BC1CC215D4A4 /* Pods-ApiClient.release.xcconfig */;
+			baseConfigurationReference = B4B36EB776E8532715447CC4 /* Pods-Apexy.release.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
@@ -377,14 +381,14 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				INFOPLIST_FILE = "ApiClient/Supporting Files/Info.plist";
+				INFOPLIST_FILE = "Apexy/Supporting Files/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.redmadrobot.ApiClient;
+				PRODUCT_BUNDLE_IDENTIFIER = com.redmadrobot.Apexy;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -395,7 +399,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		0246DCE322B8C9C8007AD11C /* Build configuration list for PBXProject "ApiClient" */ = {
+		0246DCE322B8C9C8007AD11C /* Build configuration list for PBXProject "Apexy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0246DCEF22B8C9C8007AD11C /* Debug */,
@@ -404,7 +408,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		0246DCF122B8C9C8007AD11C /* Build configuration list for PBXNativeTarget "ApiClient" */ = {
+		0246DCF122B8C9C8007AD11C /* Build configuration list for PBXNativeTarget "Apexy" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0246DCF222B8C9C8007AD11C /* Debug */,

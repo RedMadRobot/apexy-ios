@@ -1,4 +1,4 @@
-# Testing ApiClient
+# Testing Apexy
 
 ## What to test?
 You can test all the Endpoints and models which contain business logic.

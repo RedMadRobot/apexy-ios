@@ -1,6 +1,5 @@
 //
 //  HTTPBody.swift
-//  ApiClient
 //
 //  Created by z.samarskaya on 30/06/2020.
 //  Copyright © 2020 RedMadRobot. All rights reserved.

@@ -1,6 +1,5 @@
 //
 //  UploadEndpoint.swift
-//  ApiClient
 //
 //  Created by Anton Glezman on 17.06.2020.
 //
