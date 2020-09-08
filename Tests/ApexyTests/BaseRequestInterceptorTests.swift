@@ -18,6 +18,7 @@ final class BaseRequestInterceptorTests: XCTestCase {
         
         let request = URLRequest(url: URL(string: "books/10")!)
         
+        let expectation = XCTestExpectation(description: "Wait for completion")
         interceptor.adapt(request, for: .default) { result in
             switch result {
             case .success(let req):
@@ -25,6 +26,8 @@ final class BaseRequestInterceptorTests: XCTestCase {
             case .failure:
                 XCTFail("Expected result: .success, actual result: .failure")
             }
+            expectation.fulfill()
         }
+        wait(for: [expectation], timeout: 1)
     }
 }

@@ -10,17 +10,18 @@ import XCTest
 
 final class ClientTests: XCTestCase {
     
-    private let url = URL(string: "https://booklibrary.com")!
+    private var client: Client!
     
-    private var config: URLSessionConfiguration {
+    override func setUp() {
+        let url = URL(string: "https://booklibrary.com")!
+        
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
-        return config
+        
+        client = Client(baseURL: url, configuration: config)
     }
     
     func testClientRequest() {
-        let client = Client(baseURL: url, configuration: config)
-        
         let endpoint = EmptyEndpoint()
         let data = "Test".data(using: .utf8)!
         MockURLProtocol.requestHandler = { request in
@@ -42,8 +43,6 @@ final class ClientTests: XCTestCase {
     }
     
     func testClientUpload() {
-        let client = Client(baseURL: url, configuration: config)
-        
         let data = "apple".data(using: .utf8)!
         let endpoint = SimpleUploadEndpoint(data: data)
         MockURLProtocol.requestHandler = { request in
@@ -66,8 +65,6 @@ final class ClientTests: XCTestCase {
     
     @available(OSX 10.15, *)
     func testClientRequestUsingCombine() {
-        let client = Client(baseURL: url, configuration: config)
-        
         let endpoint = EmptyEndpoint()
         let data = "Test".data(using: .utf8)!
         MockURLProtocol.requestHandler = { request in
