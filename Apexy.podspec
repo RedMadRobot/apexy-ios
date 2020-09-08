@@ -4,7 +4,7 @@ Pod::Spec.new do |s|
   s.summary      = "HTTP transport library"
   s.homepage     = "https://github.com/RedMadRobot/apexy-ios"
   s.license      = { :type => "MIT"}
-  s.author      = { "Alexander Ignatiev" => "ai@redmadrobot.com" }
+  s.author       = { "Alexander Ignatiev" => "ai@redmadrobot.com" }
   s.source       = { :git => "https://github.com/RedMadRobot/apexy-ios.git", :tag => "#{s.version}" }
 
   s.ios.deployment_target = "10.0"
