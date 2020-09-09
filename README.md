@@ -12,6 +12,28 @@ The library for organizing a network layer in a project.
 - Separate the objects to work with the network in a separate module, target or library, so that they are isolated in their `namespace`.
 - Break down requests into separate structures. Classes are not forbidden, but make them non-mutable. Use `enum` if different requests have the same response.
 
+## Installation
+
+### CocoaPods
+
+To integrate Apexy into your Xcode project using CocoaPods, specify it in your Podfile:
+
+`pod 'Apexy'`
+
+### Swift Package Manager
+
+If you have Xcode project open it and select **File → Swift Packages → Add package Dependency** and paste Apexy repository URL:
+
+`https://github.com/RedMadRobot/apexy-ios`
+
+If you have your own Swift package, add Apexy as a dependency to the dependencies value of your Package.swift.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/RedMadRobot/apexy-ios.git")
+]
+```
+
 ## Endpoint
 
 `Endpoint` - one of the basic protocols for organizing work with REST API. It is a set of request and response processing.
