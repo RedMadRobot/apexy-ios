@@ -12,6 +12,28 @@
 - Выделяйте объекты для работы с сетью в отдельный модуль, таргет или библиотеку, чтобы они находились изолировано в своём `namespace`.
 - Разбивайте запросы на отдельные структуры. Классы не запрещаются, но делайте их неизменяемыми. `enum` могут подойти, если разные запросы имеют одинаковый ответ на них.
 
+## Установка
+
+### CocoaPods
+
+Чтобы добавить Apexy в ваш Xcode проект используя CocoaPods, укажите его в Podfile:
+
+`pod 'Apexy'`
+
+### Swift Package Manager
+
+Если у вас есть Xcode проект, откройте его и выберите **File → Swift Packages → Add package Dependency** и вставьте адрес репозитория Apexy:
+
+`https://github.com/RedMadRobot/apexy-ios`
+
+Если у вас есть Swift пакет, добавьте Apexy как зависимость в свойство dependencies файла Package.swift.
+
+```swift
+dependencies: [
+    .package(url: "https://github.com/RedMadRobot/apexy-ios.git")
+]
+```
+
 ## Endpoint
 
 `Endpoint` - один из базовых протоколов организации работы с REST API. Является совокупностью запроса и обработки ответа.
