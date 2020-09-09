@@ -8,7 +8,6 @@
 
 The library for organizing a network layer in a project.
 
-- The library doesn't depend on the implementation of how to work with the network. You can use `URLSession` or `Alamofire`.
 - Separate the objects to work with the network in a separate module, target or library, so that they are isolated in their `namespace`.
 - Break down requests into separate structures. Classes are not forbidden, but make them non-mutable. Use `enum` if different requests have the same response.
 
