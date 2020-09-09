@@ -13,15 +13,19 @@ Pod::Spec.new do |s|
   s.watchos.deployment_target = "4.0"
 
   s.swift_version = "5.2"
-  s.source_files  = "Sources/Apexy/**/*.swift"
   
   s.dependency "Alamofire", '~>5.0'
 
-  s.subspec 'RxSwift' do |sp|
-    sp.source_files = 'Sources/Apexy+RxSwift/*.swift'
-    sp.dependency "RxSwift"
+  s.subspec 'Core' do |sp|
+    sp.source_files = "Sources/Apexy/*.swift"
   end
 
-  s.default_subspecs = :none
+  s.subspec 'RxSwift' do |sp|
+    sp.source_files = "Sources/ApexyRxSwift/*.swift"
+    sp.dependency "RxSwift"
+    sp.dependency "Apexy/Core"
+  end
+
+  s.default_subspecs = "Core"
 
 end
