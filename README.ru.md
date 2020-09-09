@@ -1,5 +1,11 @@
 # Client
 
+[![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Apexy.svg)](https://cocoapods.org/pods/Apexy)
+[![Platform](https://img.shields.io/cocoapods/p/Apexy.svg?style=flat)](https://cocoapods.org/pods/Apexy)
+[![SPM compatible](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
+[![Swift 5.2](https://img.shields.io/badge/swift-5.2-red.svg?style=flat)](https://developer.apple.com/swift)
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/RedMadRobot/api-client-ios/blob/master/LICENSE)
+
 Библиотека для организации сетевого слоя в проекте.
 
 - Не зависит от реализации работы с сетью. Может быть использована `URLSession` или `Alamofire`.

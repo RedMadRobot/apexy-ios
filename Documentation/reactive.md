@@ -33,11 +33,9 @@ bookService.fetchBooks()
     }).disposed(by: bag)
 ```
 
-## Apexy extension for integrating with Combine
+## Combine
 
-If you want to use Apexy with Combine add `Apexy/Combine` pod to your `Podfile`.
-
-`pod 'Apexy/Combine'`
+Apexy supports Combine framework
 
 How to use by example `BookService` (see Example project).
 

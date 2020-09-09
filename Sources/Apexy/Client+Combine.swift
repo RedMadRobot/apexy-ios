@@ -1,10 +1,20 @@
+//
+//  File.swift
+//  
+//
+//  Created by Daniil Subbotin on 08.09.2020.
+//
+
 #if canImport(Combine)
 import Combine
-#endif
 
+/// Wrapper for Combine framework
 public extension Client {
-    
+
     @available(iOS 13.0, *)
+    @available(macOS 10.15, *)
+    @available(tvOS 13.0, *)
+    @available(watchOS 6.0, *)
     func request<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: Endpoint {
         let subject = PassthroughSubject<T.Content, Error>()
         
@@ -24,3 +34,4 @@ public extension Client {
         }).eraseToAnyPublisher()
     }
 }
+#endif
