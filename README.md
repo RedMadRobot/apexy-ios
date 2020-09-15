@@ -1,3 +1,5 @@
+<img src="Images/apexy.png"/>
+
 # Apexy
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Apexy.svg)](https://cocoapods.org/pods/Apexy)

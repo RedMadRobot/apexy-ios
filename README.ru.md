@@ -1,4 +1,6 @@
-# Client
+<img src="Images/apexy.png"/>
+
+# Apexy
 
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Apexy.svg)](https://cocoapods.org/pods/Apexy)
 [![Platform](https://img.shields.io/cocoapods/p/Apexy.svg?style=flat)](https://cocoapods.org/pods/Apexy)
