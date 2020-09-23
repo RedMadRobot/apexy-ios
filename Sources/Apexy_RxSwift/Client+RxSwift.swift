@@ -1,3 +1,4 @@
+import Apexy
 import RxSwift
 
 public extension Client {
@@ -15,5 +16,4 @@ public extension Client {
             return Disposables.create(with: progress.cancel)
         }
     }
-    
 }

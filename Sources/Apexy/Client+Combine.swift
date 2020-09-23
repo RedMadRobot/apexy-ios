@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Daniil Subbotin on 08.09.2020.
-//
-
 #if canImport(Combine)
 import Combine
 

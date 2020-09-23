@@ -1,16 +1,17 @@
 //
-//  ClientTests.swift
+//  AlamofireClientTests.swift
 //
 //  Created by Daniil Subbotin on 07.09.2020.
 //  Copyright © 2020 RedMadRobot. All rights reserved.
 //
 
 import Apexy
+import Apexy_Alamofire
 import XCTest
 
-final class ClientTests: XCTestCase {
+final class AlamofireClientTests: XCTestCase {
     
-    private var client: Client!
+    private var client: AlamofireClient!
     
     override func setUp() {
         let url = URL(string: "https://booklibrary.com")!
@@ -18,7 +19,7 @@ final class ClientTests: XCTestCase {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
         
-        client = Client(baseURL: url, configuration: config)
+        client = AlamofireClient(baseURL: url, configuration: config)
     }
     
     func testClientRequest() {
@@ -61,32 +62,6 @@ final class ClientTests: XCTestCase {
             exp.fulfill()
         })
         wait(for: [exp], timeout: 1)
-    }
-    
-    @available(OSX 10.15, *)
-    func testClientRequestUsingCombine() {
-        let endpoint = EmptyEndpoint()
-        let data = "Test".data(using: .utf8)!
-        MockURLProtocol.requestHandler = { request in
-            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "2.0", headerFields: nil)!
-            return (response, data)
-        }
-        
-        let exp = expectation(description: "wait for response")
-        let publisher = client.request(endpoint)
-        _ = publisher.sink(receiveCompletion: { result in
-            switch result {
-            case .finished:
-                break
-            case .failure:
-                XCTFail("Expected result: .finished, actual result: .failure")
-            }
-            exp.fulfill()
-        }) { content in
-            XCTAssertEqual(content, data)
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 0.1)
     }
 }
 

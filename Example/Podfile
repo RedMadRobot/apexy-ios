@@ -6,8 +6,7 @@ end
 
 target 'ExampleAPI' do
   use_frameworks!
-  
-  pod 'Alamofire'
+
   pod 'Apexy', :path => "../"
 
   target 'ExampleAPITests' do

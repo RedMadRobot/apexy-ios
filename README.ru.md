@@ -5,7 +5,7 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Apexy.svg)](https://cocoapods.org/pods/Apexy)
 [![Platform](https://img.shields.io/cocoapods/p/Apexy.svg?style=flat)](https://cocoapods.org/pods/Apexy)
 [![SPM compatible](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
-[![Swift 5.2](https://img.shields.io/badge/swift-5.2-red.svg?style=flat)](https://developer.apple.com/swift)
+[![Swift 5.3](https://img.shields.io/badge/swift-5.2-red.svg?style=flat)](https://developer.apple.com/swift)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/RedMadRobot/api-client-ios/blob/master/LICENSE)
 
 Библиотека для организации сетевого слоя в проекте.
@@ -17,15 +17,33 @@
 
 ### CocoaPods
 
-Чтобы добавить Apexy в ваш Xcode проект используя CocoaPods, укажите его в Podfile:
+Чтобы добавить Apexy в ваш Xcode проект используя CocoaPods, укажите его в Podfile.
+
+Если вы хотите использовать Apexy с Alamofire:
 
 `pod 'Apexy'`
+
+Если вы хотите использовать Apexy с Alamofire и RxSwift:
+
+`pod 'Apexy'`
+`pod 'Apexy/RxSwift'`
+
+Если вы хотите использовать Apexy без Alamofire и RxSwift:
+
+`pod 'Apexy/URLSession'`
 
 ### Swift Package Manager
 
 Если у вас есть Xcode проект, откройте его и выберите **File → Swift Packages → Add package Dependency** и вставьте адрес репозитория Apexy:
 
 `https://github.com/RedMadRobot/apexy-ios`
+
+Будут достуны 3 продукта: Apexy, Apexy_Alamofire, Apexy_RxSwift.
+
+Apexy — Под капотом использует URLSession
+Apexy_Alamofire — Под капотом использует Alamofire
+
+Если хотите использовать Apexy с RxSwift, то дополнительно подключайте пакет Apexy_RxSwift.
 
 Если у вас есть Swift пакет, добавьте Apexy как зависимость в свойство dependencies файла Package.swift.
 
