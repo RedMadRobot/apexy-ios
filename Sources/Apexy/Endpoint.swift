@@ -29,4 +29,19 @@ public protocol Endpoint {
     /// - Returns: A new endpoint content.
     /// - Throws: Any error creating content.
     func content(from response: URLResponse?, with body: Data) throws -> Content
+
+    /// Validate response.
+    ///
+    /// - Parameters:
+    ///   - request: The metadata associated with the request.
+    ///   - response: The metadata associated with the response.
+    ///   - data: The response body data.
+    /// - Returns: Validation result.
+    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) -> Result<Void, Error>
+}
+
+public extension Endpoint {
+    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) -> Result<Void, Error> {
+        return .success(())
+    }
 }
