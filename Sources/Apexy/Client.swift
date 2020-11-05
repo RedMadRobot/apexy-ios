@@ -101,8 +101,9 @@ public final class Client {
 
         let anyRequest = AnyRequest(create: endpoint.makeRequest)
         let request = sessionManager.request(anyRequest)
-            .validate(endpoint.validate)
-            .responseData(
+            .validate { request, response, data in
+                Result(catching: { try endpoint.validate(request, response: response, data: data) })
+            }.responseData(
                 queue: responseQueue,
                 completionHandler: { (response: DataResponse<Data, AFError>) in
 

@@ -37,11 +37,9 @@ public protocol Endpoint {
     ///   - response: The metadata associated with the response.
     ///   - data: The response body data.
     /// - Returns: Validation result.
-    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) -> Result<Void, Error>
+    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) throws
 }
 
 public extension Endpoint {
-    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) -> Result<Void, Error> {
-        return .success(())
-    }
+    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) { }
 }
