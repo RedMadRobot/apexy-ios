@@ -36,7 +36,7 @@ public protocol Endpoint {
     ///   - request: The metadata associated with the request.
     ///   - response: The metadata associated with the response.
     ///   - data: The response body data.
-    /// - Returns: Validation result.
+    /// - Throws: Any response validation error.
     func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) throws
 }
 
