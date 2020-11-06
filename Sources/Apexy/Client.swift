@@ -100,19 +100,22 @@ public final class Client {
     ) -> Progress where T: Endpoint {
 
         let anyRequest = AnyRequest(create: endpoint.makeRequest)
-        let request = sessionManager.request(anyRequest).responseData(
-            queue: responseQueue,
-            completionHandler: { (response: DataResponse<Data, AFError>) in
+        let request = sessionManager.request(anyRequest)
+            .validate { request, response, data in
+                Result(catching: { try endpoint.validate(request, response: response, data: data) })
+            }.responseData(
+                queue: responseQueue,
+                completionHandler: { (response: DataResponse<Data, AFError>) in
 
-                let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                    let data = try response.result.get()
-                    return try endpoint.content(from: response.response, with: data)
-                })
+                    let result = APIResult<T.Content>(catching: { () throws -> T.Content in
+                        let data = try response.result.get()
+                        return try endpoint.content(from: response.response, with: data)
+                    })
 
-                self.completionQueue.async {
-                    self.responseObserver?(response.request, response.response, response.data, result.error)
-                    completionHandler(result)
-                }
+                    self.completionQueue.async {
+                        self.responseObserver?(response.request, response.response, response.data, result.error)
+                        completionHandler(result)
+                    }
             })
 
         return progress(for: request)
