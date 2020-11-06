@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Apexy"
-  s.version      = "1.0.0"
+  s.version      = "1.1.0"
   s.summary      = "HTTP transport library"
   s.homepage     = "https://github.com/RedMadRobot/apexy-ios"
   s.license      = { :type => "MIT"}
