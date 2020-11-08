@@ -38,12 +38,12 @@
 
 `https://github.com/RedMadRobot/apexy-ios`
 
-Будут достуны 3 продукта: Apexy, Apexy_Alamofire, Apexy_RxSwift.
+Будут достуны 3 продукта: Apexy, ApexyAlamofire, ApexyRxSwift.
 
 Apexy — Под капотом использует URLSession
-Apexy_Alamofire — Под капотом использует Alamofire
+ApexyAlamofire — Под капотом использует Alamofire
 
-Если хотите использовать Apexy с RxSwift, то дополнительно подключайте пакет Apexy_RxSwift.
+Если хотите использовать Apexy с RxSwift, то дополнительно подключайте пакет ApexyRxSwift.
 
 Если у вас есть Swift пакет, добавьте Apexy как зависимость в свойство dependencies файла Package.swift.
 

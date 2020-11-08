@@ -38,12 +38,12 @@ If you have Xcode project, open it and select **File → Swift Packages → Add 
 
 `https://github.com/RedMadRobot/apexy-ios`
 
-There are 3 package products: Apexy, Apexy_Alamofire, Apexy_RxSwift.
+There are 3 package products: Apexy, ApexyAlamofire, ApexyRxSwift.
 
 Apexy — Uses URLSession under the hood
-Apexy_Alamofire — Uses Alamofire under the hood
+ApexyAlamofire — Uses Alamofire under the hood
 
-If you want to use Apexy with RxSwift add Apexy_RxSwift package product.
+If you want to use Apexy with RxSwift add ApexyRxSwift package product.
 
 If you have your own Swift package, add Apexy as a dependency to the dependencies value of your Package.swift.
 

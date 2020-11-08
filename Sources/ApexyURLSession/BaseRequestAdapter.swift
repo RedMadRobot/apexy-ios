@@ -1,7 +1,7 @@
 import Foundation
 
 protocol RequestAdapter {
-    func adapt(_ urlRequest: URLRequest) -> Result<URLRequest, Error>
+    func adapt(_ urlRequest: URLRequest) throws -> URLRequest
 }
 
 open class BaseRequestAdapter: RequestAdapter {
@@ -14,14 +14,14 @@ open class BaseRequestAdapter: RequestAdapter {
     
     // MARK: - RequestAdapter
     
-    public func adapt(_ urlRequest: URLRequest) -> Result<URLRequest, Error> {
+    public func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
         guard let url = urlRequest.url else {
-            return .failure(URLError(.badURL))
+            throw URLError(.badURL)
         }
         
         var request = urlRequest
         request.url = appendingBaseURL(to: url)
-        return .success(request)
+        return request
     }
     
     // MARK: - Private

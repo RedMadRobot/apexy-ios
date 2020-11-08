@@ -12,22 +12,22 @@ let package = Package(
       .watchOS(.v4)
     ],
     products: [
-        .library(name: "Apexy", targets: ["Apexy_URLSession"]),
-        .library(name: "Apexy_Alamofire", targets: ["Apexy_Alamofire"]),
-        .library(name: "Apexy_RxSwift", targets: ["Apexy_RxSwift"])
+        .library(name: "Apexy", targets: ["ApexyURLSession"]),
+        .library(name: "ApexyAlamofire", targets: ["ApexyAlamofire"]),
+        .library(name: "ApexyRxSwift", targets: ["ApexyRxSwift"])
     ],
     dependencies: [
         .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.2.0")),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.0.0")
     ],
     targets: [
-        .target(name: "Apexy_RxSwift", dependencies: ["Apexy", "RxSwift"]),
-        .target(name: "Apexy_Alamofire", dependencies: ["Apexy", "Alamofire"]),
-        .target(name: "Apexy_URLSession", dependencies: ["Apexy"]),
+        .target(name: "ApexyRxSwift", dependencies: ["Apexy", "RxSwift"]),
+        .target(name: "ApexyAlamofire", dependencies: ["Apexy", "Alamofire"]),
+        .target(name: "ApexyURLSession", dependencies: ["Apexy"]),
         .target(name: "Apexy"),
         
-        .testTarget(name: "ApexyAlamofireTests", dependencies: ["Apexy_Alamofire"]),
-        .testTarget(name: "ApexyURLSessionTests", dependencies: ["Apexy_URLSession"]),
+        .testTarget(name: "ApexyAlamofireTests", dependencies: ["ApexyAlamofire"]),
+        .testTarget(name: "ApexyURLSessionTests", dependencies: ["ApexyURLSession"]),
         .testTarget(name: "ApexyTests", dependencies: ["Apexy"])
     ]
 )

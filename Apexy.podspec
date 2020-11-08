@@ -19,18 +19,18 @@ Pod::Spec.new do |s|
   end
 
   s.subspec 'Alamofire' do |sp|
-    sp.source_files = "Sources/Apexy_Alamofire/*.swift"
+    sp.source_files = "Sources/ApexyAlamofire/*.swift"
     sp.dependency "Apexy/Core"
     sp.dependency "Alamofire", '~>5.0'
   end
 
   s.subspec 'URLSession' do |sp|
-    sp.source_files = "Sources/Apexy_URLSession/*.swift"
+    sp.source_files = "Sources/ApexyURLSession/*.swift"
     sp.dependency "Apexy/Core"
   end
 
   s.subspec 'RxSwift' do |sp|
-    sp.source_files = "Sources/Apexy_RxSwift/*.swift"
+    sp.source_files = "Sources/ApexyRxSwift/*.swift"
     sp.dependency "Apexy/Core"
     sp.dependency "RxSwift"
   end

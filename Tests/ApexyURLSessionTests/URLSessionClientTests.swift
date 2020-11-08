@@ -6,7 +6,7 @@
 //
 
 import Apexy
-import Apexy_URLSession
+import ApexyURLSession
 import XCTest
 
 final class URLSessionClientTests: XCTestCase {

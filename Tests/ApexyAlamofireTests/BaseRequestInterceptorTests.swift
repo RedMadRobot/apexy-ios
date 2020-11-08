@@ -6,7 +6,7 @@
 //
 
 import Apexy
-import Apexy_Alamofire
+import ApexyAlamofire
 import Alamofire
 import XCTest
 
