@@ -1,7 +1,7 @@
 import Foundation
 import Apexy
 
-final public class URLSessionClient: Client {
+open class URLSessionClient: Client {
     
     /// A closure used to observe result of every response from the server.
     public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
@@ -35,7 +35,7 @@ final public class URLSessionClient: Client {
         self.responseObserver = responseObserver
     }
     
-    public func request<T>(
+    open func request<T>(
         _ endpoint: T,
         completionHandler: @escaping (APIResult<T.Content>) -> Void) -> Progress where T : Endpoint {
         
@@ -66,7 +66,7 @@ final public class URLSessionClient: Client {
         return task.progress
     }
     
-    public func upload<T>(_ endpoint: T, completionHandler: @escaping (APIResult<T.Content>) -> Void) -> Progress where T : UploadEndpoint {
+    open func upload<T>(_ endpoint: T, completionHandler: @escaping (APIResult<T.Content>) -> Void) -> Progress where T : UploadEndpoint {
         var request: (URLRequest, UploadEndpointBody)
         do {
             request = try endpoint.makeRequest()

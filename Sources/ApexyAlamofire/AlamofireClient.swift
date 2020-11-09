@@ -10,7 +10,7 @@ import Foundation
 import Alamofire
 
 /// API Client.
-public final class AlamofireClient: Client {
+open class AlamofireClient: Client {
 
     /// A closure used to observe result of every response from the server.
     public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
@@ -93,7 +93,7 @@ public final class AlamofireClient: Client {
     ///   - endpoint: endpoint of remote content.
     ///   - completionHandler: The completion closure to be executed when request is completed.
     /// - Returns: The progress of fetching the response data from the server for the request.
-    public func request<T>(
+    open func request<T>(
         _ endpoint: T,
         completionHandler: @escaping (APIResult<T.Content>) -> Void
     ) -> Progress where T: Endpoint {
@@ -126,7 +126,7 @@ public final class AlamofireClient: Client {
     ///   - endpoint: The remote endpoint and data to upload.
     ///   - completionHandler: The completion closure to be executed when request is completed.
     /// - Returns: The progress of uploading data to the server.
-    public func upload<T>(
+    open func upload<T>(
         _ endpoint: T,
         completionHandler: @escaping (APIResult<T.Content>) -> Void
     ) -> Progress where T: UploadEndpoint {
