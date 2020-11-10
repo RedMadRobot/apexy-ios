@@ -26,6 +26,7 @@
 Если вы хотите использовать Apexy с Alamofire и RxSwift:
 
 `pod 'Apexy'`
+
 `pod 'Apexy/RxSwift'`
 
 Если вы хотите использовать Apexy без Alamofire и RxSwift:
@@ -41,6 +42,7 @@
 Будут достуны 3 продукта: Apexy, ApexyAlamofire, ApexyRxSwift.
 
 Apexy — Под капотом использует URLSession
+
 ApexyAlamofire — Под капотом использует Alamofire
 
 Если хотите использовать Apexy с RxSwift, то дополнительно подключайте пакет ApexyRxSwift.
