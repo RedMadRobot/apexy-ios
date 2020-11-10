@@ -50,6 +50,9 @@ open class URLSessionClient: Client {
         
         let task = session.dataTask(with: request) { (data, response, error) in
             let result = APIResult<T.Content>(catching: { () throws -> T.Content in
+                if let httpResponse = response as? HTTPURLResponse {
+                    try endpoint.validate(request, response: httpResponse, data: data)
+                }
                 let data = data ?? Data()
                 if let error = error {
                     throw error
