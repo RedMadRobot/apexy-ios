@@ -16,7 +16,7 @@ final class ServiceLayer {
     static let shared = ServiceLayer()
     
     private(set) lazy var apiClient: Client = {
-        return Apexy.Client(
+        return AlamofireClient(
             baseURL: URL(string: "https://library.mock-object.redmadserver.com/api/v1/")!,
             configuration: .ephemeral,
             responseObserver: { [weak self] request, response, data, error in

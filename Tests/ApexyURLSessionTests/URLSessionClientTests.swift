@@ -1,16 +1,17 @@
 //
-//  ClientTests.swift
+//  URLSessionClientTests.swift
 //
 //  Created by Daniil Subbotin on 07.09.2020.
 //  Copyright © 2020 RedMadRobot. All rights reserved.
 //
 
 import Apexy
+import ApexyURLSession
 import XCTest
 
-final class ClientTests: XCTestCase {
+final class URLSessionClientTests: XCTestCase {
     
-    private var client: Client!
+    private var client: URLSessionClient!
     
     override func setUp() {
         let url = URL(string: "https://booklibrary.com")!
@@ -18,7 +19,7 @@ final class ClientTests: XCTestCase {
         let config = URLSessionConfiguration.ephemeral
         config.protocolClasses = [MockURLProtocol.self]
         
-        client = Client(baseURL: url, configuration: config)
+        client = URLSessionClient(baseURL: url, configuration: config)
     }
     
     func testClientRequest() {
@@ -36,6 +37,32 @@ final class ClientTests: XCTestCase {
                 XCTAssertEqual(content, data)
             case .failure:
                 XCTFail("Expected result: .success, actual result: .failure")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testEndpointValidate() {
+        var endpoint = EmptyEndpoint()
+        endpoint.validateError = EndpointValidationError.validationFailed
+        
+        let data = "Test".data(using: .utf8)!
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "2.0", headerFields: nil)!
+            return (response, data)
+        }
+        
+        let exp = expectation(description: "wait for response")
+        
+        _ = client.request(endpoint) { result in
+            switch result {
+            case .success:
+                XCTFail("Expected result: .failure, actual result: .success")
+            case .failure(let error as EndpointValidationError):
+                XCTAssertEqual(error, endpoint.validateError)
+            case .failure(let error):
+                XCTFail("Expected result: .failure(EndpointValidationError), actual result: .failure(\(error))")
             }
             exp.fulfill()
         }
@@ -63,8 +90,9 @@ final class ClientTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
+    @available(iOS 13.0, *)
     @available(OSX 10.15, *)
-    func testClientRequestUsingCombine() {
+    func testClientRequestUsingCombine() throws {
         let endpoint = EmptyEndpoint()
         let data = "Test".data(using: .utf8)!
         MockURLProtocol.requestHandler = { request in
@@ -73,6 +101,7 @@ final class ClientTests: XCTestCase {
         }
         
         let exp = expectation(description: "wait for response")
+        
         let publisher = client.request(endpoint)
         _ = publisher.sink(receiveCompletion: { result in
             switch result {
@@ -121,12 +150,20 @@ private struct EmptyEndpoint: Endpoint {
     
     typealias Content = Data
     
+    var validateError: EndpointValidationError? = nil
+    
     func makeRequest() throws -> URLRequest {
         URLRequest(url: URL(string: "empty")!)
     }
     
     func content(from response: URLResponse?, with body: Data) throws -> Data {
         return body
+    }
+    
+    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) throws {
+        if let error = validateError {
+            throw error
+        }
     }
 }
 
@@ -153,3 +190,6 @@ private struct SimpleUploadEndpoint: UploadEndpoint {
     }
 }
 
+private enum EndpointValidationError: String, Error, Equatable {
+    case validationFailed
+}

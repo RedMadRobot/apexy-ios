@@ -6,19 +6,28 @@ import PackageDescription
 let package = Package(
     name: "Apexy",
     platforms: [
-      .macOS(.v10_12),
-      .iOS(.v10),
-      .tvOS(.v10),
+      .macOS(.v10_13),
+      .iOS(.v11),
+      .tvOS(.v11),
       .watchOS(.v4)
     ],
     products: [
-        .library(name: "Apexy", targets: ["Apexy"]),
+        .library(name: "Apexy", targets: ["ApexyURLSession"]),
+        .library(name: "ApexyAlamofire", targets: ["ApexyAlamofire"]),
+        .library(name: "ApexyRxSwift", targets: ["ApexyRxSwift"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.2.0"))
+        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.2.0")),
+        .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.0.0")
     ],
     targets: [
-        .target(name: "Apexy", dependencies: ["Alamofire"]),
+        .target(name: "ApexyRxSwift", dependencies: ["Apexy", "RxSwift"]),
+        .target(name: "ApexyAlamofire", dependencies: ["Apexy", "Alamofire"]),
+        .target(name: "ApexyURLSession", dependencies: ["Apexy"]),
+        .target(name: "Apexy"),
+        
+        .testTarget(name: "ApexyAlamofireTests", dependencies: ["ApexyAlamofire"]),
+        .testTarget(name: "ApexyURLSessionTests", dependencies: ["ApexyURLSession"]),
         .testTarget(name: "ApexyTests", dependencies: ["Apexy"])
     ]
 )

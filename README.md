@@ -5,7 +5,7 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Apexy.svg)](https://cocoapods.org/pods/Apexy)
 [![Platform](https://img.shields.io/cocoapods/p/Apexy.svg?style=flat)](https://cocoapods.org/pods/Apexy)
 [![SPM compatible](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
-[![Swift 5.2](https://img.shields.io/badge/swift-5.2-red.svg?style=flat)](https://developer.apple.com/swift)
+[![Swift 5.3](https://img.shields.io/badge/swift-5.2-red.svg?style=flat)](https://developer.apple.com/swift)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/RedMadRobot/api-client-ios/blob/master/LICENSE)
 
 The library for organizing a network layer in a project.
@@ -17,15 +17,33 @@ The library for organizing a network layer in a project.
 
 ### CocoaPods
 
-To integrate Apexy into your Xcode project using CocoaPods, specify it in your Podfile:
+To integrate Apexy into your Xcode project using CocoaPods, specify it in your Podfile.
+
+If you want to use Apexy with Alamofire:
 
 `pod 'Apexy'`
 
+If you want to use Apexy with Alamofire and RxSwift:
+
+`pod 'Apexy'`
+`pod 'Apexy/RxSwift'`
+
+If you want to use Apexy without Alamofire and RxSwift:
+
+`pod 'Apexy/URLSession'`
+
 ### Swift Package Manager
 
-If you have Xcode project open it and select **File → Swift Packages → Add package Dependency** and paste Apexy repository URL:
+If you have Xcode project, open it and select **File → Swift Packages → Add package Dependency** and paste Apexy repository URL:
 
 `https://github.com/RedMadRobot/apexy-ios`
+
+There are 3 package products: Apexy, ApexyAlamofire, ApexyRxSwift.
+
+Apexy — Uses URLSession under the hood
+ApexyAlamofire — Uses Alamofire under the hood
+
+If you want to use Apexy with RxSwift add ApexyRxSwift package product.
 
 If you have your own Swift package, add Apexy as a dependency to the dependencies value of your Package.swift.
 
