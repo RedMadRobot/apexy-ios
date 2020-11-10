@@ -26,6 +26,7 @@ If you want to use Apexy with Alamofire:
 If you want to use Apexy with Alamofire and RxSwift:
 
 `pod 'Apexy'`
+
 `pod 'Apexy/RxSwift'`
 
 If you want to use Apexy without Alamofire and RxSwift:
@@ -41,6 +42,7 @@ If you have Xcode project, open it and select **File → Swift Packages → Add 
 There are 3 package products: Apexy, ApexyAlamofire, ApexyRxSwift.
 
 Apexy — Uses URLSession under the hood
+
 ApexyAlamofire — Uses Alamofire under the hood
 
 If you want to use Apexy with RxSwift add ApexyRxSwift package product.
