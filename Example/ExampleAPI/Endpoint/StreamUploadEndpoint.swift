@@ -12,6 +12,7 @@ import Apexy
 public struct StreamUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
+    public typealias ErrorType = Error
     
     private let stream: InputStream
     private let size: Int

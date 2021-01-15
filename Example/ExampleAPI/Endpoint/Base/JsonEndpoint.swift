@@ -14,6 +14,8 @@ protocol JsonEndpoint: Endpoint, URLRequestBuildable where Content: Decodable {}
 
 extension JsonEndpoint {
 
+    public typealias ErrorType = Error
+    
     /// Request body encoder.
     internal var encoder: JSONEncoder { return JSONEncoder.default }
 
@@ -21,6 +23,10 @@ extension JsonEndpoint {
         try ResponseValidator.validate(response, with: body)
         let resource = try JSONDecoder.default.decode(ResponseData<Content>.self, from: body)
         return resource.data
+    }
+    
+    public func error(from response: URLResponse?, with body: Data?, and error: Error) -> ErrorType {
+        return error
     }
 }
 

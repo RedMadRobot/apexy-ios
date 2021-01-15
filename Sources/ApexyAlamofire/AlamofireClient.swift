@@ -95,7 +95,7 @@ open class AlamofireClient: Client {
     /// - Returns: The progress of fetching the response data from the server for the request.
     open func request<T>(
         _ endpoint: T,
-        completionHandler: @escaping (APIResult<T.Content>) -> Void
+        completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void
     ) -> Progress where T: Endpoint {
 
         let anyRequest = AnyRequest(create: endpoint.makeRequest)
@@ -106,10 +106,18 @@ open class AlamofireClient: Client {
                 queue: responseQueue,
                 completionHandler: { (response: DataResponse<Data, AFError>) in
 
-                    let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                        let data = try response.result.get()
-                        return try endpoint.content(from: response.response, with: data)
-                    })
+                    let httpResponse = response.response
+                    let result = response.result
+                        .mapError{ error -> T.ErrorType in
+                            return endpoint.error(from: httpResponse, with: nil, and: error)
+                        }
+                        .flatMap { data -> Result<T.Content, T.ErrorType> in
+                            do {
+                                return try .success(endpoint.content(from: httpResponse, with: data))
+                            } catch {
+                                return .failure(endpoint.error(from: httpResponse, with: data, and: error))
+                            }
+                        }
 
                     self.completionQueue.async {
                         self.responseObserver?(response.request, response.response, response.data, result.error)
@@ -128,7 +136,7 @@ open class AlamofireClient: Client {
     /// - Returns: The progress of uploading data to the server.
     open func upload<T>(
         _ endpoint: T,
-        completionHandler: @escaping (APIResult<T.Content>) -> Void
+        completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void
     ) -> Progress where T: UploadEndpoint {
         
         let urlRequest: URLRequest
@@ -136,7 +144,7 @@ open class AlamofireClient: Client {
         do {
             (urlRequest, body) = try endpoint.makeRequest()
         } catch {
-            completionHandler(.failure(error))
+            completionHandler(.failure(endpoint.error(from: nil, with: nil, and: error)))
             return Progress()
         }
         
@@ -154,10 +162,18 @@ open class AlamofireClient: Client {
             queue: responseQueue,
             completionHandler: { (response: DataResponse<Data, AFError>) in
 
-                let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                    let data = try response.result.get()
-                    return try endpoint.content(from: response.response, with: data)
-                })
+                let httpResponse = response.response
+                let result = response.result
+                    .mapError{ error -> T.ErrorType in
+                        return endpoint.error(from: httpResponse, with: nil, and: error)
+                    }
+                    .flatMap { data -> Result<T.Content, T.ErrorType> in
+                        do {
+                            return try .success(endpoint.content(from: httpResponse, with: data))
+                        } catch {
+                            return .failure(endpoint.error(from: httpResponse, with: data, and: error))
+                        }
+                    }
 
                 self.completionQueue.async {
                     self.responseObserver?(response.request, response.response, response.data, result.error)
@@ -190,7 +206,7 @@ private struct AnyRequest: Alamofire.URLRequestConvertible {
     }
 }
 
-private extension APIResult {
+private extension Result {
     var error: Error? {
         switch self {
         case .failure(let error):

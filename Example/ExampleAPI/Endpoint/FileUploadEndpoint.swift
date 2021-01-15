@@ -12,6 +12,7 @@ import Apexy
 public struct FileUploadEndpoint: UploadEndpoint {
     
     public typealias Content = Void
+    public typealias ErrorType = Error
     
     private let fileURL: URL
     

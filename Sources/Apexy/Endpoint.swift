@@ -14,6 +14,9 @@ public protocol Endpoint {
     ///
     /// - Author: Nino
     associatedtype Content
+    
+    /// Error type
+    associatedtype ErrorType: Error
 
     /// Create a new `URLRequest`.
     ///
@@ -29,6 +32,16 @@ public protocol Endpoint {
     /// - Returns: A new endpoint content.
     /// - Throws: Any error creating content.
     func content(from response: URLResponse?, with body: Data) throws -> Content
+    
+    /// Obtain error from response with body.
+    ///
+    /// - Parameters:
+    ///   - response: The metadata associated with the response.
+    ///   - body: The response body.
+    ///   - error: The response error.
+    /// - Returns: A new endpoint error.
+    /// - Throws: Any error creating error.
+    func error(from response: URLResponse?, with body: Data?, and error: Error) -> ErrorType
 
     /// Validate response.
     ///

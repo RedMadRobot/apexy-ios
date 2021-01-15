@@ -12,6 +12,7 @@ public struct BookListEndpoint: JsonEndpoint {
     
     public typealias Content = [Book]
 
+    
     public init() {}
     
     public func makeRequest() throws -> URLRequest {

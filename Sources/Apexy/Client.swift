@@ -1,7 +1,5 @@
 import Foundation
 
-public typealias APIResult<Value> = Swift.Result<Value, Error>
-
 public protocol Client: AnyObject {
     
     /// Send request to specified endpoint.
@@ -12,7 +10,7 @@ public protocol Client: AnyObject {
     /// - Returns: The progress of fetching the response data from the server for the request.
     func request<T>(
         _ endpoint: T,
-        completionHandler: @escaping (APIResult<T.Content>) -> Void
+        completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void
     ) -> Progress where T: Endpoint
     
     /// Upload data to specified endpoint.
@@ -23,6 +21,6 @@ public protocol Client: AnyObject {
     /// - Returns: The progress of uploading data to the server.
     func upload<T>(
         _ endpoint: T,
-        completionHandler: @escaping (APIResult<T.Content>) -> Void
+        completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void
     ) -> Progress where T: UploadEndpoint
 }

@@ -38,6 +38,7 @@
 		0F22960A24D028DA00EF4F8F /* StreamUploadEndpointTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F22960924D028DA00EF4F8F /* StreamUploadEndpointTests.swift */; };
 		59230CD861919924787FBD90 /* Pods_ExampleAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 986550D9D8D646CD39BFD44A /* Pods_ExampleAPI.framework */; };
 		7F25F8B767BEF06DB8B3B440 /* Pods_Example.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8D9C14D1741721987B950ADC /* Pods_Example.framework */; };
+		C6AE285E25B1FCE90095EA8C /* UploadEndpoint+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C6AE285D25B1FCE90095EA8C /* UploadEndpoint+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -117,6 +118,7 @@
 		8D9C14D1741721987B950ADC /* Pods_Example.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Example.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		986550D9D8D646CD39BFD44A /* Pods_ExampleAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ExampleAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7444102FDF3BF64D170F337 /* Pods-ExampleAPI.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleAPI.release.xcconfig"; path = "Target Support Files/Pods-ExampleAPI/Pods-ExampleAPI.release.xcconfig"; sourceTree = "<group>"; };
+		C6AE285D25B1FCE90095EA8C /* UploadEndpoint+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UploadEndpoint+Extension.swift"; sourceTree = "<group>"; };
 		EF67CE46DB5494E09A3CB131 /* Pods-Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Example.debug.xcconfig"; path = "Target Support Files/Pods-Example/Pods-Example.debug.xcconfig"; sourceTree = "<group>"; };
 		F31AB0223F4479EEE604472A /* Pods-ExampleAPI.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ExampleAPI.debug.xcconfig"; path = "Target Support Files/Pods-ExampleAPI/Pods-ExampleAPI.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,6 +275,7 @@
 			children = (
 				0246DD2F22B8D808007AD11C /* JsonEndpoint.swift */,
 				0246DD2D22B8D807007AD11C /* EmptyEndpoint.swift */,
+				C6AE285D25B1FCE90095EA8C /* UploadEndpoint+Extension.swift */,
 			);
 			path = Base;
 			sourceTree = "<group>";
@@ -602,6 +605,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F2295F524D022B300EF4F8F /* EmptyEndpoint.swift in Sources */,
+				C6AE285E25B1FCE90095EA8C /* UploadEndpoint+Extension.swift in Sources */,
 				0F2295FF24D0230100EF4F8F /* HTTPError.swift in Sources */,
 				0F2295FB24D022E400EF4F8F /* Form.swift in Sources */,
 				0F22960024D0230100EF4F8F /* ResponseValidator.swift in Sources */,

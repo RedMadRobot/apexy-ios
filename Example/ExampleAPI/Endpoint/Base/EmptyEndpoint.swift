@@ -12,7 +12,13 @@ protocol EmptyEndpoint: Endpoint, URLRequestBuildable where Content == Void {}
 
 extension EmptyEndpoint {
 
+    public typealias ErrorType = Error
+    
     public func content(from response: URLResponse?, with body: Data) throws {
         try ResponseValidator.validate(response, with: body)
+    }
+    
+    func error(from response: URLResponse?, with body: Data?, and error: Error) -> ErrorType {
+        return error
     }
 }
