@@ -95,6 +95,7 @@ private final class MockURLProtocol: URLProtocol {
 private struct EmptyEndpoint: Endpoint {
     
     typealias Content = Data
+    typealias ErrorType = Error
     
     func makeRequest() throws -> URLRequest {
         URLRequest(url: URL(string: "empty")!)
@@ -103,11 +104,16 @@ private struct EmptyEndpoint: Endpoint {
     func content(from response: URLResponse?, with body: Data) throws -> Data {
         return body
     }
+    
+    func error(from response: URLResponse?, with body: Data?, and error: Error) -> Error {
+        return error
+    }
 }
 
 private struct SimpleUploadEndpoint: UploadEndpoint {
    
     typealias Content = Data
+    typealias ErrorType = Error
     
     private let data: Data
     
@@ -125,6 +131,10 @@ private struct SimpleUploadEndpoint: UploadEndpoint {
     
     func content(from response: URLResponse?, with body: Data) throws -> Data {
         body
+    }
+    
+    func error(from response: URLResponse?, with body: Data?, and error: Error) -> Error {
+        return error
     }
 }
 
