@@ -44,7 +44,7 @@ open class URLSessionClient: Client {
             request = try endpoint.makeRequest()
             request = try requestAdapter.adapt(request)
         } catch {
-            completionHandler(.failure(endpoint.error(from: nil, with: nil, and: error)))
+            completionHandler(.failure(endpoint.error(fromResponse: nil, withBody: nil, withError: error)))
             return Progress()
         }
         
@@ -60,7 +60,7 @@ open class URLSessionClient: Client {
                 }
                 return try endpoint.content(from: response, with: data)
             }).mapError { error -> T.ErrorType in
-                return endpoint.error(from: response as? HTTPURLResponse, with: data, and: error)
+                return endpoint.error(fromResponse: response as? HTTPURLResponse, withBody: data, withError: error)
             }
             self.completionQueue.async {
                 self.responseObserver?(request, response as? HTTPURLResponse, data, error)
@@ -78,7 +78,7 @@ open class URLSessionClient: Client {
             request = try endpoint.makeRequest()
             request.0 = try requestAdapter.adapt(request.0)
         } catch {
-            completionHandler(.failure(endpoint.error(from: nil, with: nil, and: error)))
+            completionHandler(.failure(endpoint.error(fromResponse: nil, withBody: nil, withError: error)))
             return Progress()
         }
         
@@ -90,7 +90,7 @@ open class URLSessionClient: Client {
                 }
                 return try endpoint.content(from: response, with: data)
             }).mapError { error -> T.ErrorType in
-                return endpoint.error(from: response as? HTTPURLResponse, with: data, and: error)
+                return endpoint.error(fromResponse: response as? HTTPURLResponse, withBody: data, withError: error)
             }
             self.completionQueue.async {
                 self.responseObserver?(request.0, response as? HTTPURLResponse, data, error)
@@ -106,9 +106,9 @@ open class URLSessionClient: Client {
             task = session.uploadTask(with: request, fromFile: url, completionHandler: handler)
         case (_, .stream):
             completionHandler(.failure(endpoint.error(
-                                        from: nil,
-                                        with: nil,
-                                        and: URLSessionClientError.uploadStreamUnimplemented)))
+                                        fromResponse: nil,
+                                        withBody: nil,
+                                        withError: URLSessionClientError.uploadStreamUnimplemented)))
             return Progress()
         }
         task.resume()

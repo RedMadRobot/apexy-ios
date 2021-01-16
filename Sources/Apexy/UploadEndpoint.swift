@@ -46,5 +46,5 @@ public protocol UploadEndpoint {
     ///   - error: The response error.
     /// - Returns: A new endpoint error.
     /// - Throws: Any error creating error.
-    func error(from response: URLResponse?, with body: Data?, and error: Error) -> ErrorType
+    func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> ErrorType
 }

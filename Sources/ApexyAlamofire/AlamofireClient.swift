@@ -108,14 +108,14 @@ open class AlamofireClient: Client {
 
                     let httpResponse = response.response
                     let result = response.result
-                        .mapError{ error -> T.ErrorType in
-                            return endpoint.error(from: httpResponse, with: nil, and: error)
+                        .mapError { error -> T.ErrorType in
+                            return endpoint.error(fromResponse: httpResponse, withBody: nil, withError: error)
                         }
                         .flatMap { data -> Result<T.Content, T.ErrorType> in
                             do {
                                 return try .success(endpoint.content(from: httpResponse, with: data))
                             } catch {
-                                return .failure(endpoint.error(from: httpResponse, with: data, and: error))
+                                return .failure(endpoint.error(fromResponse: httpResponse, withBody: data, withError: error))
                             }
                         }
 
@@ -144,7 +144,7 @@ open class AlamofireClient: Client {
         do {
             (urlRequest, body) = try endpoint.makeRequest()
         } catch {
-            completionHandler(.failure(endpoint.error(from: nil, with: nil, and: error)))
+            completionHandler(.failure(endpoint.error(fromResponse: nil, withBody: nil, withError: error)))
             return Progress()
         }
         
@@ -164,14 +164,14 @@ open class AlamofireClient: Client {
 
                 let httpResponse = response.response
                 let result = response.result
-                    .mapError{ error -> T.ErrorType in
-                        return endpoint.error(from: httpResponse, with: nil, and: error)
+                    .mapError { error -> T.ErrorType in
+                        return endpoint.error(fromResponse: httpResponse, withBody: nil, withError: error)
                     }
                     .flatMap { data -> Result<T.Content, T.ErrorType> in
                         do {
                             return try .success(endpoint.content(from: httpResponse, with: data))
                         } catch {
-                            return .failure(endpoint.error(from: httpResponse, with: data, and: error))
+                            return .failure(endpoint.error(fromResponse: httpResponse, withBody: data, withError: error))
                         }
                     }
 

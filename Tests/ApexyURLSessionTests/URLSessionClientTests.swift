@@ -167,7 +167,7 @@ private struct EmptyEndpoint: Endpoint {
         }
     }
     
-    func error(from response: URLResponse?, with body: Data?, and error: Error) -> Error {
+    func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> Error {
         return error
     }
 }
@@ -195,7 +195,7 @@ private struct SimpleUploadEndpoint: UploadEndpoint {
         body
     }
     
-    func error(from response: URLResponse?, with body: Data?, and error: Error) -> Error {
+    func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> Error {
         return error
     }
 }

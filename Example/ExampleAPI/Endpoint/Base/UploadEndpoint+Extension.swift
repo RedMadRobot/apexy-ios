@@ -12,7 +12,7 @@ extension UploadEndpoint {
 
     public typealias ErrorType = Error
     
-    public func error(from response: URLResponse?, with body: Data?, and error: Error) -> Error {
+    public func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> Error {
         return error
     }
 }

@@ -25,7 +25,7 @@ extension JsonEndpoint {
         return resource.data
     }
     
-    public func error(from response: URLResponse?, with body: Data?, and error: Error) -> ErrorType {
+    public func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> ErrorType {
         return error
     }
 }
