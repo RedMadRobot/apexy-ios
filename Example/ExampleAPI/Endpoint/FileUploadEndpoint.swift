@@ -10,9 +10,9 @@ import Apexy
 
 /// Endpoint for uploading a file
 public struct FileUploadEndpoint: UploadEndpoint {
-    
+
     public typealias Content = Void
-    public typealias ErrorType = Error
+    public typealias Failure = Error
     
     private let fileURL: URL
     
@@ -20,14 +20,20 @@ public struct FileUploadEndpoint: UploadEndpoint {
         self.fileURL = fileURL
     }
     
-    public func content(from response: URLResponse?, with body: Data) throws {
-        try ResponseValidator.validate(response, with: body)
-    }
-    
-    public func makeRequest() throws -> (URLRequest, UploadEndpointBody) {
+    public func makeRequest() -> Result<(URLRequest, UploadEndpointBody), Error> {
         var request = URLRequest(url: URL(string: "upload")!)
         request.httpMethod = "POST"
         request.setValue("application/octet-stream", forHTTPHeaderField: "Content-Type")
-        return (request, .file(fileURL))
+        return .success((request, .file(fileURL)))
+    }
+    
+    public func decode(fromResponse response: URLResponse?, withResult result: Result<Data, Error>) -> Result<Void, Error> {
+        return result.flatMap { body -> Result<Void, Error> in
+            do {
+                return .success(try ResponseValidator.validate(response, with: body))
+            } catch {
+                return .failure(error)
+            }
+        }
     }
 }

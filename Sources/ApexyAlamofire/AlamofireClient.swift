@@ -95,29 +95,24 @@ open class AlamofireClient: Client {
     /// - Returns: The progress of fetching the response data from the server for the request.
     open func request<T>(
         _ endpoint: T,
-        completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void
+        completionHandler: @escaping (Result<T.Content, T.Failure>) -> Void
     ) -> Progress where T: Endpoint {
 
-        let anyRequest = AnyRequest(create: endpoint.makeRequest)
-        let request = sessionManager.request(anyRequest)
-            .validate { request, response, data in
-                Result(catching: { try endpoint.validate(request, response: response, data: data) })
-            }.responseData(
+        let urlRequestResult = endpoint.makeRequest()
+        guard case let .success(urlRequest) = urlRequestResult else {
+            if case let .failure(error) = urlRequestResult {
+                completionHandler(.failure(error))
+            }
+            return Progress()
+        }
+        let request = sessionManager.request(urlRequest)
+            .responseData(
                 queue: responseQueue,
                 completionHandler: { (response: DataResponse<Data, AFError>) in
 
-                    let httpResponse = response.response
-                    let result = response.result
-                        .mapError { error -> T.ErrorType in
-                            return endpoint.error(fromResponse: httpResponse, withBody: nil, withError: error)
-                        }
-                        .flatMap { data -> Result<T.Content, T.ErrorType> in
-                            do {
-                                return try .success(endpoint.content(from: httpResponse, with: data))
-                            } catch {
-                                return .failure(endpoint.error(fromResponse: httpResponse, withBody: data, withError: error))
-                            }
-                        }
+                    let result = endpoint.decode(
+                        fromResponse: response.response,
+                        withResult: response.result.mapError({ $0 }))
 
                     self.completionQueue.async {
                         self.responseObserver?(response.request, response.response, response.data, result.error)
@@ -136,17 +131,17 @@ open class AlamofireClient: Client {
     /// - Returns: The progress of uploading data to the server.
     open func upload<T>(
         _ endpoint: T,
-        completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void
+        completionHandler: @escaping (Result<T.Content, T.Failure>) -> Void
     ) -> Progress where T: UploadEndpoint {
         
-        let urlRequest: URLRequest
-        let body: UploadEndpointBody
-        do {
-            (urlRequest, body) = try endpoint.makeRequest()
-        } catch {
-            completionHandler(.failure(endpoint.error(fromResponse: nil, withBody: nil, withError: error)))
+        let urlRequestResult = endpoint.makeRequest()
+        guard case let .success(urlRequestTuple) = urlRequestResult else {
+            if case let .failure(error) = urlRequestResult {
+                completionHandler(.failure(error))
+            }
             return Progress()
         }
+        let (urlRequest, body) = urlRequestTuple
         
         let request: UploadRequest
         switch body {
@@ -162,18 +157,9 @@ open class AlamofireClient: Client {
             queue: responseQueue,
             completionHandler: { (response: DataResponse<Data, AFError>) in
 
-                let httpResponse = response.response
-                let result = response.result
-                    .mapError { error -> T.ErrorType in
-                        return endpoint.error(fromResponse: httpResponse, withBody: nil, withError: error)
-                    }
-                    .flatMap { data -> Result<T.Content, T.ErrorType> in
-                        do {
-                            return try .success(endpoint.content(from: httpResponse, with: data))
-                        } catch {
-                            return .failure(endpoint.error(fromResponse: httpResponse, withBody: data, withError: error))
-                        }
-                    }
+                let result = endpoint.decode(
+                    fromResponse: response.response,
+                    withResult: response.result.mapError({ $0 }))
 
                 self.completionQueue.async {
                     self.responseObserver?(response.request, response.response, response.data, result.error)

@@ -21,30 +21,20 @@ public protocol UploadEndpoint {
     
     
     /// Error type
-    associatedtype ErrorType: Error
+    associatedtype Failure: Error
 
-    /// Create a new `URLRequest` and uploadable payload.
+    /// Create a new `URLRequest`.
     ///
-    /// - Returns: Resource request and uploadable data
-    /// - Throws: Any error creating request.
-    func makeRequest() throws -> (URLRequest, UploadEndpointBody)
+    /// - Returns: Resource request.
+    func makeRequest() -> Result<(URLRequest, UploadEndpointBody), Failure>
 
-    /// Obtain new content from response with body.
+    /// Obtain content from response with result
     ///
     /// - Parameters:
     ///   - response: The metadata associated with the response.
-    ///   - body: The response body.
+    ///   - result: Result which contain Data or Error
     /// - Returns: A new endpoint content.
-    /// - Throws: Any error creating content.
-    func content(from response: URLResponse?, with body: Data) throws -> Content
-    
-    /// Obtain error from response with body.
-    ///
-    /// - Parameters:
-    ///   - response: The metadata associated with the response.
-    ///   - body: The response body.
-    ///   - error: The response error.
-    /// - Returns: A new endpoint error.
-    /// - Throws: Any error creating error.
-    func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> ErrorType
+    func decode(
+        fromResponse response: URLResponse?,
+        withResult result: Result<Data, Error>) -> Result<Content, Failure>
 }

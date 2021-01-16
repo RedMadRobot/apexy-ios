@@ -5,7 +5,7 @@ public extension Client {
     
     func request<T>(_ endpoint: T) -> Single<T.Content> where T: Endpoint {
         Single.create { single in
-            let progress = self.request(endpoint) { (result: Result<T.Content, T.ErrorType>) in
+            let progress = self.request(endpoint) { (result: Result<T.Content, T.Failure>) in
                 switch result {
                 case .success(let content):
                     single(.success(content))

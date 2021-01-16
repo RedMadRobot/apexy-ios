@@ -16,43 +16,20 @@ public protocol Endpoint {
     associatedtype Content
     
     /// Error type
-    associatedtype ErrorType: Error
+    associatedtype Failure: Error
 
     /// Create a new `URLRequest`.
     ///
     /// - Returns: Resource request.
-    /// - Throws: Any error creating request.
-    func makeRequest() throws -> URLRequest
+    func makeRequest() -> Result<URLRequest, Failure>
 
-    /// Obtain new content from response with body.
+    /// Obtain content from response with result
     ///
     /// - Parameters:
     ///   - response: The metadata associated with the response.
-    ///   - body: The response body.
+    ///   - result: Result which contain Data or Error
     /// - Returns: A new endpoint content.
-    /// - Throws: Any error creating content.
-    func content(from response: URLResponse?, with body: Data) throws -> Content
-    
-    /// Obtain error from response with body.
-    ///
-    /// - Parameters:
-    ///   - response: The metadata associated with the response.
-    ///   - body: The response body.
-    ///   - error: The response error.
-    /// - Returns: A new endpoint error.
-    /// - Throws: Any error creating error.
-    func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> ErrorType
-
-    /// Validate response.
-    ///
-    /// - Parameters:
-    ///   - request: The metadata associated with the request.
-    ///   - response: The metadata associated with the response.
-    ///   - data: The response body data.
-    /// - Throws: Any response validation error.
-    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) throws
-}
-
-public extension Endpoint {
-    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) { }
+    func decode(
+        fromResponse response: URLResponse?,
+        withResult result: Result<Data, Error>) -> Result<Content, Failure>
 }

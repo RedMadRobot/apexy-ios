@@ -16,7 +16,7 @@ final class StreamUploadEndpointTests: XCTestCase {
         let fileSize = 1024
         let endpoint = StreamUploadEndpoint(stream: fileStream, size: fileSize)
         
-        let (request, body) = try endpoint.makeRequest()
+        let (request, body) = try! endpoint.makeRequest().get()
         
         assertPOST(request)
         assertURL(request, "upload")

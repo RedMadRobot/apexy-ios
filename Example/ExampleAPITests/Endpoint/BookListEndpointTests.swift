@@ -13,10 +13,12 @@ final class BookListEndpointTests: XCTestCase {
 
     func testMakeRequest() throws {
         let endpoint = BookListEndpoint()
-        let urlRequest = try endpoint.makeRequest()
+        let urlRequest = endpoint.makeRequest()
         
-        assertGET(urlRequest)
-        assertURL(urlRequest, "books")
+        let request = try! urlRequest.get()
+        
+        assertGET(request)
+        assertURL(request, "books")
     }
 
 }

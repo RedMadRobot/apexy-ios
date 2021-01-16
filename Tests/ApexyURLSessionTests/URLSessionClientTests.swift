@@ -149,54 +149,43 @@ private final class MockURLProtocol: URLProtocol {
 private struct EmptyEndpoint: Endpoint {
     
     typealias Content = Data
-    typealias ErrorType = Error
+    typealias Failure = Error
     
     var validateError: EndpointValidationError? = nil
     
-    func makeRequest() throws -> URLRequest {
-        URLRequest(url: URL(string: "empty")!)
+    func makeRequest() -> Result<URLRequest, Error> {
+        return .success(URLRequest(url: URL(string: "empty")!))
     }
     
-    func content(from response: URLResponse?, with body: Data) throws -> Data {
-        return body
-    }
-    
-    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) throws {
+    func decode(fromResponse response: URLResponse?, withResult result: Result<Data, Error>) -> Result<Data, Error> {
         if let error = validateError {
-            throw error
+            return .failure(error)
         }
-    }
-    
-    func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> Error {
-        return error
+        return result
     }
 }
 
 private struct SimpleUploadEndpoint: UploadEndpoint {
    
     typealias Content = Data
-    typealias ErrorType = Error
+    typealias Failure = Error
     
     private let data: Data
     
     init(data: Data) {
         self.data = data
     }
-    
-    func makeRequest() throws -> (URLRequest, UploadEndpointBody) {
+
+    func makeRequest() -> Result<(URLRequest, UploadEndpointBody), Error> {
         var req = URLRequest(url: URL(string: "upload")!)
         req.httpMethod = "POST"
         
         let body = UploadEndpointBody.data(data)
-        return (req, body)
+        return .success((req, body))
     }
     
-    func content(from response: URLResponse?, with body: Data) throws -> Data {
-        body
-    }
-    
-    func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> Error {
-        return error
+    func decode(fromResponse response: URLResponse?, withResult result: Result<Data, Error>) -> Result<Data, Error> {
+        return result
     }
 }
 

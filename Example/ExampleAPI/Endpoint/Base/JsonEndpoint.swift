@@ -14,19 +14,23 @@ protocol JsonEndpoint: Endpoint, URLRequestBuildable where Content: Decodable {}
 
 extension JsonEndpoint {
 
-    public typealias ErrorType = Error
+    public typealias Failure = Error
     
     /// Request body encoder.
     internal var encoder: JSONEncoder { return JSONEncoder.default }
 
-    public func content(from response: URLResponse?, with body: Data) throws -> Content {
-        try ResponseValidator.validate(response, with: body)
-        let resource = try JSONDecoder.default.decode(ResponseData<Content>.self, from: body)
-        return resource.data
-    }
-    
-    public func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> ErrorType {
-        return error
+    public func decode(
+        fromResponse response: URLResponse?,
+        withResult result: Result<Data, Error>) -> Result<Content, Failure> {
+        return result.flatMap { body -> Result<Content, Error> in
+            do {
+                try ResponseValidator.validate(response, with: body)
+                let resource = try JSONDecoder.default.decode(ResponseData<Content>.self, from: body)
+                return .success(resource.data)
+            } catch {
+                return .failure(error)
+            }
+        }
     }
 }
 

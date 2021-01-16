@@ -37,31 +37,38 @@ open class URLSessionClient: Client {
     
     open func request<T>(
         _ endpoint: T,
-        completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void) -> Progress where T : Endpoint {
+        completionHandler: @escaping (Result<T.Content, T.Failure>) -> Void) -> Progress where T : Endpoint {
         
-        var request: URLRequest
+        let urlRequestResult = endpoint.makeRequest()
+        guard case let .success(urlRequest) = urlRequestResult else {
+            if case let .failure(error) = urlRequestResult {
+                completionHandler(.failure(error))
+            }
+            return Progress()
+        }
+        let request: URLRequest
         do {
-            request = try endpoint.makeRequest()
-            request = try requestAdapter.adapt(request)
+            request = try requestAdapter.adapt(urlRequest)
         } catch {
-            completionHandler(.failure(endpoint.error(fromResponse: nil, withBody: nil, withError: error)))
+            completionHandler(endpoint.decode(fromResponse: nil, withResult: .failure(error)))
             return Progress()
         }
         
         let task = session.dataTask(with: request) { (data, response, error) in
 
-            let result = Result<T.Content, Error>(catching: { () throws -> T.Content in
-                if let httpResponse = response as? HTTPURLResponse {
-                    try endpoint.validate(request, response: httpResponse, data: data)
-                }
-                let data = data ?? Data()
+            let dataResult: Result<Data, Error>
+            if let data = data {
+                dataResult = .success(data)
+            } else {
                 if let error = error {
-                    throw error
+                    dataResult = .failure(error)
+                } else {
+                    dataResult = .failure(URLSessionClientError.badResponse)
                 }
-                return try endpoint.content(from: response, with: data)
-            }).mapError { error -> T.ErrorType in
-                return endpoint.error(fromResponse: response as? HTTPURLResponse, withBody: data, withError: error)
             }
+            let httpResponse = response as? HTTPURLResponse
+            let result = endpoint.decode(fromResponse: httpResponse, withResult: dataResult)
+
             self.completionQueue.async {
                 self.responseObserver?(request, response as? HTTPURLResponse, data, error)
                 completionHandler(result)
@@ -72,26 +79,38 @@ open class URLSessionClient: Client {
         return task.progress
     }
     
-    open func upload<T>(_ endpoint: T, completionHandler: @escaping (Result<T.Content, T.ErrorType>) -> Void) -> Progress where T : UploadEndpoint {
-        var request: (URLRequest, UploadEndpointBody)
+    open func upload<T>(_ endpoint: T, completionHandler: @escaping (Result<T.Content, T.Failure>) -> Void) -> Progress where T : UploadEndpoint {
+
+        let urlRequestResult = endpoint.makeRequest()
+        guard case let .success(urlRequestTuple) = urlRequestResult else {
+            if case let .failure(error) = urlRequestResult {
+                completionHandler(.failure(error))
+            }
+            return Progress()
+        }
+        let request: (URLRequest, UploadEndpointBody)
         do {
-            request = try endpoint.makeRequest()
-            request.0 = try requestAdapter.adapt(request.0)
+            request = (try requestAdapter.adapt(urlRequestTuple.0), urlRequestTuple.1)
         } catch {
-            completionHandler(.failure(endpoint.error(fromResponse: nil, withBody: nil, withError: error)))
+            completionHandler(endpoint.decode(fromResponse: nil, withResult: .failure(error)))
             return Progress()
         }
         
         let handler: (Data?, URLResponse?, Error?) -> Void = { (data, response, error) in
-            let result = Result<T.Content, Error>(catching: { () throws -> T.Content in
-                let data = data ?? Data()
+            
+            let dataResult: Result<Data, Error>
+            if let data = data {
+                dataResult = .success(data)
+            } else {
                 if let error = error {
-                    throw error
+                    dataResult = .failure(error)
+                } else {
+                    dataResult = .failure(URLSessionClientError.badResponse)
                 }
-                return try endpoint.content(from: response, with: data)
-            }).mapError { error -> T.ErrorType in
-                return endpoint.error(fromResponse: response as? HTTPURLResponse, withBody: data, withError: error)
             }
+            let httpResponse = response as? HTTPURLResponse
+            let result = endpoint.decode(fromResponse: httpResponse, withResult: dataResult)
+
             self.completionQueue.async {
                 self.responseObserver?(request.0, response as? HTTPURLResponse, data, error)
                 completionHandler(result)
@@ -105,10 +124,10 @@ open class URLSessionClient: Client {
         case (let request, .file(let url)):
             task = session.uploadTask(with: request, fromFile: url, completionHandler: handler)
         case (_, .stream):
-            completionHandler(.failure(endpoint.error(
-                                        fromResponse: nil,
-                                        withBody: nil,
-                                        withError: URLSessionClientError.uploadStreamUnimplemented)))
+            completionHandler(
+                endpoint.decode(
+                    fromResponse: nil,
+                    withResult: .failure(URLSessionClientError.uploadStreamUnimplemented)))
             return Progress()
         }
         task.resume()
@@ -119,12 +138,18 @@ open class URLSessionClient: Client {
 
 enum URLSessionClientError: LocalizedError {
     case uploadStreamUnimplemented
+    case badResponse
     
     var errorDescription: String? {
         switch self {
         case .uploadStreamUnimplemented:
             return """
             UploadEndpointBody.stream is unimplemented. If you need it feel free to create an issue \
+            on GitHub https://github.com/RedMadRobot/apexy-ios/issues/new
+            """
+        case .badResponse:
+            return """
+            Request adaption has failed. If you need it feel free to create an issue \
             on GitHub https://github.com/RedMadRobot/apexy-ios/issues/new
             """
         }

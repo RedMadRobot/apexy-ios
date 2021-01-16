@@ -15,8 +15,7 @@ public struct BookListEndpoint: JsonEndpoint {
     
     public init() {}
     
-    public func makeRequest() throws -> URLRequest {
-        return get(URL(string: "books")!)
+    public func makeRequest() -> Result<URLRequest, Error> {
+        return .success(get(URL(string: "books")!))
     }
-
 }
