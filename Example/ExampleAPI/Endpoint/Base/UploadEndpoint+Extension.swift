@@ -10,7 +10,7 @@ import Apexy
 
 extension UploadEndpoint {
 
-    public typealias ErrorType = Error
+    public typealias Failure = Error
     
     public func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> Error {
         return error

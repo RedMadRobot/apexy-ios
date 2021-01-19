@@ -42,7 +42,9 @@ open class URLSessionClient: Client {
         let urlRequestResult = endpoint.makeRequest()
         guard case let .success(urlRequest) = urlRequestResult else {
             if case let .failure(error) = urlRequestResult {
-                completionHandler(.failure(error))
+                self.completionQueue.async {
+                    completionHandler(.failure(error))
+                }
             }
             return Progress()
         }
@@ -50,7 +52,9 @@ open class URLSessionClient: Client {
         do {
             request = try requestAdapter.adapt(urlRequest)
         } catch {
-            completionHandler(endpoint.decode(fromResponse: nil, withResult: .failure(error)))
+            self.completionQueue.async {
+                completionHandler(endpoint.decode(fromResponse: nil, withResult: .failure(error)))
+            }
             return Progress()
         }
         

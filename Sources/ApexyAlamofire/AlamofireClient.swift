@@ -101,7 +101,9 @@ open class AlamofireClient: Client {
         let urlRequestResult = endpoint.makeRequest()
         guard case let .success(urlRequest) = urlRequestResult else {
             if case let .failure(error) = urlRequestResult {
-                completionHandler(.failure(error))
+                completionQueue.async {
+                    completionHandler(.failure(error))
+                }
             }
             return Progress()
         }

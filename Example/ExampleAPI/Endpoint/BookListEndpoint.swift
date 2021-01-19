@@ -11,7 +11,6 @@ import Apexy
 public struct BookListEndpoint: JsonEndpoint {
     
     public typealias Content = [Book]
-
     
     public init() {}
     

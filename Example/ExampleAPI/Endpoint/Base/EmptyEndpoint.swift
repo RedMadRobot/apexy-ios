@@ -12,13 +12,15 @@ protocol EmptyEndpoint: Endpoint, URLRequestBuildable where Content == Void {}
 
 extension EmptyEndpoint {
 
-    public typealias ErrorType = Error
+    public typealias Failure = Error
     
-    public func content(from response: URLResponse?, with body: Data) throws {
-        try ResponseValidator.validate(response, with: body)
-    }
-    
-    public func error(fromResponse response: URLResponse?, withBody body: Data?, withError error: Error) -> ErrorType {
-        return error
+    func decode(fromResponse response: URLResponse?, withResult result: Result<Data, Error>) -> Result<Content, Failure> {
+        return result.flatMap { body -> Result<Content, Error> in
+            do {
+                return .success(try ResponseValidator.validate(response, with: body))
+            } catch {
+                return .failure(error)
+            }
+        }
     }
 }

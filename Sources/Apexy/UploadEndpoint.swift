@@ -19,7 +19,6 @@ public protocol UploadEndpoint {
     /// Response type.
     associatedtype Content
     
-    
     /// Error type
     associatedtype Failure: Error
 
