@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "Apexy"
-  s.version      = "1.2.0"
+  s.version      = "1.3.0"
   s.summary      = "HTTP transport library"
   s.homepage     = "https://github.com/RedMadRobot/apexy-ios"
   s.license      = { :type => "MIT"}
@@ -33,6 +33,11 @@ Pod::Spec.new do |s|
     sp.source_files = "Sources/ApexyRxSwift/*.swift"
     sp.dependency "Apexy/Core"
     sp.dependency "RxSwift"
+  end
+
+  s.subspec 'Loader' do |sp|
+    sp.source_files = "Sources/ApexyLoader/*.swift"
+    sp.dependency "Apexy/Core"
   end
 
   s.default_subspecs = ["Alamofire"]

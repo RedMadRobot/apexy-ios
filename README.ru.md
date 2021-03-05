@@ -33,19 +33,26 @@
 
 `pod 'Apexy/URLSession'`
 
+Если вы хотите использовать [ApexyLoader](Documentation/loader_ru.md):
+
+`pod 'Apexy/Loader'`
+
+
 ### Swift Package Manager
 
 Если у вас есть Xcode проект, откройте его и выберите **File → Swift Packages → Add package Dependency** и вставьте адрес репозитория Apexy:
 
 `https://github.com/RedMadRobot/apexy-ios`
 
-Будут достуны 3 продукта: Apexy, ApexyAlamofire, ApexyRxSwift.
+Будут достуны 4 продукта: Apexy, ApexyAlamofire, ApexyRxSwift, ApexyLoader.
 
 Apexy — Под капотом использует URLSession
 
 ApexyAlamofire — Под капотом использует Alamofire
 
 Если хотите использовать Apexy с RxSwift, то дополнительно подключайте пакет ApexyRxSwift.
+
+ApexyLoader — дополнение для Apexy, которое позволяет хранить загруженные данные в памяти и следить за состоянием загрузки. Подробности смотрите в документации [ApexyLoader](Documentation/loader_ru.md):
 
 Если у вас есть Swift пакет, добавьте Apexy как зависимость в свойство dependencies файла Package.swift.
 
@@ -269,9 +276,16 @@ public struct FileUploadEndpoint: UploadEndpoint {
       - `UpdateBookEndpointTests`
       - `DeleteBookEndpointTests`
 
+## Требования
+
+- iOS 11.0+ / macOS 10.13+ / tvOS 11.0+ / watchOS 4.0+
+- Xcode 12+
+- Swift 5.3+
+
 ## Дополнительные материалы
 
 - [Вложенные ответы](Documentation/nested_response.ru.md)
 - [Тестирование](Documentation/tests.ru.md)
 - [Обработка ошибок](Documentation/error_handling.ru.md)
 - [Реактивное программирование](Documentation/reactive.ru.md)
+- [ApexyLoader](Documentation/loader_ru.md)

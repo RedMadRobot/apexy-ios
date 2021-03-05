@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="FetchViewController" customModule="ApexyLoaderExample" customModuleProvider="target">
+            <connections>
+                <outlet property="activityIndicatorView" destination="eW1-KG-hk9" id="G29-KC-Py9"/>
+                <outlet property="downloadButton" destination="lPM-0S-3vz" id="jEt-P3-o0e"/>
+                <outlet property="repoTextView" destination="bFA-uK-GYh" id="LFw-tr-Mfp"/>
+                <outlet property="view" destination="drw-Tw-tld" id="tFS-fg-eUC"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="drw-Tw-tld">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lPM-0S-3vz">
+                    <rect key="frame" x="20" y="133" width="39" height="44"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="44" id="DRC-ln-hmA"/>
+                    </constraints>
+                    <state key="normal" title="Fetch"/>
+                    <connections>
+                        <action selector="fetchFileURL" destination="-1" eventType="touchUpInside" id="HQD-Xa-ypE"/>
+                    </connections>
+                </button>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Tap on Fetch to start loading RedMadRobot's repository list." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="inU-pV-3os">
+                    <rect key="frame" x="20" y="76" width="374" height="41"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="large" translatesAutoresizingMaskIntoConstraints="NO" id="eW1-KG-hk9">
+                    <rect key="frame" x="91" y="136.5" width="37" height="37"/>
+                </activityIndicatorView>
+                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="bFA-uK-GYh">
+                    <rect key="frame" x="16" y="197" width="382" height="699"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <color key="textColor" systemColor="labelColor"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                </textView>
+            </subviews>
+            <viewLayoutGuide key="safeArea" id="6PX-Vw-E1p"/>
+            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+            <constraints>
+                <constraint firstItem="bFA-uK-GYh" firstAttribute="top" secondItem="lPM-0S-3vz" secondAttribute="bottom" constant="20" id="0KW-hd-GVZ"/>
+                <constraint firstItem="eW1-KG-hk9" firstAttribute="centerY" secondItem="lPM-0S-3vz" secondAttribute="centerY" id="6Cq-9b-FYr"/>
+                <constraint firstItem="bFA-uK-GYh" firstAttribute="leading" secondItem="6PX-Vw-E1p" secondAttribute="leading" constant="16" id="Aq4-VQ-6cK"/>
+                <constraint firstItem="6PX-Vw-E1p" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="lPM-0S-3vz" secondAttribute="trailing" constant="20" id="IE4-b6-z43"/>
+                <constraint firstAttribute="bottom" secondItem="bFA-uK-GYh" secondAttribute="bottom" id="ILD-nc-sa8"/>
+                <constraint firstItem="inU-pV-3os" firstAttribute="leading" secondItem="6PX-Vw-E1p" secondAttribute="leading" constant="20" id="Of3-mY-6u3"/>
+                <constraint firstItem="eW1-KG-hk9" firstAttribute="leading" secondItem="lPM-0S-3vz" secondAttribute="trailing" constant="32" id="UAV-F8-R2k"/>
+                <constraint firstItem="6PX-Vw-E1p" firstAttribute="trailing" secondItem="inU-pV-3os" secondAttribute="trailing" constant="20" id="asN-3O-e8B"/>
+                <constraint firstItem="lPM-0S-3vz" firstAttribute="top" secondItem="inU-pV-3os" secondAttribute="bottom" constant="16" id="fGw-oN-S4h"/>
+                <constraint firstItem="inU-pV-3os" firstAttribute="top" secondItem="6PX-Vw-E1p" secondAttribute="top" constant="32" id="k9a-Nb-QtQ"/>
+                <constraint firstItem="6PX-Vw-E1p" firstAttribute="trailing" secondItem="bFA-uK-GYh" secondAttribute="trailing" constant="16" id="poV-Zi-6v8"/>
+                <constraint firstItem="lPM-0S-3vz" firstAttribute="leading" secondItem="6PX-Vw-E1p" secondAttribute="leading" constant="20" id="qpa-rJ-445"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="108"/>
+        </view>
+    </objects>
+    <resources>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

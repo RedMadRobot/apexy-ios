@@ -33,6 +33,10 @@ If you want to use Apexy without Alamofire and RxSwift:
 
 `pod 'Apexy/URLSession'`
 
+If you want to use [ApexyLoader](Documentation/loader_ru.md):
+
+`pod 'Apexy/Loader'`
+
 ### Swift Package Manager
 
 If you have Xcode project, open it and select **File → Swift Packages → Add package Dependency** and paste Apexy repository URL:
@@ -46,6 +50,8 @@ Apexy — Uses URLSession under the hood
 ApexyAlamofire — Uses Alamofire under the hood
 
 If you want to use Apexy with RxSwift add ApexyRxSwift package product.
+
+ApexyLoader — add-on for Apexy to store fetched data in memory and observe loading state. See the documentation for details [ApexyLoader](Documentation/loader_ru.md):
 
 If you have your own Swift package, add Apexy as a dependency to the dependencies value of your Package.swift.
 
@@ -269,9 +275,16 @@ Split the network layer into folders:
       - `UpdateBookEndpointTests`
       - `DeleteBookEndpointTests`
 
+## Requirements
+
+- iOS 11.0+ / macOS 10.13+ / tvOS 11.0+ / watchOS 4.0+
+- Xcode 12+
+- Swift 5.3+
+
 ## Additional resources
 
 - [Nested response](Documentation/nested_response.md)
 - [Testing](Documentation/tests.md)
 - [Error handling](Documentation/error_handling.md)
 - [Reactive programming](Documentation/reactive.md)
+- [ApexyLoader](Documentation/loader_ru.md)
