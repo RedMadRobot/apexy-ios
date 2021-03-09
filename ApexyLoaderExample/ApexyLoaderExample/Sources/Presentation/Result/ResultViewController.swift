@@ -13,11 +13,11 @@ final class ResultViewController: UIViewController {
     @IBOutlet private var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet private var repoTextView: UITextView!
     
-    private let fileLoader: RepoLoading
+    private let repoLoader: RepoLoading
     private var observer: LoaderObservation?
     
-    init(fileLoader: RepoLoading = ServiceLayer.shared.repoLoader) {
-        self.fileLoader = fileLoader
+    init(repoLoader: RepoLoading = ServiceLayer.shared.repoLoader) {
+        self.repoLoader = repoLoader
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -28,20 +28,20 @@ final class ResultViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        observer = fileLoader.observe { [weak self] in
+        observer = repoLoader.observe { [weak self] in
             self?.stateDidUpdate()
         }
         stateDidUpdate()
     }
     
     private func stateDidUpdate() {
-        if fileLoader.state.isLoading {
+        if repoLoader.state.isLoading {
             activityIndicatorView.startAnimating()
         } else {
             activityIndicatorView.stopAnimating()
         }
         
-        switch fileLoader.state {
+        switch repoLoader.state {
         case .failure(_, let content?),
              .loading(let content?),
              .success(let content):
