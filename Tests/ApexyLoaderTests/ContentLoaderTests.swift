@@ -18,11 +18,11 @@ final class ContentLoaderTests: XCTestCase {
 
         XCTAssertTrue(
             contentLoader.observations.isEmpty,
-            "Нет наблюдений за другими загрузчиками")
+            "No observation of other loaders")
         XCTAssertEqual(
             contentLoader.state,
             .initial,
-            "Начальное состояние загрузчика")
+            "Initial loader state")
     }
 
     func testCancelObservation() {
@@ -30,64 +30,64 @@ final class ContentLoaderTests: XCTestCase {
         contentLoader.state = .success(content: 10)
         XCTAssertEqual(
             numberOfChanges, 0,
-            "Обработчик изменений не сработал, потому что произошла отмена наблюдения")
+            "The change handler didn‘t triggered because the observation was canceled")
     }
 
     func testStartLoading() {
         XCTAssertTrue(
             contentLoader.startLoading(),
-            "Началась загрузка")
+            "Loading has begun")
         XCTAssertTrue(
             contentLoader.state == .loading(cache: nil),
-            "Состояние загрузки")
+            "State of the loader must be loading")
         XCTAssertEqual(
             numberOfChanges, 1,
-            "Обработчик изменений сработал")
+            "Change handler triggered")
 
         XCTAssertFalse(
             contentLoader.startLoading(),
-            "Повторная загрузка до окончания первой не отработала")
+            "The second loading didn‘t start before the end of the first one.")
         XCTAssertTrue(
             contentLoader.state == .loading(cache: nil),
-            "Состояние загрузки НЕ поменялось")
+            "The load status has NOT changed")
         XCTAssertEqual(
             numberOfChanges, 1,
-            "Обработчик изменений НЕ сработал")
+            "The change handler did NOT triggered")
     }
 
     func testFinishLoading() {
         contentLoader.finishLoading(.success(12))
         XCTAssertTrue(
             contentLoader.state == .success(content: 12),
-            "Состояние успешной загрузки")
+            "Succesfull loading state")
         XCTAssertEqual(
             numberOfChanges, 1,
-            "Обработчик изменений сработал")
+            "The change handler triggered")
 
         let error = URLError(.networkConnectionLost)
         contentLoader.finishLoading(.failure(error))
         XCTAssertTrue(
             contentLoader.state == .failure(error: error, cache: 12),
-            "Состояние провалившейся загрузки с закешированым результатом")
+            "The state must me failure with cache")
         XCTAssertEqual(
             numberOfChanges, 2,
-            "Обработчик изменений сработал")
+            "The handler triggered")
     }
 
     func testUpdate() {
         contentLoader.update(.initial)
         XCTAssertEqual(
             numberOfChanges, 0,
-            "Состояние не поменялось и обработчик не сработал")
+            "The state didn't change and the handler didn't triggered")
 
         contentLoader.update(.success(content: 1))
         XCTAssertEqual(
             numberOfChanges, 1,
-            "Новое состояние и обработчик сработал")
+            "The state changed and the handler triggered")
 
         contentLoader.update(.success(content: 1))
         XCTAssertEqual(
             numberOfChanges, 1,
-            "Состояние не поменялось и обработчик не сработал")
+            "The state didn't changed and the handler didn't triggered")
     }
 }

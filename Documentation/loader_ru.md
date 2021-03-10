@@ -74,7 +74,31 @@ final class ProfileViewController: UIViewController {
 
 При создании загрузчика его начальное состояние будет `initial`. У загрузчика есть метод `startLoading()` который необходимо вызвать чтобы поменять состояние на `loading`. Сразу после первого вызова этого метода состояние загрузчика становится `loading(cache: nil)`. Если возникнет ошибка то состояние станет `failure(error: Error, cache: nil)`, иначе `success(Content)`. Если после успешной загрузки данных повторить загрузку данных (например при pull to refresh), то состояния `loading` и `failure` будут содеражать в аргументе `cache` ранее загруженные данные.
 
-Состояния нескольких загрузчиков можно объединять с помощью метода `merge` у `LoadingState`.
+<img src="resources/uml_state.png" width="500"/>
+
+Состояния нескольких загрузчиков можно объединить с помощью метода `merge` у `LoadingState`. Этот метод принимает второе состояние и замыкание которое возвращает новый контент на основе контента обоих состояний.
+
+В примере ниже есть два состояния: состояние загрузки информации о пользователе и состояние загрузки списка услуг. С помощью метода `merge` эти два состояния объединяются в одно. Вместо двух модельных объектов: `User` и `Service` будет один `UserServices`.
+
+```swift
+let userState = LoadingState<User>.loading(cache: nil)
+let servicesState = LoadingState<[Service]>.success(content: 3)
+
+let state = userState.merge(servicesState) { user, services in
+    UserServices(user: user, services: services)
+}
+
+switch state {
+case .initial:
+    // initial state
+case .loading(let userServices):
+    // loading state with optional cache (info about user and list of services)
+case .success(let userServices):
+    // successfull state with info about user and list of services
+case .failure(let error, let userServices):
+    // failed state with optional cache (info about user and list of services)
+}
+```
 
 ## Отслеживание состояния загрузки
 
