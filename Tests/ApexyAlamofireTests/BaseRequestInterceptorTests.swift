@@ -31,4 +31,28 @@ final class BaseRequestInterceptorTests: XCTestCase {
         }
         wait(for: [expectation], timeout: 1)
     }
+    
+    func testAdapt_urlPathWithTrailingSlash() {
+        let interceptor = BaseRequestInterceptor(baseURL: url)
+        let request = URLRequest(url: URL(string: "path/")!)
+        let exp = expectation(description: "Adapting url request")
+        interceptor.adapt(request, for: .default) { result in
+            let request = try! result.get()
+            XCTAssertEqual(request.url?.absoluteString, "https://booklibrary.com/path/")
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testAdapt_urlPathWithoutTrailingSlash() {
+        let interceptor = BaseRequestInterceptor(baseURL: url)
+        let request = URLRequest(url: URL(string: "path")!)
+        let exp = expectation(description: "Adapting url request")
+        interceptor.adapt(request, for: .default) { result in
+            let request = try! result.get()
+            XCTAssertEqual(request.url?.absoluteString, "https://booklibrary.com/path")
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+    }
 }

@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		01B71C3DA046E74FC12EE725 /* Pods_ExampleAPITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5729DF785874DE9498978A98 /* Pods_ExampleAPITests.framework */; };
-		021A661725FB926500E120BD /* BaseRequestInterceptorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 021A661625FB926500E120BD /* BaseRequestInterceptorTests.swift */; };
 		0246DD0822B8D50B007AD11C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD0722B8D50B007AD11C /* AppDelegate.swift */; };
 		0246DD0A22B8D50B007AD11C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0246DD0922B8D50B007AD11C /* ViewController.swift */; };
 		0246DD0D22B8D50B007AD11C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0246DD0B22B8D50B007AD11C /* Main.storyboard */; };
@@ -80,7 +79,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		021A661625FB926500E120BD /* BaseRequestInterceptorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseRequestInterceptorTests.swift; sourceTree = "<group>"; };
 		0246DD0422B8D50B007AD11C /* Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0246DD0722B8D50B007AD11C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0246DD0922B8D50B007AD11C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -316,7 +314,6 @@
 				0F22960224D025AD00EF4F8F /* BookListEndpointTests.swift */,
 				0F22960724D0269600EF4F8F /* FileUploadEndpointTests.swift */,
 				0F22960924D028DA00EF4F8F /* StreamUploadEndpointTests.swift */,
-				021A661625FB926500E120BD /* BaseRequestInterceptorTests.swift */,
 			);
 			path = Endpoint;
 			sourceTree = "<group>";
@@ -622,7 +619,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				021A661725FB926500E120BD /* BaseRequestInterceptorTests.swift in Sources */,
 				0F22960824D0269600EF4F8F /* FileUploadEndpointTests.swift in Sources */,
 				0F22960324D025AD00EF4F8F /* BookListEndpointTests.swift in Sources */,
 				0F22960624D0262700EF4F8F /* Asserts.swift in Sources */,
