@@ -33,7 +33,7 @@ If you want to use Apexy without Alamofire and RxSwift:
 
 `pod 'Apexy/URLSession'`
 
-If you want to use [ApexyLoader](Documentation/loader_ru.md):
+If you want to use [ApexyLoader](Documentation/loader.md):
 
 `pod 'Apexy/Loader'`
 
@@ -51,7 +51,7 @@ ApexyAlamofire — Uses Alamofire under the hood
 
 If you want to use Apexy with RxSwift add ApexyRxSwift package product.
 
-ApexyLoader — add-on for Apexy to store fetched data in memory and observe loading state. See the documentation for details [ApexyLoader](Documentation/loader_ru.md):
+ApexyLoader — add-on for Apexy to store fetched data in memory and observe loading state. See the documentation for details [ApexyLoader](Documentation/loader.md):
 
 If you have your own Swift package, add Apexy as a dependency to the dependencies value of your Package.swift.
 
@@ -287,4 +287,4 @@ Split the network layer into folders:
 - [Testing](Documentation/tests.md)
 - [Error handling](Documentation/error_handling.md)
 - [Reactive programming](Documentation/reactive.md)
-- [ApexyLoader](Documentation/loader_ru.md)
+- [ApexyLoader](Documentation/loader.md)
