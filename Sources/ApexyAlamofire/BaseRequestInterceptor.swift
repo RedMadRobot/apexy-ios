@@ -13,6 +13,8 @@ open class BaseRequestInterceptor: Alamofire.RequestInterceptor {
     
     /// Contains Base `URL`.
     ///
+    /// Must end with a slash character `https://example.com/api/v1/`
+    ///
     /// - Warning: declared as open variable for debug purposes only.
     open var baseURL: URL
     
