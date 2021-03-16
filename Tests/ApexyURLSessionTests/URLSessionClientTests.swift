@@ -7,11 +7,13 @@
 
 import Apexy
 import ApexyURLSession
+import Combine
 import XCTest
 
 final class URLSessionClientTests: XCTestCase {
     
     private var client: URLSessionClient!
+    private var bag = Set<AnyCancellable>()
     
     override func setUp() {
         let url = URL(string: "https://booklibrary.com")!
@@ -103,18 +105,17 @@ final class URLSessionClientTests: XCTestCase {
         let exp = expectation(description: "wait for response")
         
         let publisher = client.request(endpoint)
-        _ = publisher.sink(receiveCompletion: { result in
+        publisher.sink(receiveCompletion: { result in
             switch result {
             case .finished:
                 break
             case .failure:
                 XCTFail("Expected result: .finished, actual result: .failure")
             }
-            exp.fulfill()
         }) { content in
             XCTAssertEqual(content, data)
             exp.fulfill()
-        }
+        }.store(in: &bag)
         wait(for: [exp], timeout: 0.1)
     }
 }

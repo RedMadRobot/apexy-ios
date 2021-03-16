@@ -53,13 +53,7 @@ open class BaseRequestInterceptor: Alamofire.RequestInterceptor {
     // MARK: - Private
     
     private func appendingBaseURL(to url: URL) -> URL {
-        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
-        components.percentEncodedQuery = url.query
-        let result = components.url!.appendingPathComponent(url.path)
-        if url.hasDirectoryPath {
-            return result.appendingPathComponent("/")
-        }
-        return result
+        URL(string: url.absoluteString, relativeTo: baseURL)!
     }
 
 }
