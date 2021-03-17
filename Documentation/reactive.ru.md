@@ -27,7 +27,7 @@ bookService.fetchBooks()
     .subscribe(onSuccess: { [weak self] books in
         self?.activityView.isHidden = true
         self?.show(books: books)
-    }, onError: { [weak self] error in
+    }, onFailure: { [weak self] error in
         self?.activityView.isHidden = true
         self?.resultLabel.text = error.localizedDescription
     }).disposed(by: bag)
