@@ -8,6 +8,7 @@ target 'ExampleAPI' do
   use_frameworks!
 
   pod 'Apexy', :path => "../"
+  pod 'Apexy/RxSwift', :path => "../"
 
   target 'ExampleAPITests' do
     inherit! :search_paths
