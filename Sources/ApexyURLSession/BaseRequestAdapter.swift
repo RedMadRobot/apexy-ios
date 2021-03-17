@@ -27,8 +27,6 @@ open class BaseRequestAdapter: RequestAdapter {
     // MARK: - Private
     
     private func appendingBaseURL(to url: URL) -> URL {
-        var components = URLComponents(url: baseURL, resolvingAgainstBaseURL: true)!
-        components.percentEncodedQuery = url.query
-        return components.url!.appendingPathComponent(url.path)
+        URL(string: url.absoluteString, relativeTo: baseURL)!
     }
 }

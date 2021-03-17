@@ -14,9 +14,11 @@ final class BaseRequestInterceptorTests: XCTestCase {
     
     private let url = URL(string: "https://booklibrary.com")!
     
+    var interceptor: RequestInterceptor {
+        BaseRequestInterceptor(baseURL: url)
+    }
+    
     func testAdapt() {
-        let interceptor = BaseRequestInterceptor(baseURL: url)
-        
         let request = URLRequest(url: URL(string: "books/10")!)
         
         let expectation = XCTestExpectation(description: "Wait for completion")
@@ -30,5 +32,42 @@ final class BaseRequestInterceptorTests: XCTestCase {
             expectation.fulfill()
         }
         wait(for: [expectation], timeout: 1)
+    }
+    
+    func testAdapt_urlPathWithTrailingSlash() {
+        let request = URLRequest(url: URL(string: "path/")!)
+        let exp = expectation(description: "Adapting url request")
+        interceptor.adapt(request, for: .default) { result in
+            let request = try! result.get()
+            XCTAssertEqual(request.url?.absoluteString, "https://booklibrary.com/path/")
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testAdapt_urlPathWithoutTrailingSlash() {
+        let request = URLRequest(url: URL(string: "path")!)
+        let exp = expectation(description: "Adapting url request")
+        interceptor.adapt(request, for: .default) { result in
+            let request = try! result.get()
+            XCTAssertEqual(request.url?.absoluteString, "https://booklibrary.com/path")
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func testAdapt_urlPathWithTrailingSlashWithQuery() {
+        let url = URL(string: "api/path/")!
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)!
+        components.queryItems = [URLQueryItem(name: "param", value: "value")]
+        
+        let request = URLRequest(url: components.url!)
+        let exp = expectation(description: "Adapting url request")
+        interceptor.adapt(request, for: .default) { result in
+            let request = try! result.get()
+            XCTAssertEqual(request.url?.absoluteString, "https://booklibrary.com/api/path/?param=value")
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
     }
 }
