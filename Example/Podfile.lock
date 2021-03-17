@@ -1,24 +1,18 @@
 PODS:
   - Alamofire (5.4.1)
-  - Apexy (1.3.1):
-    - Apexy/Alamofire (= 1.3.1)
-  - Apexy/Alamofire (1.3.1):
+  - Apexy (1.3.0):
+    - Apexy/Alamofire (= 1.3.0)
+  - Apexy/Alamofire (1.3.0):
     - Alamofire (~> 5.0)
     - Apexy/Core
-  - Apexy/Core (1.3.1)
-  - Apexy/RxSwift (1.3.1):
-    - Apexy/Core
-    - RxSwift (~> 6.0)
-  - RxSwift (6.1.0)
+  - Apexy/Core (1.3.0)
 
 DEPENDENCIES:
   - Apexy (from `../`)
-  - Apexy/RxSwift (from `../`)
 
 SPEC REPOS:
   trunk:
     - Alamofire
-    - RxSwift
 
 EXTERNAL SOURCES:
   Apexy:
@@ -26,9 +20,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Apexy: cc99b766252333348576161046b0e5698d366d4f
-  RxSwift: a834e5c538e89eca0cae86f403f4fbf0336786ce
+  Apexy: f6d81271bf1228dd10ddd86c24fb4f1a0fdc85fd
 
-PODFILE CHECKSUM: 2de1310ea6063211b0269e9fe451cd4baab92485
+PODFILE CHECKSUM: f86a90e7590ccb3aa7caeceaf315abe256650c66
 
 COCOAPODS: 1.10.1
