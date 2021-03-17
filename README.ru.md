@@ -5,8 +5,9 @@
 [![CocoaPods Compatible](https://img.shields.io/cocoapods/v/Apexy.svg)](https://cocoapods.org/pods/Apexy)
 [![Platform](https://img.shields.io/cocoapods/p/Apexy.svg?style=flat)](https://cocoapods.org/pods/Apexy)
 [![SPM compatible](https://img.shields.io/badge/spm-compatible-brightgreen.svg?style=flat)](https://swift.org/package-manager)
-[![Swift 5.3](https://img.shields.io/badge/swift-5.2-red.svg?style=flat)](https://developer.apple.com/swift)
+[![Swift 5.3](https://img.shields.io/badge/swift-5.3-red.svg?style=flat)](https://developer.apple.com/swift)
 [![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)](https://github.com/RedMadRobot/api-client-ios/blob/master/LICENSE)
+[![codebeat badge](https://codebeat.co/badges/2cf939f7-b511-43c6-a977-6907478af759)](https://codebeat.co/projects/github-com-redmadrobot-api-client-ios-master)
 
 Библиотека для организации сетевого слоя в проекте.
 
