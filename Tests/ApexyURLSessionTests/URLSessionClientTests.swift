@@ -116,6 +116,7 @@ final class URLSessionClientTests: XCTestCase {
             XCTAssertEqual(content, data)
             exp.fulfill()
         }.store(in: &bag)
+        
         wait(for: [exp], timeout: 0.1)
     }
 }
