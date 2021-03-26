@@ -23,13 +23,33 @@ open class URLSessionClient: Client {
     ///   - configuration: The configuration used to construct the managed session.
     ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
     ///   - responseObserver: The closure to be called after each response.
-    public init(
+    public convenience init(
         baseURL: URL,
         configuration: URLSessionConfiguration = .default,
         completionQueue: DispatchQueue = .main,
         responseObserver: ResponseObserver? = nil) {
         
-        self.requestAdapter = BaseRequestAdapter(baseURL: baseURL)
+        self.init(
+            requestAdapter: BaseRequestAdapter(baseURL: baseURL),
+            configuration: configuration,
+            completionQueue: completionQueue,
+            responseObserver: responseObserver)
+    }
+    
+    /// Creates new 'URLSessionClient' instance.
+    ///
+    /// - Parameters:
+    ///   - requestAdapter: RequestAdapter used to adapt a `URLRequest`.
+    ///   - configuration: The configuration used to construct the managed session.
+    ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
+    ///   - responseObserver: The closure to be called after each response.
+    public init(
+        requestAdapter: RequestAdapter,
+        configuration: URLSessionConfiguration = .default,
+        completionQueue: DispatchQueue = .main,
+        responseObserver: ResponseObserver? = nil) {
+        
+        self.requestAdapter = requestAdapter
         self.session = URLSession(configuration: configuration)
         self.completionQueue = completionQueue
         self.responseObserver = responseObserver
