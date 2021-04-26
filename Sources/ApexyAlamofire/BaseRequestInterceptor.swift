@@ -27,7 +27,7 @@ open class BaseRequestInterceptor: Alamofire.RequestInterceptor {
     
     // MARK: - Alamofire.RequestInterceptor
     
-    public func adapt(
+    open func adapt(
         _ urlRequest: URLRequest,
         for session: Session,
         completion: @escaping (Result<URLRequest, Error>) -> Void) {
@@ -43,7 +43,7 @@ open class BaseRequestInterceptor: Alamofire.RequestInterceptor {
         completion(.success(request))
     }
     
-    public func retry(
+    open func retry(
         _ request: Request,
         for session: Session,
         dueTo error: Error,
