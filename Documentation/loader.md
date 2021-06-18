@@ -16,7 +16,7 @@ In the example below a user profile loader is shown.
 
 ```swift
 import Foundation
-import ApexyLoaders
+import ApexyLoader
 
 protocol UserProfileLoading: ContentLoading {
     var state: LoadingState<UserProfile> { get }

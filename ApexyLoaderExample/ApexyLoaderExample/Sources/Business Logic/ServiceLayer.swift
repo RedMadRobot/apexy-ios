@@ -14,7 +14,7 @@ final class ServiceLayer {
     private init() {}
     
     private(set) lazy var repoLoader: RepoLoading = RepositoriesLoader(apiClient: apiClient)
-    private(set) lazy var orgLoader: OrganisationLoading = OrganisationLoader(apiClient: apiClient)
+    private(set) lazy var orgLoader: OrganizationLoading = OrganizationLoader(apiClient: apiClient)
     
     private lazy var apiClient: Client = {
         URLSessionClient(

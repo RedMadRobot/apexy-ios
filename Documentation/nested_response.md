@@ -42,7 +42,7 @@ The request to receive all the books will return an array wrapped in `data`.
 
 `GET books/{book_id}`
 
-The request to recereive a book by `id` will return one book wrapped in `data`
+The request to receive a book by `id` will return one book wrapped in `data`
 
 ```json
 {
@@ -74,8 +74,8 @@ private struct ResponseData<Content>: Decodable where Content: Decodable {
 
 As a result, our requests hide the nesting of the response.
 
-- `BookListEndpoint.Contnet = [Book]`
-- `BookEndpoint.Contnet = Book`
+- `BookListEndpoint.Content = [Book]`
+- `BookEndpoint.Content = Book`
 
 ```swift
 public struct BookEndpoint: JsonEndpoint {

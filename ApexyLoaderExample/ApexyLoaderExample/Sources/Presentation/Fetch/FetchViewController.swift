@@ -10,18 +10,22 @@ import UIKit
 
 final class FetchViewController: UIViewController {
 
+    // MARK: - Private Properties
+    
     @IBOutlet private var downloadButton: UIButton!
     @IBOutlet private var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet private var repoTextView: UITextView!
     
     private let repoLoader: RepoLoading
-    private let orgLoader: OrganisationLoading
+    private let orgLoader: OrganizationLoading
     
     private var observers = [LoaderObservation]()
     
+    // MARK: - Init
+    
     init(
         repoLoader: RepoLoading = ServiceLayer.shared.repoLoader,
-        orgLoader: OrganisationLoading = ServiceLayer.shared.orgLoader) {
+        orgLoader: OrganizationLoading = ServiceLayer.shared.orgLoader) {
         
         self.repoLoader = repoLoader
         self.orgLoader = orgLoader
@@ -32,6 +36,8 @@ final class FetchViewController: UIViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    // MARK: - UIViewController
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,10 +51,12 @@ final class FetchViewController: UIViewController {
         })
     }
     
+    // MARK: - Private Methods
+    
     private func stateDidChange() {
         
         let state = orgLoader.state.merge(repoLoader.state) { org, repos in
-            OrganisationRepositories(org: org, repos: repos)
+            OrganizationRepositories(org: org, repos: repos)
         }
         
         if state.isLoading {
@@ -62,7 +70,7 @@ final class FetchViewController: UIViewController {
              .loading(let content?),
              .success(let content):
             let repos = content.repos.map { $0.name }.joined(separator: "\n")
-            repoTextView.text = "Repositories of the \(content.org.name) organisation:\n\n\(repos)"
+            repoTextView.text = "Repositories of the \(content.org.name) organization:\n\n\(repos)"
         default:
             break
         }

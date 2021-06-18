@@ -52,7 +52,7 @@ open class ContentLoader<Content>: ObservableLoader {
     /// Updates the loader state to `.loading`.
     ///
     /// Call this method before loading data to update the loader state.
-    /// - Returns: A boolean value indicating the possibility to start loading data. The metod return `false` if the current state is `loading`.
+    /// - Returns: A boolean value indicating the possibility to start loading data. The method return `false` if the current state is `loading`.
     @discardableResult
     final public func startLoading() -> Bool {
         if state.isLoading {

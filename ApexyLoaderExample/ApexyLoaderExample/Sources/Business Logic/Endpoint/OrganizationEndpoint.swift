@@ -1,5 +1,5 @@
 //
-//  OrganisationEndpoint.swift
+//  OrganizationEndpoint.swift
 //  ApexyLoaderExample
 //
 //  Created by Daniil Subbotin on 04.03.2021.
@@ -8,9 +8,9 @@
 import Apexy
 import Foundation
 
-struct OrganisationEndpoint: BaseEndpoint {
+struct OrganizationEndpoint: BaseEndpoint {
     
-    typealias Content = Organisation
+    typealias Content = Organization
 
     func makeRequest() -> URLRequest {
         let url = URL(string: "orgs/RedMadRobot")!

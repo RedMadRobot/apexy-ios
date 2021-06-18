@@ -15,7 +15,7 @@ ApexyLoader — дополнение для Apexy, которое позволя
 
 ```swift
 import Foundation
-import ApexyLoaders
+import ApexyLoader
 
 protocol UserProfileLoading: ContentLoading {
     var state: LoadingState<UserProfile> { get }
@@ -72,7 +72,7 @@ final class ProfileViewController: UIViewController {
 - `success(content: Content)` — данные успешно загружены.
 - `failure(error: Error, cache: Content?)` — ошибка загрузки данных, при этом может быть закэшированный (ранее загруженный) контент.
 
-При создании загрузчика его начальное состояние будет `initial`. У загрузчика есть метод `startLoading()` который необходимо вызвать чтобы поменять состояние на `loading`. Сразу после первого вызова этого метода состояние загрузчика становится `loading(cache: nil)`. Если возникнет ошибка то состояние станет `failure(error: Error, cache: nil)`, иначе `success(Content)`. Если после успешной загрузки данных повторить загрузку данных (например при pull to refresh), то состояния `loading` и `failure` будут содеражать в аргументе `cache` ранее загруженные данные.
+При создании загрузчика его начальное состояние будет `initial`. У загрузчика есть метод `startLoading()` который необходимо вызвать чтобы поменять состояние на `loading`. Сразу после первого вызова этого метода состояние загрузчика становится `loading(cache: nil)`. Если возникнет ошибка то состояние станет `failure(error: Error, cache: nil)`, иначе `success(Content)`. Если после успешной загрузки данных повторить загрузку данных (например при pull to refresh), то состояния `loading` и `failure` будут содержать в аргументе `cache` ранее загруженные данные.
 
 <img src="resources/uml_state.png" width="650"/>
 
@@ -94,7 +94,7 @@ case .initial:
 case .loading(let userServices):
     // loading state with optional cache (info about user and list of services)
 case .success(let userServices):
-    // successfull state with info about user and list of services
+    // successful state with info about user and list of services
 case .failure(let error, let userServices):
     // failed state with optional cache (info about user and list of services)
 }

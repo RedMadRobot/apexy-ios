@@ -75,8 +75,8 @@ private struct ResponseData<Content>: Decodable where Content: Decodable {
 
 В итоге наши запросы скрывают вложенность ответа.
 
-- `BookListEndpoint.Contnet = [Book]`
-- `BookEndpoint.Contnet = Book`
+- `BookListEndpoint.Content = [Book]`
+- `BookEndpoint.Content = Book`
 
 ```swift
 public struct BookEndpoint: JsonEndpoint {
