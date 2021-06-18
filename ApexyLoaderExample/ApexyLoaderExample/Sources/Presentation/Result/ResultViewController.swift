@@ -10,11 +10,15 @@ import UIKit
 
 final class ResultViewController: UIViewController {
 
+    // MARK: - Private Properties
+    
     @IBOutlet private var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet private var repoTextView: UITextView!
     
     private let repoLoader: RepoLoading
     private var observer: LoaderObservation?
+    
+    // MARK: - Init
     
     init(repoLoader: RepoLoading = ServiceLayer.shared.repoLoader) {
         self.repoLoader = repoLoader
@@ -25,6 +29,8 @@ final class ResultViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,6 +39,8 @@ final class ResultViewController: UIViewController {
         }
         stateDidUpdate()
     }
+    
+    // MARK: - Private Methods
     
     private func stateDidUpdate() {
         if repoLoader.state.isLoading {

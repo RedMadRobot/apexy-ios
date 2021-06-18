@@ -7,7 +7,7 @@
 
 import Apexy
 
-/// Empty Body Request Enpoint.
+/// Empty Body Request Endpoint.
 protocol EmptyEndpoint: Endpoint, URLRequestBuildable where Content == Void {}
 
 extension EmptyEndpoint {

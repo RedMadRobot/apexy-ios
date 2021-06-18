@@ -10,6 +10,8 @@ import UIKit
 
 final class FetchViewController: UIViewController {
 
+    // MARK: - Private Properties
+    
     @IBOutlet private var downloadButton: UIButton!
     @IBOutlet private var activityIndicatorView: UIActivityIndicatorView!
     @IBOutlet private var repoTextView: UITextView!
@@ -18,6 +20,8 @@ final class FetchViewController: UIViewController {
     private let orgLoader: OrganisationLoading
     
     private var observers = [LoaderObservation]()
+    
+    // MARK: - Init
     
     init(
         repoLoader: RepoLoading = ServiceLayer.shared.repoLoader,
@@ -33,6 +37,8 @@ final class FetchViewController: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - UIViewController
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,6 +50,8 @@ final class FetchViewController: UIViewController {
             self?.stateDidChange()
         })
     }
+    
+    // MARK: - Private Methods
     
     private func stateDidChange() {
         

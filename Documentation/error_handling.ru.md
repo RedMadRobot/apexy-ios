@@ -67,7 +67,7 @@ public struct BookListEndpoint: BaseEndpoint {
 
 Если возникнет сетевая ошибка, то она будет передана в completionHandler при вызове метода `request` у экземпляра `Client`.
 
-## Обработка ошибкок API
+## Обработка ошибок API
 
 Обычно в спецификации API есть описание формата ошибок. Пример:
 ```json
