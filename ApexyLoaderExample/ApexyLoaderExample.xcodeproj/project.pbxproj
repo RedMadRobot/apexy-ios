@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F02AE3F25F770DF002F8128 /* OrganisationRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F02AE3E25F770DF002F8128 /* OrganisationRepositories.swift */; };
+		0F02AE3F25F770DF002F8128 /* OrganizationRepositories.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F02AE3E25F770DF002F8128 /* OrganizationRepositories.swift */; };
 		0F02AE4425F777DA002F8128 /* Repository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F02AE4325F777DA002F8128 /* Repository.swift */; };
-		0F02AE4725F777E8002F8128 /* Organisation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F02AE4625F777E8002F8128 /* Organisation.swift */; };
+		0F02AE4725F777E8002F8128 /* Organization.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F02AE4625F777E8002F8128 /* Organization.swift */; };
 		0F2119BB25F0F9F100C9065C /* ResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2119BA25F0F9F100C9065C /* ResultViewController.swift */; };
 		0F2119CF25F0FC2900C9065C /* BaseEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2119CE25F0FC2900C9065C /* BaseEndpoint.swift */; };
 		0F2119D225F0FD1B00C9065C /* ServiceLayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F2119D125F0FD1B00C9065C /* ServiceLayer.swift */; };
@@ -23,14 +23,14 @@
 		0FB3403A25F0F6B600BB089D /* FetchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB3403925F0F6B600BB089D /* FetchViewController.swift */; };
 		0FB3403F25F0F6B700BB089D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0FB3403E25F0F6B700BB089D /* Assets.xcassets */; };
 		0FB3404225F0F6B700BB089D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0FB3404025F0F6B700BB089D /* LaunchScreen.storyboard */; };
-		0FE4A5A525F76FA300D6CED9 /* OrganisationEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4A5A425F76FA300D6CED9 /* OrganisationEndpoint.swift */; };
-		0FE4A5A925F76FC800D6CED9 /* OrganisationLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4A5A825F76FC800D6CED9 /* OrganisationLoader.swift */; };
+		0FE4A5A525F76FA300D6CED9 /* OrganizationEndpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4A5A425F76FA300D6CED9 /* OrganizationEndpoint.swift */; };
+		0FE4A5A925F76FC800D6CED9 /* OrganizationLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FE4A5A825F76FC800D6CED9 /* OrganizationLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		0F02AE3E25F770DF002F8128 /* OrganisationRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganisationRepositories.swift; sourceTree = "<group>"; };
+		0F02AE3E25F770DF002F8128 /* OrganizationRepositories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationRepositories.swift; sourceTree = "<group>"; };
 		0F02AE4325F777DA002F8128 /* Repository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Repository.swift; sourceTree = "<group>"; };
-		0F02AE4625F777E8002F8128 /* Organisation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organisation.swift; sourceTree = "<group>"; };
+		0F02AE4625F777E8002F8128 /* Organization.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Organization.swift; sourceTree = "<group>"; };
 		0F2119BA25F0F9F100C9065C /* ResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultViewController.swift; sourceTree = "<group>"; };
 		0F2119CE25F0FC2900C9065C /* BaseEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseEndpoint.swift; sourceTree = "<group>"; };
 		0F2119D125F0FD1B00C9065C /* ServiceLayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceLayer.swift; sourceTree = "<group>"; };
@@ -45,8 +45,8 @@
 		0FB3403E25F0F6B700BB089D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0FB3404125F0F6B700BB089D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		0FB3404325F0F6B700BB089D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0FE4A5A425F76FA300D6CED9 /* OrganisationEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganisationEndpoint.swift; sourceTree = "<group>"; };
-		0FE4A5A825F76FC800D6CED9 /* OrganisationLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganisationLoader.swift; sourceTree = "<group>"; };
+		0FE4A5A425F76FA300D6CED9 /* OrganizationEndpoint.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationEndpoint.swift; sourceTree = "<group>"; };
+		0FE4A5A825F76FC800D6CED9 /* OrganizationLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,9 +65,9 @@
 		0F02AE3D25F770D4002F8128 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				0F02AE3E25F770DF002F8128 /* OrganisationRepositories.swift */,
+				0F02AE3E25F770DF002F8128 /* OrganizationRepositories.swift */,
 				0F02AE4325F777DA002F8128 /* Repository.swift */,
-				0F02AE4625F777E8002F8128 /* Organisation.swift */,
+				0F02AE4625F777E8002F8128 /* Organization.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -101,7 +101,7 @@
 		0F2119C225F0FADE00C9065C /* Loaders */ = {
 			isa = PBXGroup;
 			children = (
-				0FE4A5A825F76FC800D6CED9 /* OrganisationLoader.swift */,
+				0FE4A5A825F76FC800D6CED9 /* OrganizationLoader.swift */,
 				0F211A1525F2777500C9065C /* RepositoriesLoader.swift */,
 			);
 			path = Loaders;
@@ -111,7 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				0F211A1025F2772D00C9065C /* RepositoriesEndpoint.swift */,
-				0FE4A5A425F76FA300D6CED9 /* OrganisationEndpoint.swift */,
+				0FE4A5A425F76FA300D6CED9 /* OrganizationEndpoint.swift */,
 				0F2119CE25F0FC2900C9065C /* BaseEndpoint.swift */,
 			);
 			path = Endpoint;
@@ -276,15 +276,15 @@
 			files = (
 				0FB3403A25F0F6B600BB089D /* FetchViewController.swift in Sources */,
 				0F211A1125F2772D00C9065C /* RepositoriesEndpoint.swift in Sources */,
-				0FE4A5A925F76FC800D6CED9 /* OrganisationLoader.swift in Sources */,
+				0FE4A5A925F76FC800D6CED9 /* OrganizationLoader.swift in Sources */,
 				0F211A1625F2777500C9065C /* RepositoriesLoader.swift in Sources */,
 				0F2119CF25F0FC2900C9065C /* BaseEndpoint.swift in Sources */,
 				0F02AE4425F777DA002F8128 /* Repository.swift in Sources */,
 				0FB3403625F0F6B600BB089D /* AppDelegate.swift in Sources */,
-				0F02AE4725F777E8002F8128 /* Organisation.swift in Sources */,
+				0F02AE4725F777E8002F8128 /* Organization.swift in Sources */,
 				0F2119D225F0FD1B00C9065C /* ServiceLayer.swift in Sources */,
-				0F02AE3F25F770DF002F8128 /* OrganisationRepositories.swift in Sources */,
-				0FE4A5A525F76FA300D6CED9 /* OrganisationEndpoint.swift in Sources */,
+				0F02AE3F25F770DF002F8128 /* OrganizationRepositories.swift in Sources */,
+				0FE4A5A525F76FA300D6CED9 /* OrganizationEndpoint.swift in Sources */,
 				0F2119BB25F0F9F100C9065C /* ResultViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

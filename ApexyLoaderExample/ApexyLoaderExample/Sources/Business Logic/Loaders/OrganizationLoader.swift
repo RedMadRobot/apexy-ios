@@ -1,5 +1,5 @@
 //
-//  RepositoriesLoader.swift
+//  OrganizationLoader.swift
 //  ApexyLoaderExample
 //
 //  Created by Daniil Subbotin on 04.03.2021.
@@ -8,14 +8,14 @@
 import Foundation
 import ApexyLoader
 
-protocol OrganisationLoading: ContentLoading {
-    var state: LoadingState<Organisation> { get }
+protocol OrganizationLoading: ContentLoading {
+    var state: LoadingState<Organization> { get }
 }
 
-final class OrganisationLoader: WebLoader<Organisation>, OrganisationLoading {
+final class OrganizationLoader: WebLoader<Organization>, OrganizationLoading {
     func load() {
         guard startLoading() else { return }
-        request(OrganisationEndpoint()) { result in
+        request(OrganizationEndpoint()) { result in
             // imitation of waiting for the request for 3 seconds
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
                 self.finishLoading(result)

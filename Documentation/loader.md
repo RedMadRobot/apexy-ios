@@ -151,7 +151,7 @@ The camera list loader is reused on the camera list screen. When you go to the c
 
 In the `ApexyLoaderExample` folder, you can see an example of how to use the `ApexyLoader`. 
 
-This app consists of two screens. On the first screen, you can start downloading data, see the download progress and the result (list of repositories and organisation name). On the second screen, you can see the download progress and the result (list of repositories).
+This app consists of two screens. On the first screen, you can start downloading data, see the download progress and the result (list of repositories and organization name). On the second screen, you can see the download progress and the result (list of repositories).
 
 This example demonstrates how to use a shared loader between multiple screens, how to observe the loading state, and to merge the states.
 

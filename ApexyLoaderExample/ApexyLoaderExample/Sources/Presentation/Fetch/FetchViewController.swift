@@ -17,7 +17,7 @@ final class FetchViewController: UIViewController {
     @IBOutlet private var repoTextView: UITextView!
     
     private let repoLoader: RepoLoading
-    private let orgLoader: OrganisationLoading
+    private let orgLoader: OrganizationLoading
     
     private var observers = [LoaderObservation]()
     
@@ -25,7 +25,7 @@ final class FetchViewController: UIViewController {
     
     init(
         repoLoader: RepoLoading = ServiceLayer.shared.repoLoader,
-        orgLoader: OrganisationLoading = ServiceLayer.shared.orgLoader) {
+        orgLoader: OrganizationLoading = ServiceLayer.shared.orgLoader) {
         
         self.repoLoader = repoLoader
         self.orgLoader = orgLoader
@@ -56,7 +56,7 @@ final class FetchViewController: UIViewController {
     private func stateDidChange() {
         
         let state = orgLoader.state.merge(repoLoader.state) { org, repos in
-            OrganisationRepositories(org: org, repos: repos)
+            OrganizationRepositories(org: org, repos: repos)
         }
         
         if state.isLoading {
@@ -70,7 +70,7 @@ final class FetchViewController: UIViewController {
              .loading(let content?),
              .success(let content):
             let repos = content.repos.map { $0.name }.joined(separator: "\n")
-            repoTextView.text = "Repositories of the \(content.org.name) organisation:\n\n\(repos)"
+            repoTextView.text = "Repositories of the \(content.org.name) organization:\n\n\(repos)"
         default:
             break
         }
