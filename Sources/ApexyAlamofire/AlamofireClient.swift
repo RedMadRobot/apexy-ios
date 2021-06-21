@@ -107,8 +107,12 @@ open class AlamofireClient: Client {
                 completionHandler: { (response: DataResponse<Data, AFError>) in
 
                     let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                        let data = try response.result.get()
-                        return try endpoint.content(from: response.response, with: data)
+                        do {
+                            let data = try response.result.get()
+                            return try endpoint.content(from: response.response, with: data)
+                        } catch {
+                            throw error.unwrapAlamofireValidationError()
+                        }
                     })
 
                     self.completionQueue.async {
@@ -198,5 +202,16 @@ private extension APIResult {
         default:
             return nil
         }
+    }
+}
+
+public extension Error {
+    func unwrapAlamofireValidationError() -> Error {
+        guard let afError = asAFError else { return self }
+        if case .responseValidationFailed(let reason) = afError,
+           case .customValidationFailed(let underlyingError) = reason {
+            return underlyingError
+        }
+        return self
     }
 }
