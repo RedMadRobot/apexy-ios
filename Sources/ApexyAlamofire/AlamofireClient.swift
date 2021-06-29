@@ -76,18 +76,21 @@ open class AlamofireClient: Client {
     ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
     ///   - publicKeys: Dictionary with 1..n public keys used for SSL-pinning: ["example1.com": [PK1], "example2": [PK2, PK3]].
     ///   - responseObserver: The closure to be called after each response.
+    ///   - eventMonitors: Alamofire `EventMonitor`s used by the instance. `[]` by default.
     public convenience init(
         baseURL: URL,
         configuration: URLSessionConfiguration,
         completionQueue: DispatchQueue = .main,
         publicKeys: [String: [SecKey]] = [:],
-        responseObserver: ResponseObserver? = nil) {
+        responseObserver: ResponseObserver? = nil,
+        eventMonitors: [EventMonitor] = []) {
         self.init(
             requestInterceptor: BaseRequestInterceptor(baseURL: baseURL),
             configuration: configuration,
             completionQueue: completionQueue,
             publicKeys: publicKeys,
-            responseObserver: responseObserver)
+            responseObserver: responseObserver,
+            eventMonitors: eventMonitors)
     }
 
     /// Send request to specified endpoint.
