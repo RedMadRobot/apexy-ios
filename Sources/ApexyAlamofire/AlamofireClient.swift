@@ -5,13 +5,12 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
-import Apexy
 import Foundation
 import Alamofire
 
 /// API Client.
 open class AlamofireClient: Client {
-
+    
     /// A closure used to observe result of every response from the server.
     public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
 
@@ -178,6 +177,36 @@ open class AlamofireClient: Client {
         let progress = request.uploadProgress
         progress.cancellationHandler = { [weak request] in request?.cancel() }
         return progress
+    }
+    
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    public func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
+        typealias ContentContinuation = CheckedContinuation<T.Content, Error>
+        return try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
+            _ = request(endpoint) { result in
+                switch result {
+                case .success(let content):
+                    continuation.resume(returning: content)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
+    }
+    
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    public func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
+        typealias ContentContinuation = CheckedContinuation<T.Content, Error>
+        return try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
+            _ = upload(endpoint) { result in
+                switch result {
+                case .success(let content):
+                    continuation.resume(returning: content)
+                case .failure(let error):
+                    continuation.resume(throwing: error)
+                }
+            }
+        }
     }
 
     // MARK: - Private

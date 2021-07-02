@@ -25,4 +25,15 @@ public protocol Client: AnyObject {
         _ endpoint: T,
         completionHandler: @escaping (APIResult<T.Content>) -> Void
     ) -> Progress where T: UploadEndpoint
+    
+    /// Send request to specified endpoint.
+    /// - Returns: response data from the server for the request.
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    func request<T>(_ endpoint: T) async throws -> T.Content where T: Endpoint
+    
+    /// Upload data to specified endpoint.
+    /// - Returns: response data from the server for the upload.
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    func upload<T>(_ endpoint: T) async throws -> T.Content where T: UploadEndpoint
+    
 }
