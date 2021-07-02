@@ -15,6 +15,9 @@ protocol BookService {
     
     @discardableResult
     func fetchBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress
+    
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    func fetchBooks() async throws -> [Book]
 }
 
 
@@ -29,5 +32,11 @@ final class BookServiceImpl: BookService {
     func fetchBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress {
         let endpoint = BookListEndpoint()
         return apiClient.request(endpoint, completionHandler: completion)
+    }
+    
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    func fetchBooks() async throws -> [Book] {
+        let endpoint = BookListEndpoint()
+        return try await apiClient.request(endpoint)
     }
 }
