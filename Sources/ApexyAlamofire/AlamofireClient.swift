@@ -183,14 +183,7 @@ open class AlamofireClient: Client {
     public func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
         typealias ContentContinuation = CheckedContinuation<T.Content, Error>
         return try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
-            _ = request(endpoint) { result in
-                switch result {
-                case .success(let content):
-                    continuation.resume(returning: content)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
+            _ = request(endpoint) { continuation.resume(with: $0) }
         }
     }
     
@@ -198,14 +191,7 @@ open class AlamofireClient: Client {
     public func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
         typealias ContentContinuation = CheckedContinuation<T.Content, Error>
         return try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
-            _ = upload(endpoint) { result in
-                switch result {
-                case .success(let content):
-                    continuation.resume(returning: content)
-                case .failure(let error):
-                    continuation.resume(throwing: error)
-                }
-            }
+            _ = upload(endpoint) { continuation.resume(with: $0) }
         }
     }
 
