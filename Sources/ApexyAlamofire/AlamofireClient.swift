@@ -182,17 +182,27 @@ open class AlamofireClient: Client {
     @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
     public func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
         typealias ContentContinuation = CheckedContinuation<T.Content, Error>
-        return try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
-            _ = request(endpoint) { continuation.resume(with: $0) }
-        }
+        let progressWrapper = ProgressWrapper()
+        return try await withTaskCancellationHandler(handler: {
+            progressWrapper.cancel()
+        }, operation: {
+            try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
+                progressWrapper.progress = request(endpoint) { continuation.resume(with: $0) }
+            }
+        })
     }
     
     @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
     public func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
         typealias ContentContinuation = CheckedContinuation<T.Content, Error>
-        return try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
-            _ = upload(endpoint) { continuation.resume(with: $0) }
-        }
+        let progressWrapper = ProgressWrapper()
+        return try await withTaskCancellationHandler(handler: {
+            progressWrapper.cancel()
+        }, operation: {
+            try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
+                progressWrapper.progress = upload(endpoint) { continuation.resume(with: $0) }
+            }
+        })
     }
 
     // MARK: - Private
@@ -234,5 +244,14 @@ public extension Error {
             return underlyingError
         }
         return self
+    }
+}
+
+@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+private final class ProgressWrapper {
+    var progress: Progress?
+    
+    func cancel() {
+        progress?.cancel()
     }
 }
