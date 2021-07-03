@@ -19,6 +19,7 @@ class ViewController: UIViewController {
     private var observation: NSKeyValueObservation?
     private var progress: Progress?
     private var streamer: Streamer?
+    private var cancelTask: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,6 +28,31 @@ class ViewController: UIViewController {
 
     @IBAction private func performRequest() {
         activityView.isHidden = false
+        
+        guard #available(macOS 12, iOS 15, *) else { performLegacyRequest(); return }
+        
+        let task = detach {
+            do {
+                let books = try await self.bookService.fetchBooks()
+                DispatchQueue.main.async {
+                    self.show(books: books)
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.resultLabel.text = error.localizedDescription
+                }
+            }
+            DispatchQueue.main.async {
+                self.activityView.isHidden = true
+            }
+        }
+        
+        cancelTask = {
+            task.cancel()
+        }
+    }
+    
+    private func performLegacyRequest() {
         progress = bookService.fetchBooks() { [weak self] result in
             guard let self = self else { return }
             self.activityView.isHidden = true
@@ -39,9 +65,36 @@ class ViewController: UIViewController {
         }
     }
     
+    
     @IBAction private func upload() {
         guard let file = Bundle.main.url(forResource: "Info", withExtension: "plist") else { return }
         activityView.isHidden = false
+     
+        guard #available(macOS 12, iOS 15, *) else { legacyUpload(with: file); return }
+        
+        let task = detach { [weak self] in
+            guard let self = self else { return }
+            do {
+                try await self.fileService.upload(file: file)
+                DispatchQueue.main.async {
+                    self.resultLabel.text = "ok"
+                }
+            } catch {
+                DispatchQueue.main.async {
+                    self.resultLabel.text = error.localizedDescription
+                }
+            }
+            DispatchQueue.main.async {
+                self.activityView.isHidden = true
+            }
+        }
+        
+        cancelTask = {
+            task.cancel()
+        }
+    }
+    
+    private func legacyUpload(with file: URL) {
         progress = fileService.upload(file: file) { [weak self] result in
             guard let self = self else { return }
             self.activityView.isHidden = true
@@ -58,6 +111,32 @@ class ViewController: UIViewController {
         let streamer = Streamer()
         self.streamer = streamer
         activityView.isHidden = false
+        
+        guard #available(macOS 12, iOS 15, *) else { legacyUploadStream(with: streamer); return }
+        
+        streamer.run()
+        
+        let task = detach { [weak self] in
+            guard let self = self else { return }
+            do {
+                try await self.fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
+            } catch {
+                DispatchQueue.main.async {
+                    self.resultLabel.text = error.localizedDescription
+                    self.streamer = nil
+                }
+            }
+            DispatchQueue.main.async {
+                self.activityView.isHidden = true
+            }
+        }
+        
+        cancelTask = {
+            task.cancel()
+        }
+    }
+    
+    private func legacyUploadStream(with streamer: Streamer) {
         progress = fileService.upload(
             stream: streamer.boundStreams.input,
             size: streamer.totalDataSize) { [weak self] result in
@@ -83,6 +162,7 @@ class ViewController: UIViewController {
     
     @IBAction private func cancel() {
         progress?.cancel()
+        cancelTask?()
     }
     
     private func show(books: [Book]) {
