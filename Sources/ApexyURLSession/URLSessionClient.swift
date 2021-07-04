@@ -139,6 +139,8 @@ open class URLSessionClient: Client {
             try endpoint.validate(request, response: httpResponse, data: data)
         }
         
+        responseObserver?(request, response as? HTTPURLResponse, data, nil)
+        
         return try endpoint.content(from: response, with: data)
     }
     
