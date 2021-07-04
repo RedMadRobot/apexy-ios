@@ -127,6 +127,41 @@ open class URLSessionClient: Client {
         
         return task.progress
     }
+    
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
+        var request = try endpoint.makeRequest()
+        request = try requestAdapter.adapt(request)
+        
+        let (data, response) = try await session.data(for: request)
+        
+        if let httpResponse = response as? HTTPURLResponse {
+            try endpoint.validate(request, response: httpResponse, data: data)
+        }
+        
+        return try endpoint.content(from: response, with: data)
+    }
+    
+    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    open func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
+        var request = try endpoint.makeRequest()
+        request.0 = try requestAdapter.adapt(request.0)
+        
+        let response: (Data, URLResponse)
+        switch request {
+        case (let request, .data(let data)):
+            response = try await session.upload(for: request, from: data)
+        case (let request, .file(let url)):
+            response = try await session.upload(for: request, fromFile: url)
+        case (_, .stream):
+            throw URLSessionClientError.uploadStreamUnimplemented
+        }
+        
+        responseObserver?(request.0, response.1 as? HTTPURLResponse, response.0, nil)
+        
+        return try endpoint.content(from: response.1, with: response.0)
+    }
+    
 }
 
 enum URLSessionClientError: LocalizedError {
