@@ -249,7 +249,22 @@ public extension Error {
 
 @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
 private final class ProgressWrapper {
-    var progress: Progress?
+    
+    var progress: Progress? {
+        get {
+            lock.lock()
+            defer { lock.unlock() }
+            return _progress
+        }
+        set {
+            lock.lock()
+            defer { lock.unlock() }
+            _progress = newValue
+        }
+    }
+    
+    private var _progress: Progress?
+    private let lock = NSLock()
     
     func cancel() {
         progress?.cancel()
