@@ -27,24 +27,19 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func performRequest() {
-        activityView.isHidden = false
+        updateActivityIndicator(isHidden: false)
         
         guard #available(macOS 12, iOS 15, *) else { performLegacyRequest(); return }
         
-        let task = detach {
+        let task = detach { [weak self] in
+            guard let self = self else { return }
             do {
                 let books = try await self.bookService.fetchBooks()
-                DispatchQueue.main.async {
-                    self.show(books: books)
-                }
+                await self.show(books: books)
             } catch {
-                DispatchQueue.main.async {
-                    self.resultLabel.text = error.localizedDescription
-                }
+                await self.show(error: error)
             }
-            DispatchQueue.main.async {
-                self.activityView.isHidden = true
-            }
+            await self.updateActivityIndicator(isHidden: true)
         }
         
         cancelTask = {
@@ -60,7 +55,7 @@ class ViewController: UIViewController {
             case .success(let books):
                 self.show(books: books)
             case .failure(let error):
-                self.resultLabel.text = error.localizedDescription
+                self.show(error: error)
             }
         }
     }
@@ -76,17 +71,11 @@ class ViewController: UIViewController {
             guard let self = self else { return }
             do {
                 try await self.fileService.upload(file: file)
-                DispatchQueue.main.async {
-                    self.resultLabel.text = "ok"
-                }
+                await self.showOKUpload()
             } catch {
-                DispatchQueue.main.async {
-                    self.resultLabel.text = error.localizedDescription
-                }
+                await self.show(error: error)
             }
-            DispatchQueue.main.async {
-                self.activityView.isHidden = true
-            }
+            await self.updateActivityIndicator(isHidden: true)
         }
         
         cancelTask = {
@@ -100,9 +89,9 @@ class ViewController: UIViewController {
             self.activityView.isHidden = true
             switch result {
             case .success:
-                self.resultLabel.text = "ok"
+                self.showOKUpload()
             case .failure(let error):
-                self.resultLabel.text = error.localizedDescription
+                self.show(error: error)
             }
         }
     }
@@ -121,14 +110,10 @@ class ViewController: UIViewController {
             do {
                 try await self.fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
             } catch {
-                DispatchQueue.main.async {
-                    self.resultLabel.text = error.localizedDescription
-                    self.streamer = nil
-                }
+                await self.show(error: error)
+                await self.streamer?.stop()
             }
-            DispatchQueue.main.async {
-                self.activityView.isHidden = true
-            }
+            await self.updateActivityIndicator(isHidden: true)
         }
         
         cancelTask = {
@@ -144,9 +129,9 @@ class ViewController: UIViewController {
                 self.activityView.isHidden = true
                 switch result {
                 case .success:
-                    self.resultLabel.text = "ok"
+                    self.showOKUpload()
                 case .failure(let error):
-                    self.resultLabel.text = error.localizedDescription
+                    self.show(error: error)
                     self.streamer = nil
                 }
             }
@@ -165,8 +150,25 @@ class ViewController: UIViewController {
         cancelTask?()
     }
     
+    @MainActor
     private func show(books: [Book]) {
         resultLabel.text = books.map { "• \($0.title)" }.joined(separator: "\n")
     }
+    
+    @MainActor
+    private func show(error: Error) {
+        resultLabel.text = error.localizedDescription
+    }
+    
+    @MainActor
+    private func updateActivityIndicator(isHidden: Bool) {
+        activityView.isHidden = isHidden
+    }
+    
+    @MainActor
+    private func showOKUpload() {
+        resultLabel.text = "ok"
+    }
+    
 }
 
