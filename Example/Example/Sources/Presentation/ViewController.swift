@@ -27,7 +27,7 @@ class ViewController: UIViewController {
     }
 
     @IBAction private func performRequest() {
-        updateActivityIndicator(isHidden: false)
+        activityView.isHidden = false
         
         guard #available(macOS 12, iOS 15, *) else { performLegacyRequest(); return }
         
@@ -38,7 +38,6 @@ class ViewController: UIViewController {
             } catch {
                 await self.show(error: error)
             }
-            await self.updateActivityIndicator(isHidden: true)
         }
         
         cancelTask = {
@@ -73,7 +72,6 @@ class ViewController: UIViewController {
             } catch {
                 await self.show(error: error)
             }
-            await self.updateActivityIndicator(isHidden: true)
         }
         
         cancelTask = {
@@ -110,7 +108,6 @@ class ViewController: UIViewController {
                 await self.show(error: error)
                 await self.streamer?.stop()
             }
-            await self.updateActivityIndicator(isHidden: true)
         }
         
         cancelTask = {
@@ -150,21 +147,19 @@ class ViewController: UIViewController {
     @MainActor
     private func show(books: [Book]) {
         resultLabel.text = books.map { "• \($0.title)" }.joined(separator: "\n")
+        activityView.isHidden = true
     }
     
     @MainActor
     private func show(error: Error) {
         resultLabel.text = error.localizedDescription
-    }
-    
-    @MainActor
-    private func updateActivityIndicator(isHidden: Bool) {
-        activityView.isHidden = isHidden
+        activityView.isHidden = true
     }
     
     @MainActor
     private func showOKUpload() {
         resultLabel.text = "ok"
+        activityView.isHidden = true
     }
     
 }
