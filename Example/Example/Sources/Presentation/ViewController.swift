@@ -31,8 +31,7 @@ class ViewController: UIViewController {
         
         guard #available(macOS 12, iOS 15, *) else { performLegacyRequest(); return }
         
-        let task = detach { [weak self] in
-            guard let self = self else { return }
+        let task = detach {
             do {
                 let books = try await self.bookService.fetchBooks()
                 await self.show(books: books)
@@ -67,8 +66,7 @@ class ViewController: UIViewController {
      
         guard #available(macOS 12, iOS 15, *) else { legacyUpload(with: file); return }
         
-        let task = detach { [weak self] in
-            guard let self = self else { return }
+        let task = detach {
             do {
                 try await self.fileService.upload(file: file)
                 await self.showOKUpload()
@@ -105,8 +103,7 @@ class ViewController: UIViewController {
         
         streamer.run()
         
-        let task = detach { [weak self] in
-            guard let self = self else { return }
+        let task = detach {
             do {
                 try await self.fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
             } catch {
