@@ -31,12 +31,12 @@ class ViewController: UIViewController {
         
         guard #available(macOS 12, iOS 15, *) else { performLegacyRequest(); return }
         
-        let task = detach {
+        let task = async {
             do {
                 let books = try await self.bookService.fetchBooks()
-                await self.show(books: books)
+                self.show(books: books)
             } catch {
-                await self.show(error: error)
+                self.show(error: error)
             }
         }
         
@@ -65,12 +65,12 @@ class ViewController: UIViewController {
      
         guard #available(macOS 12, iOS 15, *) else { legacyUpload(with: file); return }
         
-        let task = detach {
+        let task = async {
             do {
                 try await self.fileService.upload(file: file)
-                await self.showOKUpload()
+                self.showOKUpload()
             } catch {
-                await self.show(error: error)
+                self.show(error: error)
             }
         }
         
@@ -101,12 +101,12 @@ class ViewController: UIViewController {
         
         streamer.run()
         
-        let task = detach {
+        let task = async {
             do {
                 try await self.fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
             } catch {
-                await self.show(error: error)
-                await self.streamer?.stop()
+                self.show(error: error)
+                self.streamer?.stop()
             }
         }
         
@@ -144,19 +144,16 @@ class ViewController: UIViewController {
         cancelTask?()
     }
     
-    @MainActor
     private func show(books: [Book]) {
         resultLabel.text = books.map { "• \($0.title)" }.joined(separator: "\n")
         activityView.isHidden = true
     }
     
-    @MainActor
     private func show(error: Error) {
         resultLabel.text = error.localizedDescription
         activityView.isHidden = true
     }
     
-    @MainActor
     private func showOKUpload() {
         resultLabel.text = "ok"
         activityView.isHidden = true
