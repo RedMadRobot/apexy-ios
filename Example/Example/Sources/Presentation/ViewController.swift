@@ -34,11 +34,12 @@ class ViewController: UIViewController {
         
         task = async {
             do {
-                let books = try await self.bookService.fetchBooks()
-                self.show(books: books)
+                let books = try await bookService.fetchBooks()
+                show(books: books)
             } catch {
-                self.show(error: error)
+                show(error: error)
             }
+            activityView.isHidden = true
         }
     }
     
@@ -64,11 +65,12 @@ class ViewController: UIViewController {
         
         task = async {
             do {
-                try await self.fileService.upload(file: file)
-                self.showOKUpload()
+                try await fileService.upload(file: file)
+                showOKUpload()
             } catch {
-                self.show(error: error)
+                show(error: error)
             }
+            activityView.isHidden = true
         }
     }
     
@@ -96,10 +98,10 @@ class ViewController: UIViewController {
         
         task = async {
             do {
-                try await self.fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
+                try await fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
             } catch {
-                self.show(error: error)
-                self.streamer?.stop()
+                show(error: error)
+                self.streamer = nil
             }
         }
     }
@@ -138,17 +140,14 @@ class ViewController: UIViewController {
     
     private func show(books: [Book]) {
         resultLabel.text = books.map { "• \($0.title)" }.joined(separator: "\n")
-        activityView.isHidden = true
     }
     
     private func show(error: Error) {
         resultLabel.text = error.localizedDescription
-        activityView.isHidden = true
     }
     
     private func showOKUpload() {
         resultLabel.text = "ok"
-        activityView.isHidden = true
     }
     
 }
