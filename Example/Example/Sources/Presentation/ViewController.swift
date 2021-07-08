@@ -18,8 +18,9 @@ class ViewController: UIViewController {
 
     private var observation: NSKeyValueObservation?
     private var progress: Progress?
+    
+    private var task: Any?
     private var streamer: Streamer?
-    private var cancelTask: (() -> Void)?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -31,17 +32,13 @@ class ViewController: UIViewController {
         
         guard #available(macOS 12, iOS 15, *) else { performLegacyRequest(); return }
         
-        let task = async {
+        task = async {
             do {
                 let books = try await self.bookService.fetchBooks()
                 self.show(books: books)
             } catch {
                 self.show(error: error)
             }
-        }
-        
-        cancelTask = {
-            task.cancel()
         }
     }
     
@@ -65,17 +62,13 @@ class ViewController: UIViewController {
      
         guard #available(macOS 12, iOS 15, *) else { legacyUpload(with: file); return }
         
-        let task = async {
+        task = async {
             do {
                 try await self.fileService.upload(file: file)
                 self.showOKUpload()
             } catch {
                 self.show(error: error)
             }
-        }
-        
-        cancelTask = {
-            task.cancel()
         }
     }
     
@@ -101,17 +94,13 @@ class ViewController: UIViewController {
         
         streamer.run()
         
-        let task = async {
+        task = async {
             do {
                 try await self.fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
             } catch {
                 self.show(error: error)
                 self.streamer?.stop()
             }
-        }
-        
-        cancelTask = {
-            task.cancel()
         }
     }
     
@@ -140,8 +129,11 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func cancel() {
-        progress?.cancel()
-        cancelTask?()
+        if #available(iOS 15.0, *) {
+            (task as? Task.Handle<Void, Never>)?.cancel()
+        } else {
+            progress?.cancel()
+        }
     }
     
     private func show(books: [Book]) {
