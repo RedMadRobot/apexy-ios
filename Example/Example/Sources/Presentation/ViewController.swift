@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     @IBAction private func performRequest() {
         activityView.isHidden = false
         
-        guard #available(macOS 12, iOS 15, *) else { performLegacyRequest(); return }
+        guard #available(macOS 12, iOS 15, watchOS 8, tvOS 15, *) else { performLegacyRequest(); return }
         
         task = async {
             do {
@@ -61,9 +61,9 @@ class ViewController: UIViewController {
         guard let file = Bundle.main.url(forResource: "Info", withExtension: "plist") else { return }
         activityView.isHidden = false
      
-        guard #available(macOS 12, iOS 15, *) else { legacyUpload(with: file); return }
+        guard #available(macOS 12, iOS 15, watchOS 8, tvOS 15, *) else { legacyUpload(with: file); return }
         
-        task = async {
+        task = Task {
             do {
                 try await fileService.upload(file: file)
                 showOKUpload()
@@ -92,11 +92,11 @@ class ViewController: UIViewController {
         self.streamer = streamer
         activityView.isHidden = false
         
-        guard #available(macOS 12, iOS 15, *) else { legacyUploadStream(with: streamer); return }
+        guard #available(macOS 12, iOS 15, watchOS 8, tvOS 15, *) else { legacyUploadStream(with: streamer); return }
         
         streamer.run()
         
-        task = async {
+        task = Task {
             do {
                 try await fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
             } catch {
@@ -131,8 +131,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func cancel() {
-        if #available(iOS 15.0, *) {
-            (task as? Task.Handle<Void, Never>)?.cancel()
+        if #available(macOS 12, iOS 15, watchOS 8, tvOS 15, *) {
+            (task as? Task<Void, Never>)?.cancel()
         } else {
             progress?.cancel()
         }
