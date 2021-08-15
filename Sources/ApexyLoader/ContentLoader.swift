@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 
 private final class StateChangeHandler {
@@ -28,8 +29,18 @@ open class ContentLoader<Content>: ObservableLoader {
     public var state: LoadingState<Content> = .initial {
         didSet {
             stateHandlers.forEach { $0.notify() }
+            if #available(macOS 10.15, *), #available(iOS 13.0, *) {
+                statePublisher.send(state)
+            }
         }
     }
+    
+    /// Content loading status. The default value is `.initial`.
+    ///
+    /// - Remark: To change state use `update(_:)`.
+    @available(iOS 13.0, *)
+    @available(macOS 10.15, *)
+    private(set) public lazy var statePublisher = CurrentValueSubject<LoadingState<Content>, Never>(.initial)
 
     // MARK: - ObservableLoader
     
