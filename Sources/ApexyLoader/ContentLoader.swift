@@ -1,4 +1,6 @@
+#if canImport(Combine)
 import Combine
+#endif
 import Foundation
 
 private final class StateChangeHandler {
@@ -30,17 +32,21 @@ open class ContentLoader<Content>: ObservableLoader {
         didSet {
             stateHandlers.forEach { $0.notify() }
             if #available(macOS 10.15, *), #available(iOS 13.0, *) {
-                statePublisher.send(state)
+                stateSubject.send(state)
             }
         }
     }
+    
+    @available(iOS 13.0, *)
+    @available(macOS 10.15, *)
+    private lazy var stateSubject = CurrentValueSubject<LoadingState<Content>, Never>(.initial)
     
     /// Content loading status. The default value is `.initial`.
     ///
     /// - Remark: To change state use `update(_:)`.
     @available(iOS 13.0, *)
     @available(macOS 10.15, *)
-    private(set) public lazy var statePublisher = CurrentValueSubject<LoadingState<Content>, Never>(.initial)
+    public lazy var statePublisher: AnyPublisher<LoadingState<Content>, Never> = stateSubject.eraseToAnyPublisher()
 
     // MARK: - ObservableLoader
     
