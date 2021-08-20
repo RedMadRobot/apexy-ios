@@ -31,21 +31,20 @@ open class ContentLoader<Content>: ObservableLoader {
     public var state: LoadingState<Content> = .initial {
         didSet {
             stateHandlers.forEach { $0.notify() }
-            if #available(macOS 10.15, *), #available(iOS 13.0, *) {
+            
+            if #available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *) {
                 stateSubject.send(state)
             }
         }
     }
     
-    @available(iOS 13.0, *)
-    @available(macOS 10.15, *)
+    @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
     private lazy var stateSubject = CurrentValueSubject<LoadingState<Content>, Never>(.initial)
     
     /// Content loading status. The default value is `.initial`.
     ///
     /// - Remark: To change state use `update(_:)`.
-    @available(iOS 13.0, *)
-    @available(macOS 10.15, *)
+    @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
     public lazy var statePublisher: AnyPublisher<LoadingState<Content>, Never> = stateSubject.eraseToAnyPublisher()
 
     // MARK: - ObservableLoader
