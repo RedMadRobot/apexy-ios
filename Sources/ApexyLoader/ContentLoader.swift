@@ -30,6 +30,8 @@ open class ContentLoader<Content>: ObservableLoader {
             stateHandlers.forEach { $0.notify() }
         }
     }
+    
+    public init() {}
 
     // MARK: - ObservableLoader
     
