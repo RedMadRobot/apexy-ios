@@ -46,7 +46,9 @@ open class ContentLoader<Content>: ObservableLoader {
     /// - Remark: To change state use `update(_:)`.
     @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
     public lazy var statePublisher: AnyPublisher<LoadingState<Content>, Never> = stateSubject.eraseToAnyPublisher()
-
+    
+    public init() {}
+    
     // MARK: - ObservableLoader
     
     /// Starts state observing.
