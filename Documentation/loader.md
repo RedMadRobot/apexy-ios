@@ -129,6 +129,34 @@ final class ProfileViewController: UIViewController {
 }
 ```
 
+## Observing loading state via Combine
+
+To keep track of the loader state via Combine use `statePublisher`.
+
+```swift
+final class ProfileViewController: UIViewController {
+    private var bag = Set<AnyCancellable>()
+    ...
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        userProfileLoader.statePublisher.sink { [weak self] newState in
+            guard let self = self else { return }
+            
+            switch newState {
+            case .initial:
+                //
+            case .loading(let cache):
+                //
+            case .success(let content):
+                //
+            case .failure(let error, let cache):
+                //
+            }
+        }.store(in: &bag)
+    }
+}
+```
+
 ## Use cases
 
 ApexyLoader used in the following scenarios:

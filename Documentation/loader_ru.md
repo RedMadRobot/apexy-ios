@@ -128,6 +128,34 @@ final class ProfileViewController: UIViewController {
 }
 ```
 
+## Отслеживание состояния загрузки через Combine
+
+Чтобы следить за состоянием загрузчика с помощью Combine используйте паблишер `statePublisher`.
+
+```swift
+final class ProfileViewController: UIViewController {
+    private var bag = Set<AnyCancellable>()
+    ...
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        userProfileLoader.statePublisher.sink { [weak self] newState in
+            guard let self = self else { return }
+            
+            switch newState {
+            case .initial:
+                //
+            case .loading(let cache):
+                //
+            case .success(let content):
+                //
+            case .failure(let error, let cache):
+                //
+            }
+        }.store(in: &bag)
+    }
+}
+```
+
 ## Сценарии использования
 
 ApexyLoader применяется когда:
