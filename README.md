@@ -24,13 +24,7 @@ If you want to use Apexy with Alamofire:
 
 `pod 'Apexy'`
 
-If you want to use Apexy with Alamofire and RxSwift:
-
-`pod 'Apexy'`
-
-`pod 'Apexy/RxSwift'`
-
-If you want to use Apexy without Alamofire and RxSwift:
+If you want to use Apexy without Alamofire:
 
 `pod 'Apexy/URLSession'`
 
@@ -44,13 +38,11 @@ If you have Xcode project, open it and select **File → Swift Packages → Add 
 
 `https://github.com/RedMadRobot/apexy-ios`
 
-There are 3 package products: Apexy, ApexyAlamofire, ApexyRxSwift.
+There are 2 package products: Apexy, ApexyAlamofire.
 
 Apexy — Uses URLSession under the hood
 
 ApexyAlamofire — Uses Alamofire under the hood
-
-If you want to use Apexy with RxSwift add ApexyRxSwift package product.
 
 ApexyLoader — add-on for Apexy to store fetched data in memory and observe loading state. See the documentation for details [ApexyLoader](Documentation/loader.md):
 
@@ -114,7 +106,7 @@ client.request(endpoint) { (result: Result<Book, Error>)
 `Client` - an object with only one method for executing `Endpoint`.
 - It's easy to mock, because it has only one method.
 - It's easy to send several `Endpoint`.
-- Easily wraps into decorators or adapters. For example, you can wrap in `RxSwift` or `Combine` and you don't have to make wrappers for each request.
+- Easily wraps into decorators or adapters. For example, you can wrap in `Combine` and you don't have to make wrappers for each request.
 
 The separation into `Client` and `Endpoint` allows you to separate the asynchronous code in `Client` from the synchronous code in `Endpoint`. Thus, the side effects are isolated in `Client`, and the pure functions in the non-mutable `Endpoint`.
 
