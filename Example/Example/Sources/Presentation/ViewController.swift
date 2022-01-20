@@ -61,7 +61,7 @@ class ViewController: UIViewController {
         guard let file = Bundle.main.url(forResource: "Info", withExtension: "plist") else { return }
         activityView.isHidden = false
      
-        guard #available(macOS 12, iOS 15, watchOS 8, tvOS 15, *) else { legacyUpload(with: file); return }
+        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { legacyUpload(with: file); return }
         
         task = Task {
             do {
