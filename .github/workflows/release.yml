@@ -13,6 +13,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Change Xcode
+        run: sudo xcode-select -s /Applications/Xcode_13.2.1.app
+
       - name: Install Cocoapods
         run: gem install cocoapods
 
