@@ -20,7 +20,7 @@ protocol FileService {
    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func upload(file: URL) async throws
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func upload(stream: InputStream, size: Int) async throws
 }
 
