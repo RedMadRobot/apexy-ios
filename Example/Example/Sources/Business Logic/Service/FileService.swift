@@ -49,7 +49,7 @@ final class FileServiceImpl: FileService {
         return try await apiClient.upload(endpoint)
     }
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func upload(stream: InputStream, size: Int) async throws {
         let endpoint = StreamUploadEndpoint(stream: stream, size: size)
         return try await apiClient.upload(endpoint)
