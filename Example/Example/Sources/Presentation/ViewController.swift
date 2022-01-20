@@ -30,7 +30,7 @@ class ViewController: UIViewController {
     @IBAction private func performRequest() {
         activityView.isHidden = false
         
-        guard #available(macOS 12, iOS 15, watchOS 8, tvOS 15, *) else { performLegacyRequest(); return }
+        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { performLegacyRequest(); return }
         
         task = Task {
             do {
