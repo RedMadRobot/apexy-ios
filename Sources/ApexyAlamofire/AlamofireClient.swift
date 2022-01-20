@@ -247,27 +247,3 @@ public extension Error {
         return self
     }
 }
-
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-private final class ProgressWrapper {
-    
-    var progress: Progress? {
-        get {
-            lock.lock()
-            defer { lock.unlock() }
-            return _progress
-        }
-        set {
-            lock.lock()
-            defer { lock.unlock() }
-            _progress = newValue
-        }
-    }
-    
-    private var _progress: Progress?
-    private let lock = NSLock()
-    
-    func cancel() {
-        progress?.cancel()
-    }
-}
