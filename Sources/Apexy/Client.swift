@@ -28,12 +28,12 @@ public protocol Client: AnyObject {
     
     /// Send request to specified endpoint.
     /// - Returns: response data from the server for the request.
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func request<T>(_ endpoint: T) async throws -> T.Content where T: Endpoint
     
     /// Upload data to specified endpoint.
     /// - Returns: response data from the server for the upload.
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func upload<T>(_ endpoint: T) async throws -> T.Content where T: UploadEndpoint
     
 }

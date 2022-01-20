@@ -1,3 +1,4 @@
+import Apexy
 import Foundation
 
 open class URLSessionClient: Client {
@@ -127,7 +128,7 @@ open class URLSessionClient: Client {
         return task.progress
     }
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
         var request = try endpoint.makeRequest()
         request = try requestAdapter.adapt(request)
@@ -156,7 +157,7 @@ open class URLSessionClient: Client {
         }
     }
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     open func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
         var request: (request: URLRequest, body: UploadEndpointBody) = try endpoint.makeRequest()
         request.request = try requestAdapter.adapt(request.request)
