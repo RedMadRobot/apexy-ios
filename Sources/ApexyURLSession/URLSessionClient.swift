@@ -157,7 +157,7 @@ open class URLSessionClient: Client {
         }
     }
     
-    @available(macOS 10.15, iOS 12, watchOS 6, tvOS 13, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     open func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
         var request: (request: URLRequest, body: UploadEndpointBody) = try endpoint.makeRequest()
         request.request = try requestAdapter.adapt(request.request)
