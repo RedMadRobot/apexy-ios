@@ -38,7 +38,7 @@ If you have Xcode project, open it and select **File → Swift Packages → Add 
 
 `https://github.com/RedMadRobot/apexy-ios`
 
-There are 2 package products: Apexy, ApexyAlamofire.
+There are 3 package products: Apexy, ApexyAlamofire, ApexyLoader.
 
 Apexy — Uses URLSession under the hood
 
