@@ -24,13 +24,7 @@
 
 `pod 'Apexy'`
 
-Если вы хотите использовать Apexy с Alamofire и RxSwift:
-
-`pod 'Apexy'`
-
-`pod 'Apexy/RxSwift'`
-
-Если вы хотите использовать Apexy без Alamofire и RxSwift:
+Если вы хотите использовать Apexy без Alamofire:
 
 `pod 'Apexy/URLSession'`
 
@@ -45,13 +39,11 @@
 
 `https://github.com/RedMadRobot/apexy-ios`
 
-Будут достуны 4 продукта: Apexy, ApexyAlamofire, ApexyRxSwift, ApexyLoader.
+Будут достуны 3 продукта: Apexy, ApexyAlamofire, ApexyLoader.
 
 Apexy — Под капотом использует URLSession
 
 ApexyAlamofire — Под капотом использует Alamofire
-
-Если хотите использовать Apexy с RxSwift, то дополнительно подключайте пакет ApexyRxSwift.
 
 ApexyLoader — дополнение для Apexy, которое позволяет хранить загруженные данные в памяти и следить за состоянием загрузки. Подробности смотрите в документации [ApexyLoader](Documentation/loader_ru.md):
 
@@ -115,7 +107,7 @@ client.request(endpoint) { (result: Result<Book, Error>)
 `Client` - объект с одним методом способный выполнить `Endpoint`.
 - Легко мокается, так как у него один метод.
 - Легко отправить через него несколько разных `Endpoint`.
-- Легко оборачивается в декораторы или адаптеры. Например можно обернуть в `RxSwift` или `Combine` и вам не придется делать обертки для каждого запроса.
+- Легко оборачивается в декораторы или адаптеры. Например можно обернуть в `Combine` и вам не придется делать обертки для каждого запроса.
 
 Разделение на `Client` и `Endpoint` позволяет разделить асинхронный код в `Client` от синхронного кода в `Endpoint`. Таким образом сайд эффекты изолированы в одном месте `Client`, а чистые функции в немутабельных `Endpoint`.
 
