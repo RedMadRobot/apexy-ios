@@ -16,7 +16,7 @@ protocol BookService {
     @discardableResult
     func fetchBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func fetchBooks() async throws -> [Book]
 }
 
