@@ -18,7 +18,7 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: XCode select
+      - name: Change Xcode
         run: sudo xcode-select -s /Applications/Xcode_13.2.1.app
       - name: Build and test
         run: swift test --enable-code-coverage --disable-automatic-resolution
