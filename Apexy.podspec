@@ -29,12 +29,6 @@ Pod::Spec.new do |s|
     sp.dependency "Apexy/Core"
   end
 
-  s.subspec 'RxSwift' do |sp|
-    sp.source_files = "Sources/ApexyRxSwift/*.swift"
-    sp.dependency "Apexy/Core"
-    sp.dependency "RxSwift", '~>6.0'
-  end
-
   s.subspec 'Loader' do |sp|
     sp.source_files = "Sources/ApexyLoader/*.swift"
     sp.dependency "Apexy/Core"
