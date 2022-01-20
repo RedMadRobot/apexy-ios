@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         
         guard #available(macOS 12, iOS 15, watchOS 8, tvOS 15, *) else { performLegacyRequest(); return }
         
-        task = async {
+        task = Task {
             do {
                 let books = try await bookService.fetchBooks()
                 show(books: books)
