@@ -119,6 +119,42 @@ final class URLSessionClientTests: XCTestCase {
         
         wait(for: [exp], timeout: 0.1)
     }
+    
+    @available(iOS 13.0, *)
+    @available(macOS 10.15, *)
+    func testClientDataRequestUsingAsyncAwait() async throws {
+        let endpoint = EmptyEndpoint()
+        let data = "Test".data(using: .utf8)!
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "2.0", headerFields: nil)!
+            return (response, data)
+        }
+        
+        do {
+            let content = try await client.request(endpoint)
+            XCTAssertEqual(content, data)
+        } catch {
+            XCTFail("Expected result: .success, actual result: .failure")
+        }
+    }
+    
+    @available(iOS 13.0, *)
+    @available(macOS 10.15, *)
+    func testClientUploadUsingAsyncAwait() async throws {
+        let data = "apple".data(using: .utf8)!
+        let endpoint = SimpleUploadEndpoint(data: data)
+        MockURLProtocol.requestHandler = { request in
+            let response = HTTPURLResponse(url: request.url!, statusCode: 200, httpVersion: "2.0", headerFields: nil)!
+            return (response, data)
+        }
+        
+        do {
+            let content = try await client.upload(endpoint)
+            XCTAssertEqual(content, data)
+        } catch {
+            XCTFail("Expected result: .success, actual result: .failure")
+        }
+    }
 }
 
 private final class MockURLProtocol: URLProtocol {

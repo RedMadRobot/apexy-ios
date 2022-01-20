@@ -5,6 +5,7 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
+import Apexy
 import Foundation
 import Alamofire
 
@@ -179,7 +180,7 @@ open class AlamofireClient: Client {
         return progress
     }
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 12, watchOS 6, tvOS 13, *)
     public func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
         typealias ContentContinuation = CheckedContinuation<T.Content, Error>
         let progressWrapper = ProgressWrapper()
@@ -192,7 +193,7 @@ open class AlamofireClient: Client {
         })
     }
     
-    @available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+    @available(macOS 10.15, iOS 12, watchOS 6, tvOS 13, *)
     public func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
         typealias ContentContinuation = CheckedContinuation<T.Content, Error>
         let progressWrapper = ProgressWrapper()
@@ -247,7 +248,7 @@ public extension Error {
     }
 }
 
-@available(macOS 12, iOS 15, watchOS 8, tvOS 15, *)
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 private final class ProgressWrapper {
     
     var progress: Progress? {
