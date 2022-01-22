@@ -136,9 +136,8 @@ open class URLSessionClient: Client {
         var error: Error?
         
         defer {
-            let wrapper = ResponseObserverWrapper(request: request, data: response?.data, response: response?.response, error: error)
-            completionQueue.async {
-                self.responseObserver?(wrapper.request, wrapper.response as? HTTPURLResponse, wrapper.data, wrapper.error)
+            completionQueue.async { [request, response, error] in
+                self.responseObserver?(request, response?.response as? HTTPURLResponse, response?.data, error)
             }
         }
         
@@ -165,9 +164,8 @@ open class URLSessionClient: Client {
         var error: Error?
         
         defer {
-            let wrapper = ResponseObserverWrapper(request: request.request, data: response?.data, response: response?.response, error: error)
-            completionQueue.async {
-                self.responseObserver?(wrapper.request, wrapper.response as? HTTPURLResponse, wrapper.data, wrapper.error)
+            completionQueue.async { [request, response, error] in
+                self.responseObserver?(request.request, response?.response as? HTTPURLResponse, response?.data, error)
             }
         }
         
@@ -203,11 +201,4 @@ enum URLSessionClientError: LocalizedError {
             """
         }
     }
-}
-
-private struct ResponseObserverWrapper {
-    var request: URLRequest
-    var data: Data?
-    var response: URLResponse?
-    var error: Error?
 }
