@@ -46,6 +46,12 @@ final class Streamer: NSObject, StreamDelegate {
             }
     }
     
+    func stop() {
+        boundStreams.output.close()
+        boundStreams.input.close()
+        timer?.invalidate()
+    }
+    
     private func timerFired() {
         if counter == chunksCount {
             boundStreams.output.close()
@@ -61,8 +67,6 @@ final class Streamer: NSObject, StreamDelegate {
     }
     
     deinit {
-        boundStreams.output.close()
-        boundStreams.input.close()
-        timer?.invalidate()
+        stop()
     }
 }

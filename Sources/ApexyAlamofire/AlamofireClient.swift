@@ -11,7 +11,7 @@ import Alamofire
 
 /// API Client.
 open class AlamofireClient: Client {
-
+    
     /// A closure used to observe result of every response from the server.
     public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
 
@@ -178,6 +178,32 @@ open class AlamofireClient: Client {
         let progress = request.uploadProgress
         progress.cancellationHandler = { [weak request] in request?.cancel() }
         return progress
+    }
+    
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    public func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
+        typealias ContentContinuation = CheckedContinuation<T.Content, Error>
+        let progressWrapper = ProgressWrapper()
+        return try await withTaskCancellationHandler(handler: {
+            progressWrapper.cancel()
+        }, operation: {
+            try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
+                progressWrapper.progress = request(endpoint) { continuation.resume(with: $0) }
+            }
+        })
+    }
+    
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    public func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
+        typealias ContentContinuation = CheckedContinuation<T.Content, Error>
+        let progressWrapper = ProgressWrapper()
+        return try await withTaskCancellationHandler(handler: {
+            progressWrapper.cancel()
+        }, operation: {
+            try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
+                progressWrapper.progress = upload(endpoint) { continuation.resume(with: $0) }
+            }
+        })
     }
 
     // MARK: - Private

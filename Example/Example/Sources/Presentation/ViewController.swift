@@ -18,6 +18,8 @@ class ViewController: UIViewController {
 
     private var observation: NSKeyValueObservation?
     private var progress: Progress?
+    
+    private var task: Any?
     private var streamer: Streamer?
     
     override func viewDidLoad() {
@@ -27,6 +29,21 @@ class ViewController: UIViewController {
 
     @IBAction private func performRequest() {
         activityView.isHidden = false
+        
+        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { performLegacyRequest(); return }
+        
+        task = Task {
+            do {
+                let books = try await bookService.fetchBooks()
+                show(books: books)
+            } catch {
+                show(error: error)
+            }
+            activityView.isHidden = true
+        }
+    }
+    
+    private func performLegacyRequest() {
         progress = bookService.fetchBooks() { [weak self] result in
             guard let self = self else { return }
             self.activityView.isHidden = true
@@ -34,22 +51,38 @@ class ViewController: UIViewController {
             case .success(let books):
                 self.show(books: books)
             case .failure(let error):
-                self.resultLabel.text = error.localizedDescription
+                self.show(error: error)
             }
         }
     }
     
+    
     @IBAction private func upload() {
         guard let file = Bundle.main.url(forResource: "Info", withExtension: "plist") else { return }
         activityView.isHidden = false
+     
+        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { legacyUpload(with: file); return }
+        
+        task = Task {
+            do {
+                try await fileService.upload(file: file)
+                showOKUpload()
+            } catch {
+                show(error: error)
+            }
+            activityView.isHidden = true
+        }
+    }
+    
+    private func legacyUpload(with file: URL) {
         progress = fileService.upload(file: file) { [weak self] result in
             guard let self = self else { return }
             self.activityView.isHidden = true
             switch result {
             case .success:
-                self.resultLabel.text = "ok"
+                self.showOKUpload()
             case .failure(let error):
-                self.resultLabel.text = error.localizedDescription
+                self.show(error: error)
             }
         }
     }
@@ -58,6 +91,22 @@ class ViewController: UIViewController {
         let streamer = Streamer()
         self.streamer = streamer
         activityView.isHidden = false
+        
+        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { legacyUploadStream(with: streamer); return }
+        
+        streamer.run()
+        
+        task = Task {
+            do {
+                try await fileService.upload(stream: streamer.boundStreams.input, size: streamer.totalDataSize)
+            } catch {
+                show(error: error)
+                self.streamer = nil
+            }
+        }
+    }
+    
+    private func legacyUploadStream(with streamer: Streamer) {
         progress = fileService.upload(
             stream: streamer.boundStreams.input,
             size: streamer.totalDataSize) { [weak self] result in
@@ -65,9 +114,9 @@ class ViewController: UIViewController {
                 self.activityView.isHidden = true
                 switch result {
                 case .success:
-                    self.resultLabel.text = "ok"
+                    self.showOKUpload()
                 case .failure(let error):
-                    self.resultLabel.text = error.localizedDescription
+                    self.show(error: error)
                     self.streamer = nil
                 }
             }
@@ -82,11 +131,24 @@ class ViewController: UIViewController {
     }
     
     @IBAction private func cancel() {
-        progress?.cancel()
+        if #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) {
+            (task as? Task<Void, Never>)?.cancel()
+        } else {
+            progress?.cancel()
+        }
     }
     
     private func show(books: [Book]) {
         resultLabel.text = books.map { "• \($0.title)" }.joined(separator: "\n")
     }
+    
+    private func show(error: Error) {
+        resultLabel.text = error.localizedDescription
+    }
+    
+    private func showOKUpload() {
+        resultLabel.text = "ok"
+    }
+    
 }
 

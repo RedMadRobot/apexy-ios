@@ -16,6 +16,12 @@ protocol FileService {
     
     @discardableResult
     func upload(stream: InputStream, size: Int, completion: @escaping (Result<Void, Error>) -> Void) -> Progress
+    
+   @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    func upload(file: URL) async throws
+    
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    func upload(stream: InputStream, size: Int) async throws
 }
 
 
@@ -36,4 +42,17 @@ final class FileServiceImpl: FileService {
         let endpoint = StreamUploadEndpoint(stream: stream, size: size)
         return apiClient.upload(endpoint, completionHandler: completion)
     }
+    
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    func upload(file: URL) async throws {
+        let endpoint = FileUploadEndpoint(fileURL: file)
+        return try await apiClient.upload(endpoint)
+    }
+    
+    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+    func upload(stream: InputStream, size: Int) async throws {
+        let endpoint = StreamUploadEndpoint(stream: stream, size: size)
+        return try await apiClient.upload(endpoint)
+    }
+    
 }
