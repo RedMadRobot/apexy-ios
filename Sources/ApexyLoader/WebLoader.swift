@@ -4,7 +4,7 @@ import Foundation
 /// Loads content by network.
 open class WebLoader<Content>: ContentLoader<Content> {
     private let apiClient: Client
-    private var progress: Progress?
+    public private(set) var progress: Progress?
     
     /// Creates an instance of `WebLoader` to load content by network using specified `Client`.
     /// - Parameter apiClient: An instance of the `Client` protocol. Use `AlamofireClient` or `URLSessionClient`.
