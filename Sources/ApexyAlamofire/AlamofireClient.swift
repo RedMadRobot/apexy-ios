@@ -179,32 +179,6 @@ open class AlamofireClient: Client {
         progress.cancellationHandler = { [weak request] in request?.cancel() }
         return progress
     }
-    
-    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-    public func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
-        typealias ContentContinuation = CheckedContinuation<T.Content, Error>
-        let progressWrapper = ProgressWrapper()
-        return try await withTaskCancellationHandler(handler: {
-            progressWrapper.cancel()
-        }, operation: {
-            try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
-                progressWrapper.progress = request(endpoint) { continuation.resume(with: $0) }
-            }
-        })
-    }
-    
-    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-    public func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
-        typealias ContentContinuation = CheckedContinuation<T.Content, Error>
-        let progressWrapper = ProgressWrapper()
-        return try await withTaskCancellationHandler(handler: {
-            progressWrapper.cancel()
-        }, operation: {
-            try await withCheckedThrowingContinuation { (continuation: ContentContinuation) in
-                progressWrapper.progress = upload(endpoint) { continuation.resume(with: $0) }
-            }
-        })
-    }
 
     // MARK: - Private
 

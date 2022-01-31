@@ -37,3 +37,33 @@ public protocol Client: AnyObject {
     func upload<T>(_ endpoint: T) async throws -> T.Content where T: UploadEndpoint
     
 }
+
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public extension Client {
+    
+    func request<T>(_ endpoint: T) async throws -> T.Content where T: Endpoint {
+        return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
+            return request(endpoint) { result in
+                switch result {
+                case .success(let content):
+                    return continuation.resume(returning: content)
+                case .failure(let error):
+                    return continuation.resume(throwing: error)
+                }
+            }
+        })
+    }
+    
+    func upload<T>(_ endpoint: T) async throws -> T.Content where T: UploadEndpoint {
+        return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
+            return upload(endpoint) { result in
+                switch result {
+                case .success(let content):
+                    return continuation.resume(returning: content)
+                case .failure(let error):
+                    return continuation.resume(throwing: error)
+                }
+            }
+        })
+    }
+}
