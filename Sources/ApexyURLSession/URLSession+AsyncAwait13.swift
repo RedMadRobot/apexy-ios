@@ -18,7 +18,7 @@ extension URLSession {
         for request: URLRequest,
         delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {
             return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
-                let task = self.dataTask(with: request) { data, response, error in
+                let task = dataTask(with: request) { data, response, error in
                     guard let data = data, let response = response else {
                         let error = error ?? URLError(.badServerResponse)
                         return continuation.resume(throwing: error)
@@ -35,7 +35,7 @@ extension URLSession {
         fromFile fileURL: URL,
         delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {
             return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
-                let task = self.uploadTask(with: request, fromFile: fileURL) { data, response, error in
+                let task = uploadTask(with: request, fromFile: fileURL) { data, response, error in
                     guard let data = data, let response = response else {
                         let error = error ?? URLError(.badServerResponse)
                         return continuation.resume(throwing: error)
@@ -52,7 +52,7 @@ extension URLSession {
         from bodyData: Data,
         delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {
             return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
-                let task = self.uploadTask(with: request, from: bodyData) { data, response, error in
+                let task = uploadTask(with: request, from: bodyData) { data, response, error in
                     guard let data = data, let response = response else {
                         let error = error ?? URLError(.badServerResponse)
                         return continuation.resume(throwing: error)

@@ -12,14 +12,14 @@ public enum AsyncAwaitHelper {
     public typealias ContentContinuation<T> = CheckedContinuation<T, Error>
 
     public static func adaptToAsync<T>(dataTaskClosure: (ContentContinuation<T>) -> Progress) async throws -> T {
-            let progressWrapper = ProgressWrapper()
-            return try await withTaskCancellationHandler(handler: {
-                progressWrapper.cancel()
-            }, operation: {
-                try await withCheckedThrowingContinuation { (continuation: ContentContinuation<T>) in
-                    let progress = dataTaskClosure(continuation)
-                    progressWrapper.progress = progress
-                }
-            })
+        let progressWrapper = ProgressWrapper()
+        return try await withTaskCancellationHandler(handler: {
+            progressWrapper.cancel()
+        }, operation: {
+            try await withCheckedThrowingContinuation { (continuation: ContentContinuation<T>) in
+                let progress = dataTaskClosure(continuation)
+                progressWrapper.progress = progress
+            }
+        })
     }
 }

@@ -42,28 +42,14 @@ public protocol Client: AnyObject {
 public extension Client {
     
     func request<T>(_ endpoint: T) async throws -> T.Content where T: Endpoint {
-        return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
-            return request(endpoint) { result in
-                switch result {
-                case .success(let content):
-                    return continuation.resume(returning: content)
-                case .failure(let error):
-                    return continuation.resume(throwing: error)
-                }
-            }
+        try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
+            request(endpoint, completionHandler: continuation.resume)
         })
     }
     
     func upload<T>(_ endpoint: T) async throws -> T.Content where T: UploadEndpoint {
-        return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
-            return upload(endpoint) { result in
-                switch result {
-                case .success(let content):
-                    return continuation.resume(returning: content)
-                case .failure(let error):
-                    return continuation.resume(throwing: error)
-                }
-            }
+        try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
+            upload(endpoint, completionHandler: continuation.resume)
         })
     }
 }
