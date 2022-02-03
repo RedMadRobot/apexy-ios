@@ -127,7 +127,9 @@ open class AlamofireClient: Client {
                     }
             })
 
-        return progress(for: request)
+        let progress = request.downloadProgress
+        progress.cancellationHandler = { [weak request] in request?.cancel() }
+        return progress
     }
     
     /// Upload data to specified endpoint.
@@ -204,14 +206,6 @@ open class AlamofireClient: Client {
                 progressWrapper.progress = upload(endpoint) { continuation.resume(with: $0) }
             }
         })
-    }
-
-    // MARK: - Private
-
-    private func progress(for request: Alamofire.Request) -> Progress {
-        let progress = Progress()
-        progress.cancellationHandler = { request.cancel() }
-        return progress
     }
 }
 
