@@ -56,7 +56,7 @@ open class ContentLoader<Content>: ObservableLoader {
     /// - Remark: To change state use `update(_:)`.
     private var storedStatePublisher: Any? = nil
     @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
-    private var statePublisher: AnyPublisher<LoadingState<Content>, Never>  {
+    public var statePublisher: AnyPublisher<LoadingState<Content>, Never>  {
         if let publisher = storedStatePublisher as? AnyPublisher<LoadingState<Content>, Never>  {
             return publisher
         }
