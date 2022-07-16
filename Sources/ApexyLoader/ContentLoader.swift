@@ -38,9 +38,9 @@ open class ContentLoader<Content>: ObservableLoader {
         }
     }
     
-    // Can not use `@available` with lazy properties on XCode 14. This is a workaround.
+    // Can not use `@available` with lazy properties in Xcode 14. This is a workaround.
     // https://stackoverflow.com/a/55534141/7453375
-    private var storedStateSubject: Any? = nil
+    private var storedStateSubject: Any?
     @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
     private var stateSubject: CurrentValueSubject<LoadingState<Content>, Never> {
         if let subject = storedStateSubject as? CurrentValueSubject<LoadingState<Content>, Never> {
@@ -54,7 +54,7 @@ open class ContentLoader<Content>: ObservableLoader {
     /// Content loading status. The default value is `.initial`.
     ///
     /// - Remark: To change state use `update(_:)`.
-    private var storedStatePublisher: Any? = nil
+    private var storedStatePublisher: Any?
     @available(iOS 13.0, macOS 10.15, watchOS 6.0, tvOS 13.0, *)
     public var statePublisher: AnyPublisher<LoadingState<Content>, Never>  {
         if let publisher = storedStatePublisher as? AnyPublisher<LoadingState<Content>, Never>  {
