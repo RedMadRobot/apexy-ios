@@ -1,13 +1,18 @@
 #if canImport(Combine)
 import Combine
 
-/// Wrapper for Combine framework
-public extension Client {
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public protocol CombineClient: AnyObject {
+    
+    /// Send request to specified endpoint.
+    /// - Parameters:
+    ///    - endpoint: endpoint of remote content.
+    /// - Returns: Publisher which you can subscribe to
+    func request<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: Endpoint
+}
 
-    @available(iOS 13.0, *)
-    @available(macOS 10.15, *)
-    @available(tvOS 13.0, *)
-    @available(watchOS 6.0, *)
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
+public extension Client where Self: CombineClient {
     func request<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: Endpoint {
         Deferred<AnyPublisher<T.Content, Error>> {
             let subject = PassthroughSubject<T.Content, Error>()
@@ -30,4 +35,5 @@ public extension Client {
         .eraseToAnyPublisher()
     }
 }
+
 #endif

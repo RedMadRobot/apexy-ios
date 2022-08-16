@@ -1,10 +1,3 @@
-//
-//  ProgressWrapper.swift
-//  ApexyURLSession
-//
-//  Created by Aleksei Tiurnin on 20.01.2022.
-//
-
 import Foundation
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
