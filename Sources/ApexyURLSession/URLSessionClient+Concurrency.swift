@@ -8,20 +8,40 @@
 import Apexy
 import Foundation
 
+private extension Result {
+    func error() -> Error? {
+        switch self {
+        case .success:
+            return nil
+        case .failure(let error):
+            return error
+        }
+    }
+}
+
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension URLSessionClient: ConcurrencyClient {
         
+    func observeResponse(
+        request: URLRequest?,
+        response: HTTPURLResponse?,
+        data: Data?,
+        error: Error?) async {
+            
+            return await withCheckedContinuation{ continuation in
+                completionQueue.async {[weak self] in
+                    self?.responseObserver?(request, response, data, error)
+                    continuation.resume()
+                }
+            }
+        }
+    
     open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
         var request = try endpoint.makeRequest()
         request = try requestAdapter.adapt(request)
         var response: (data: Data, response: URLResponse)?
-        var error: Error?
         
-        defer {
-            completionQueue.async { [request, response, error] in
-                self.responseObserver?(request, response?.response as? HTTPURLResponse, response?.data, error)
-            }
-        }
+        let result: Result<T.Content, Error>
         
         do {
             response = try await session.data(for: request)
@@ -31,10 +51,23 @@ extension URLSessionClient: ConcurrencyClient {
             }
             
             let data = response?.data ?? Data()
-            return try endpoint.content(from: response?.response, with: data)
+            result = .success(try endpoint.content(from: response?.response, with: data))
         } catch let someError {
-            error = someError
-            throw someError
+            result = .failure(someError)
+        }
+        
+        Task.detached {[weak self, request, response, result] in
+            await self?.observeResponse(
+                request: request,
+                response: response?.response as? HTTPURLResponse,
+                data: response?.data,
+                error: result.error())
+        }
+        
+        do {
+            return try result.get()
+        } catch {
+            throw error
         }
     }
     
@@ -42,13 +75,8 @@ extension URLSessionClient: ConcurrencyClient {
         var request: (request: URLRequest, body: UploadEndpointBody) = try endpoint.makeRequest()
         request.request = try requestAdapter.adapt(request.request)
         var response: (data: Data, response: URLResponse)?
-        var error: Error?
         
-        defer {
-            completionQueue.async { [request, response, error] in
-                self.responseObserver?(request.request, response?.response as? HTTPURLResponse, response?.data, error)
-            }
-        }
+        let result: Result<T.Content, Error>
         
         do {
             switch request {
@@ -61,10 +89,24 @@ extension URLSessionClient: ConcurrencyClient {
             }
             
             let data = response?.data ?? Data()
-            return try endpoint.content(from: response?.response, with: data)
+            result = .success(try endpoint.content(from: response?.response, with: data))
         } catch let someError {
-            error = someError
-            throw someError
+            result = .failure(someError)
+        }
+        
+        
+        Task.detached {[weak self, request, response, result] in
+            await self?.observeResponse(
+                request: request.request,
+                response: response?.response as? HTTPURLResponse,
+                data: response?.data,
+                error: result.error())
+        }
+        
+        do {
+            return try result.get()
+        } catch {
+            throw error
         }
     }
 
