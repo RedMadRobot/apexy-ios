@@ -8,17 +8,6 @@
 import Apexy
 import Foundation
 
-private extension Result {
-    func error() -> Error? {
-        switch self {
-        case .success:
-            return nil
-        case .failure(let error):
-            return error
-        }
-    }
-}
-
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 extension URLSessionClient: ConcurrencyClient {
         
@@ -41,7 +30,7 @@ extension URLSessionClient: ConcurrencyClient {
         request = try requestAdapter.adapt(request)
         var response: (data: Data, response: URLResponse)?
         
-        let result: Result<T.Content, Error>
+        let result: APIResult<T.Content>
         
         do {
             response = try await session.data(for: request)
@@ -61,7 +50,7 @@ extension URLSessionClient: ConcurrencyClient {
                 request: request,
                 response: response?.response as? HTTPURLResponse,
                 data: response?.data,
-                error: result.error())
+                error: result.error)
         }
         
         do {
@@ -76,7 +65,7 @@ extension URLSessionClient: ConcurrencyClient {
         request.request = try requestAdapter.adapt(request.request)
         var response: (data: Data, response: URLResponse)?
         
-        let result: Result<T.Content, Error>
+        let result: APIResult<T.Content>
         
         do {
             switch request {
@@ -100,7 +89,7 @@ extension URLSessionClient: ConcurrencyClient {
                 request: request.request,
                 response: response?.response as? HTTPURLResponse,
                 data: response?.data,
-                error: result.error())
+                error: result.error)
         }
         
         do {

@@ -195,17 +195,6 @@ struct AnyRequest: Alamofire.URLRequestConvertible {
     }
 }
 
-extension APIResult {
-    var error: Error? {
-        switch self {
-        case .failure(let error):
-            return error
-        default:
-            return nil
-        }
-    }
-}
-
 public extension Error {
     func unwrapAlamofireValidationError() -> Error {
         guard let afError = asAFError else { return self }

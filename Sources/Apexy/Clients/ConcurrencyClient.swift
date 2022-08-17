@@ -23,8 +23,6 @@ public protocol ConcurrencyClient: AnyObject {
     
 }
 
-public typealias APIResult<Value> = Swift.Result<Value, Error>
-
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension Client where Self: ConcurrencyClient {
     
