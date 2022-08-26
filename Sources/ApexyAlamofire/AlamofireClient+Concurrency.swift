@@ -13,14 +13,15 @@ import Foundation
 extension AlamofireClient: ConcurrencyClient {
     
     func observeResponse(
-        request: URLRequest?,
-        response: HTTPURLResponse?,
-        data: Data?,
+        dataResponse: DataResponse<Data, AFError>,
         error: Error?) async {
-            
             return await withCheckedContinuation{ continuation in
                 completionQueue.async {[weak self] in
-                    self?.responseObserver?(request, response, data, error)
+                    self?.responseObserver?(
+                        dataResponse.request,
+                        dataResponse.response,
+                        dataResponse.data,
+                        error)
                     continuation.resume()
                 }
             }
@@ -45,11 +46,7 @@ extension AlamofireClient: ConcurrencyClient {
         })
 
         Task.detached {[weak self, dataResponse, result] in
-            await self?.observeResponse(
-                request: dataResponse.request,
-                response: dataResponse.response,
-                data: dataResponse.data,
-                error: result.error)
+            await self?.observeResponse(dataResponse: dataResponse, error: result.error)
         }
 
         return try result.get()
@@ -82,11 +79,7 @@ extension AlamofireClient: ConcurrencyClient {
         })
 
         Task.detached {[weak self, dataResponse, result] in
-            await self?.observeResponse(
-                request: dataResponse.request,
-                response: dataResponse.response,
-                data: dataResponse.data,
-                error: result.error)
+            await self?.observeResponse(dataResponse: dataResponse, error: result.error)
         }
 
         return try result.get()

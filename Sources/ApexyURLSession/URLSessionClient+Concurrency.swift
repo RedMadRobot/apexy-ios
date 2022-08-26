@@ -13,13 +13,15 @@ extension URLSessionClient: ConcurrencyClient {
         
     func observeResponse(
         request: URLRequest?,
-        response: HTTPURLResponse?,
-        data: Data?,
-        error: Error?) async {
-            
+        responseResult: Result<(data: Data, response: URLResponse), Error>) async {
             return await withCheckedContinuation{ continuation in
                 completionQueue.async {[weak self] in
-                    self?.responseObserver?(request, response, data, error)
+                    let tuple = try? responseResult.get()
+                    self?.responseObserver?(
+                        request,
+                        tuple?.response as? HTTPURLResponse,
+                        tuple?.data,
+                        responseResult.error)
                     continuation.resume()
                 }
             }
@@ -42,14 +44,9 @@ extension URLSessionClient: ConcurrencyClient {
         } catch let someError {
             responseResult = .failure(someError)
         }
-        
+                
         Task.detached {[weak self, request, responseResult] in
-            let tuple = try? responseResult.get()
-            await self?.observeResponse(
-                request: request,
-                response: tuple?.response as? HTTPURLResponse,
-                data: tuple?.data,
-                error: responseResult.error)
+            await self?.observeResponse(request: request, responseResult: responseResult)
         }
         
         return try responseResult.flatMap { tuple in
@@ -83,14 +80,8 @@ extension URLSessionClient: ConcurrencyClient {
             responseResult = .failure(someError)
         }
         
-        
         Task.detached {[weak self, request, responseResult] in
-            let tuple = try? responseResult.get()
-            await self?.observeResponse(
-                request: request.request,
-                response: tuple?.response as? HTTPURLResponse,
-                data: tuple?.data,
-                error: responseResult.error)
+            await self?.observeResponse(request: request.request, responseResult: responseResult)
         }
         
         return try responseResult.flatMap { tuple in
