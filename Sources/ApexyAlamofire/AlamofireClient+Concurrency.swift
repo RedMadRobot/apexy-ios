@@ -52,11 +52,7 @@ extension AlamofireClient: ConcurrencyClient {
                 error: result.error)
         }
 
-        do {
-            return try result.get()
-        } catch {
-            throw error
-        }
+        return try result.get()
     }
     
     open func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
@@ -93,10 +89,6 @@ extension AlamofireClient: ConcurrencyClient {
                 error: result.error)
         }
 
-        do {
-            return try result.get()
-        } catch {
-            throw error
-        }
+        return try result.get()
     }
 }
