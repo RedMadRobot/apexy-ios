@@ -26,48 +26,49 @@ extension URLSessionClient: ConcurrencyClient {
         }
     
     open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
+        
         var request = try endpoint.makeRequest()
         request = try requestAdapter.adapt(request)
-        var response: (data: Data, response: URLResponse)?
-        
-        let result: APIResult<T.Content>
+        var responseResult: Result<(data: Data, response: URLResponse), Error>
         
         do {
-            response = try await session.data(for: request)
+            let response: (data: Data, response: URLResponse) = try await session.data(for: request)
             
-            if let httpResponse = response?.response as? HTTPURLResponse {
-                try endpoint.validate(request, response: httpResponse, data: response?.data)
+            if let httpResponse = response.response as? HTTPURLResponse {
+                try endpoint.validate(request, response: httpResponse, data: response.data)
             }
             
-            let data = response?.data ?? Data()
-            result = .success(try endpoint.content(from: response?.response, with: data))
+            responseResult = .success(response)
         } catch let someError {
-            result = .failure(someError)
+            responseResult = .failure(someError)
         }
         
-        Task.detached {[weak self, request, response, result] in
+        Task.detached {[weak self, request, responseResult] in
+            let tuple = try? responseResult.get()
             await self?.observeResponse(
                 request: request,
-                response: response?.response as? HTTPURLResponse,
-                data: response?.data,
-                error: result.error)
+                response: tuple?.response as? HTTPURLResponse,
+                data: tuple?.data,
+                error: responseResult.error)
         }
         
-        do {
-            return try result.get()
-        } catch {
-            throw error
-        }
+        return try responseResult.flatMap { tuple in
+            do {
+                return .success(try endpoint.content(from: tuple.response, with: tuple.data))
+            } catch {
+                return .failure(error)
+            }
+        }.get()
     }
     
     open func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
+        
         var request: (request: URLRequest, body: UploadEndpointBody) = try endpoint.makeRequest()
         request.request = try requestAdapter.adapt(request.request)
-        var response: (data: Data, response: URLResponse)?
-        
-        let result: APIResult<T.Content>
+        var responseResult: Result<(data: Data, response: URLResponse), Error>
         
         do {
+            let response: (data: Data, response: URLResponse)
             switch request {
             case (_, .data(let data)):
                 response = try await session.upload(for: request.request, from: data)
@@ -77,26 +78,27 @@ extension URLSessionClient: ConcurrencyClient {
                 throw URLSessionClientError.uploadStreamUnimplemented
             }
             
-            let data = response?.data ?? Data()
-            result = .success(try endpoint.content(from: response?.response, with: data))
+            responseResult = .success(response)
         } catch let someError {
-            result = .failure(someError)
+            responseResult = .failure(someError)
         }
         
         
-        Task.detached {[weak self, request, response, result] in
+        Task.detached {[weak self, request, responseResult] in
+            let tuple = try? responseResult.get()
             await self?.observeResponse(
                 request: request.request,
-                response: response?.response as? HTTPURLResponse,
-                data: response?.data,
-                error: result.error)
+                response: tuple?.response as? HTTPURLResponse,
+                data: tuple?.data,
+                error: responseResult.error)
         }
         
-        do {
-            return try result.get()
-        } catch {
-            throw error
-        }
+        return try responseResult.flatMap { tuple in
+            do {
+                return .success(try endpoint.content(from: tuple.response, with: tuple.data))
+            } catch {
+                return .failure(error)
+            }
+        }.get()
     }
-
 }

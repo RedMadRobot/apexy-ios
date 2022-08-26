@@ -44,7 +44,7 @@ extension AlamofireClient: ConcurrencyClient {
             }
         })
 
-        Task.detached {[weak self] in
+        Task.detached {[weak self, dataResponse, result] in
             await self?.observeResponse(
                 request: dataResponse.request,
                 response: dataResponse.response,
@@ -81,7 +81,7 @@ extension AlamofireClient: ConcurrencyClient {
             }
         })
 
-        Task.detached {[weak self] in
+        Task.detached {[weak self, dataResponse, result] in
             await self?.observeResponse(
                 request: dataResponse.request,
                 response: dataResponse.response,
