@@ -110,6 +110,18 @@ client.request(endpoint) { (result: Result<Book, Error>)
 
 The separation into `Client` and `Endpoint` allows you to separate the asynchronous code in `Client` from the synchronous code in `Endpoint`. Thus, the side effects are isolated in `Client`, and the pure functions in the non-mutable `Endpoint`.
 
+### CombineClient
+
+`CombineClient` - protocol that wrap up network request in `Combine`.
+
+### ConcurrencyClient
+
+`ConcurrencyClient` - protocol that wrap up network request in `Async/Await`.
+
+* By default, new methods implemented as extensions of `Client`'s methods.
+* `ApexyAlamofire` use built in implementation of `Async/Await` in `Alamofire`
+* For `URLSession` new `Async/Await` methods was implemented using `URLSession`'s `AsyncAwait` extended implementation for iOS 14 and below. (look into `URLSession+Concurrency.swift` for more details)
+
 ## Getting Started
 
 Since most requests will receive JSON, it is necessary to make basic protocols at the module level. They will contain common requests logic for a specific API.
