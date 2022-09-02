@@ -11,9 +11,6 @@ import Foundation
 
 /// API Client.
 open class AlamofireClient: Client, CombineClient {
-    
-    /// A closure used to observe result of every response from the server.
-    public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
 
     /// Session network manager.
     let sessionManager: Alamofire.Session

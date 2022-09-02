@@ -2,9 +2,6 @@ import Apexy
 import Foundation
 
 open class URLSessionClient: Client, ConcurrencyClient, CombineClient {
-    
-    /// A closure used to observe result of every response from the server.
-    public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
 
     let session: URLSession
     
