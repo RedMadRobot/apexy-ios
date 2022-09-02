@@ -122,6 +122,8 @@ The separation into `Client` and `Endpoint` allows you to separate the asynchron
 * `ApexyAlamofire` use built in implementation of `Async/Await` in `Alamofire`
 * For `URLSession` new `Async/Await` methods was implemented using `URLSession`'s `AsyncAwait` extended implementation for iOS 14 and below. (look into `URLSession+Concurrency.swift` for more details)
 
+`Client`, `CombineClient` and `ConcurrenyClient` are separated protocols. You can specify method that you are using by using specific protocol.
+
 ## Getting Started
 
 Since most requests will receive JSON, it is necessary to make basic protocols at the module level. They will contain common requests logic for a specific API.
