@@ -14,7 +14,7 @@ extension URLSessionClient: ConcurrencyClient {
     func observeResponse(
         request: URLRequest?,
         responseResult: Result<(data: Data, response: URLResponse), Error>) async {
-            return await withCheckedContinuation{ continuation in
+            await withCheckedContinuation { continuation in
                 completionQueue.async {[weak self] in
                     let tuple = try? responseResult.get()
                     self?.responseObserver?(
@@ -45,7 +45,7 @@ extension URLSessionClient: ConcurrencyClient {
             responseResult = .failure(someError)
         }
                 
-        Task.detached {[weak self, request, responseResult] in
+        Task.detached { [weak self, request, responseResult] in
             await self?.observeResponse(request: request, responseResult: responseResult)
         }
         

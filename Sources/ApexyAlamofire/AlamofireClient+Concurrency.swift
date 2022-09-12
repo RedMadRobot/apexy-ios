@@ -15,7 +15,7 @@ extension AlamofireClient: ConcurrencyClient {
     func observeResponse(
         dataResponse: DataResponse<Data, AFError>,
         error: Error?) async {
-            return await withCheckedContinuation{ continuation in
+            await withCheckedContinuation{ continuation in
                 completionQueue.async {[weak self] in
                     self?.responseObserver?(
                         dataResponse.request,
@@ -45,7 +45,7 @@ extension AlamofireClient: ConcurrencyClient {
             }
         })
 
-        Task.detached {[weak self, dataResponse, result] in
+        Task.detached { [weak self, dataResponse, result] in
             await self?.observeResponse(dataResponse: dataResponse, error: result.error)
         }
 
@@ -78,7 +78,7 @@ extension AlamofireClient: ConcurrencyClient {
             }
         })
 
-        Task.detached {[weak self, dataResponse, result] in
+        Task.detached { [weak self, dataResponse, result] in
             await self?.observeResponse(dataResponse: dataResponse, error: result.error)
         }
 
