@@ -9,47 +9,7 @@ import Apexy
 import Foundation
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-class URLSessionConcurrencyClient: ConcurrencyClient {
-    
-    let session: URLSession
-    
-    let requestAdapter: RequestAdapter
-
-    /// This closure to be called after each response from the server for the request.
-    let responseObserver: ResponseObserver?
-    
-    /// Creates new 'URLSessionClient' instance.
-    ///
-    /// - Parameters:
-    ///   - baseURL: Base `URL`.
-    ///   - configuration: The configuration used to construct the managed session.
-    ///   - responseObserver: The closure to be called after each response.
-    public convenience init(
-        baseURL: URL,
-        configuration: URLSessionConfiguration = .default,
-        responseObserver: ResponseObserver? = nil) {
-        
-        self.init(
-            requestAdapter: BaseRequestAdapter(baseURL: baseURL),
-            configuration: configuration,
-            responseObserver: responseObserver)
-    }
-    
-    /// Creates new 'URLSessionClient' instance.
-    ///
-    /// - Parameters:
-    ///   - requestAdapter: RequestAdapter used to adapt a `URLRequest`.
-    ///   - configuration: The configuration used to construct the managed session.
-    ///   - responseObserver: The closure to be called after each response.
-    public init(
-        requestAdapter: RequestAdapter,
-        configuration: URLSessionConfiguration = .default,
-        responseObserver: ResponseObserver? = nil) {
-        
-        self.requestAdapter = requestAdapter
-        self.session = URLSession(configuration: configuration)
-        self.responseObserver = responseObserver
-    }
+extension URLSessionClient: ConcurrencyClient {
     
     func observeResponse(
         request: URLRequest?,
@@ -130,8 +90,4 @@ class URLSessionConcurrencyClient: ConcurrencyClient {
             }
         }.get()
     }
-}
-
-@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
-extension URLSessionClient: ConcurrencyClient {
 }

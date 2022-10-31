@@ -16,14 +16,12 @@ extension AlamofireClient: ConcurrencyClient {
         dataResponse: DataResponse<Data, AFError>,
         error: Error?) async {
             await withCheckedContinuation{ continuation in
-                completionQueue.async {[weak self] in
-                    self?.responseObserver?(
-                        dataResponse.request,
-                        dataResponse.response,
-                        dataResponse.data,
-                        error)
-                    continuation.resume()
-                }
+                self.responseObserver?(
+                    dataResponse.request,
+                    dataResponse.response,
+                    dataResponse.data,
+                    error)
+                continuation.resume()
             }
         }
     

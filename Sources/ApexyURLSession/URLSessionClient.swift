@@ -1,7 +1,7 @@
 import Apexy
 import Foundation
 
-open class URLSessionClient: Client, ConcurrencyClient, CombineClient {
+open class URLSessionClient: Client, CombineClient {
 
     let session: URLSession
     
