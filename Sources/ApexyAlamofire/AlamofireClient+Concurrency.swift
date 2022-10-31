@@ -15,7 +15,7 @@ extension AlamofireClient: ConcurrencyClient {
     func observeResponse(
         dataResponse: DataResponse<Data, AFError>,
         error: Error?) async {
-            await withCheckedContinuation{ continuation in
+            await withCheckedContinuation{ (continuation: CheckedContinuation<Void, Never>) in
                 self.responseObserver?(
                     dataResponse.request,
                     dataResponse.response,

@@ -14,7 +14,7 @@ extension URLSessionClient: ConcurrencyClient {
     func observeResponse(
         request: URLRequest?,
         responseResult: Result<(data: Data, response: URLResponse), Error>) async {
-            await withCheckedContinuation { continuation in
+            await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
                 let tuple = try? responseResult.get()
                 self.responseObserver?(
                     request,
