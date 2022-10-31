@@ -41,6 +41,11 @@ public extension Client where Self: ConcurrencyClient {
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public enum AsyncAwaitHelper {
+    
+    enum AsyncError: Error {
+        case cancelledBeforeStart
+    }
+    
     public typealias ContentContinuation<T> = CheckedContinuation<T, Error>
 
     public static func adaptToAsync<T>(dataTaskClosure: (ContentContinuation<T>) -> Progress) async throws -> T {
@@ -48,7 +53,8 @@ public enum AsyncAwaitHelper {
         return try await withTaskCancellationHandler(handler: {
             progressWrapper.cancel()
         }, operation: {
-            try await withCheckedThrowingContinuation { (continuation: ContentContinuation<T>) in
+            guard progressWrapper.isCancelled else { throw AsyncError.cancelledBeforeStart }
+            return try await withCheckedThrowingContinuation { (continuation: ContentContinuation<T>) in
                 let progress = dataTaskClosure(continuation)
                 progressWrapper.progress = progress
             }

@@ -16,6 +16,13 @@ public final class ProgressWrapper {
         }
     }
     
+    public var isCancelled: Bool {
+        guard let progress = progress else {
+            return false
+        }
+        return progress.isCancelled
+    }
+    
     private var _progress: Progress?
     private let lock = NSLock()
     
