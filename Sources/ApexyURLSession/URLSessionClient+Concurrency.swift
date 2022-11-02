@@ -13,16 +13,13 @@ extension URLSessionClient: ConcurrencyClient {
     
     func observeResponse(
         request: URLRequest?,
-        responseResult: Result<(data: Data, response: URLResponse), Error>) async {
-            await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-                let tuple = try? responseResult.get()
-                self.responseObserver?(
-                    request,
-                    tuple?.response as? HTTPURLResponse,
-                    tuple?.data,
-                    responseResult.error)
-                continuation.resume()
-            }
+        responseResult: Result<(data: Data, response: URLResponse), Error>) {
+            let tuple = try? responseResult.get()
+            self.responseObserver?(
+                request,
+                tuple?.response as? HTTPURLResponse,
+                tuple?.data,
+                responseResult.error)
         }
     
     open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
@@ -44,7 +41,7 @@ extension URLSessionClient: ConcurrencyClient {
         }
                         
         Task.detached { [weak self, request, responseResult] in
-            await self?.observeResponse(request: request, responseResult: responseResult)
+            self?.observeResponse(request: request, responseResult: responseResult)
         }
         
         return try responseResult.flatMap { tuple in
@@ -79,7 +76,7 @@ extension URLSessionClient: ConcurrencyClient {
         }
         
         Task.detached {[weak self, request, responseResult] in
-            await self?.observeResponse(request: request.request, responseResult: responseResult)
+            self?.observeResponse(request: request.request, responseResult: responseResult)
         }
         
         return try responseResult.flatMap { tuple in

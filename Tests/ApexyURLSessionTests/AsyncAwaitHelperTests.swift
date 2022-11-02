@@ -31,9 +31,9 @@ final class AsyncAwaitHelperTests: XCTestCase {
         task.cancel()
         do {
             _ = try await task.value
-            XCTAssert(false)
+            XCTFail("Task has been cancelled")
         } catch {
-            XCTAssertEqual(error as! AsyncAwaitHelper.AsyncError, AsyncAwaitHelper.AsyncError.cancelledBeforeStart)
+            XCTAssert(error is CancellationError)
         }
     }
 

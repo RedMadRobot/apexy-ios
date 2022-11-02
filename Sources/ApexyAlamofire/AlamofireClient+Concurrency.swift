@@ -14,15 +14,12 @@ extension AlamofireClient: ConcurrencyClient {
     
     func observeResponse(
         dataResponse: DataResponse<Data, AFError>,
-        error: Error?) async {
-            await withCheckedContinuation{ (continuation: CheckedContinuation<Void, Never>) in
-                self.responseObserver?(
-                    dataResponse.request,
-                    dataResponse.response,
-                    dataResponse.data,
-                    error)
-                continuation.resume()
-            }
+        error: Error?) {
+            self.responseObserver?(
+                dataResponse.request,
+                dataResponse.response,
+                dataResponse.data,
+                error)
         }
     
     open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
@@ -44,7 +41,7 @@ extension AlamofireClient: ConcurrencyClient {
         })
 
         Task.detached { [weak self, dataResponse, result] in
-            await self?.observeResponse(dataResponse: dataResponse, error: result.error)
+            self?.observeResponse(dataResponse: dataResponse, error: result.error)
         }
 
         return try result.get()
@@ -77,7 +74,7 @@ extension AlamofireClient: ConcurrencyClient {
         })
 
         Task.detached { [weak self, dataResponse, result] in
-            await self?.observeResponse(dataResponse: dataResponse, error: result.error)
+            self?.observeResponse(dataResponse: dataResponse, error: result.error)
         }
 
         return try result.get()

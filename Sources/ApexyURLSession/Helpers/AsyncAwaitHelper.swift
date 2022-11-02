@@ -14,7 +14,7 @@ enum AsyncAwaitHelper {
         return try await withTaskCancellationHandler(handler: {
             progressWrapper.cancel()
         }, operation: {
-            guard !progressWrapper.isCancelled else { throw AsyncError.cancelledBeforeStart }
+            try Task.checkCancellation()
             return try await withCheckedThrowingContinuation { (continuation: ContentContinuation<T>) in
                 let progress = dataTaskClosure(continuation)
                 progressWrapper.progress = progress

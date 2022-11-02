@@ -1,6 +1,7 @@
 import Foundation
 
 @propertyWrapper struct Locked<T> {
+    
     var wrappedValue: T {
         get {
             lock.lock()
@@ -24,18 +25,15 @@ import Foundation
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 final class ProgressWrapper {
-    @Locked
-    var progress: Progress?
     
     @Locked
-    var isCancelled: Bool = false
+    var progress: Progress?
     
     init(_progress: Progress? = nil) {
         self.progress = progress
     }
     
     func cancel() {
-        isCancelled = true
         progress?.cancel()
     }
 }
