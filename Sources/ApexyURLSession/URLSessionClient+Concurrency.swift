@@ -75,7 +75,7 @@ extension URLSessionClient: ConcurrencyClient {
             responseResult = .failure(someError)
         }
         
-        Task.detached {[weak self, request, responseResult] in
+        Task.detached { [weak self, request, responseResult] in
             self?.observeResponse(request: request.request, responseResult: responseResult)
         }
         
