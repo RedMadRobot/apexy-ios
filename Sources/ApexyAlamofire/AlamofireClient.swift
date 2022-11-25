@@ -5,32 +5,29 @@
 //  Copyright © 2019 RedMadRobot. All rights reserved.
 //
 
+import Alamofire
 import Apexy
 import Foundation
-import Alamofire
 
 /// API Client.
-open class AlamofireClient: Client {
-    
-    /// A closure used to observe result of every response from the server.
-    public typealias ResponseObserver = (URLRequest?, HTTPURLResponse?, Data?, Error?) -> Void
+open class AlamofireClient: Client, CombineClient {
 
     /// Session network manager.
-    private let sessionManager: Alamofire.Session
+    let sessionManager: Alamofire.Session
 
     /// The queue on which the network response handler is dispatched.
-    private let responseQueue = DispatchQueue(
+    let responseQueue = DispatchQueue(
         label: "Apexy.responseQueue",
         qos: .utility)
 
     /// The queue on which the completion handler is dispatched.
-    private let completionQueue: DispatchQueue
+    let completionQueue: DispatchQueue
 
     /// This closure to be called after each response from the server for the request.
-    private let responseObserver: ResponseObserver?
+    let responseObserver: ResponseObserver?
 
     /// Look more at Alamofire.RequestInterceptor.
-    public let requestInterceptor: RequestInterceptor
+    let requestInterceptor: RequestInterceptor
 
     /// Creates new 'AlamofireClient' instance.
     ///
@@ -187,22 +184,11 @@ open class AlamofireClient: Client {
 // MARK: - Helper
 
 /// Wrapper for `URLRequestConvertible` from `Alamofire`.
-private struct AnyRequest: Alamofire.URLRequestConvertible {
+struct AnyRequest: Alamofire.URLRequestConvertible {
     let create: () throws -> URLRequest
 
     func asURLRequest() throws -> URLRequest {
         return try create()
-    }
-}
-
-private extension APIResult {
-    var error: Error? {
-        switch self {
-        case .failure(let error):
-            return error
-        default:
-            return nil
-        }
     }
 }
 

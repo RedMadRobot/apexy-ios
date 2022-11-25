@@ -1,5 +1,5 @@
 //
-//  URLSession+AsyncAwait13.swift
+//  URLSession+Concurrency.swift
 //  ApexyURLSession
 //
 //  Created by Aleksei Tiurnin on 20.01.2022.
@@ -14,6 +14,11 @@ import Foundation
 @available(tvOS, introduced: 13, deprecated: 15, message: "Extension is no longer necessary. Use API built into SDK")
 extension URLSession {
     
+    /// Send request
+    /// - Parameters:
+    ///    - request: A URL request object that provides the URL, cache policy, request type, and so on. The body stream and body data in this request object are ignored.
+    ///    - delegate: Delegate to get events about request (NOT WORKING💀)
+    /// - Returns: Tuple with Data and URLResponse
     public func data(
         for request: URLRequest,
         delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {
@@ -30,6 +35,12 @@ extension URLSession {
             })
         }
     
+    /// Send request
+    /// - Parameters:
+    ///    - request: A URL request object that provides the URL, cache policy, request type, and so on. The body stream and body data in this request object are ignored.
+    ///    - fromFile: The URL of the file to upload.
+    ///    - delegate: Delegate to get events about request (NOT WORKING💀)
+    /// - Returns: Tuple with Data and URLResponse
     public func upload(
         for request: URLRequest,
         fromFile fileURL: URL,
@@ -47,6 +58,12 @@ extension URLSession {
             })
         }
 
+    /// Send request
+    /// - Parameters:
+    ///    - request: A URL request object that provides the URL, cache policy, request type, and so on. The body stream and body data in this request object are ignored.
+    ///    - bodyData: The body data for the request.
+    ///    - delegate: Delegate to get events about request (NOT WORKING💀)
+    /// - Returns: Tuple with Data and URLResponse
     public func upload(
         for request: URLRequest,
         from bodyData: Data,

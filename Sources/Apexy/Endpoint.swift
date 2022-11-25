@@ -41,5 +41,5 @@ public protocol Endpoint {
 }
 
 public extension Endpoint {
-    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) { }
+    func validate(_ request: URLRequest?, response: HTTPURLResponse, data: Data?) throws { }
 }
