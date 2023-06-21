@@ -17,7 +17,7 @@ let package = Package(
         .library(name: "ApexyLoader", targets: ["ApexyLoader"])
     ],
     dependencies: [
-        .package(url: "https://github.com/Alamofire/Alamofire.git", .upToNextMajor(from: "5.2.0"))
+        .package(url: "git@github.com:Alamofire/Alamofire.git", .upToNextMajor(from: "5.2.0"))
     ],
     targets: [
         .target(name: "ApexyLoader", dependencies: ["Apexy"]),
