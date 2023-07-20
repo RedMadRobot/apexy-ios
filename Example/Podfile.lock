@@ -1,11 +1,11 @@
 PODS:
   - Alamofire (5.4.1)
-  - Apexy (1.4.1):
-    - Apexy/Alamofire (= 1.4.1)
-  - Apexy/Alamofire (1.4.1):
+  - Apexy (1.7.2):
+    - Apexy/Alamofire (= 1.7.2)
+  - Apexy/Alamofire (1.7.2):
     - Alamofire (~> 5.0)
     - Apexy/Core
-  - Apexy/Core (1.4.1)
+  - Apexy/Core (1.7.2)
 
 DEPENDENCIES:
   - Apexy (from `../`)
@@ -20,8 +20,8 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   Alamofire: 2291f7d21ca607c491dd17642e5d40fdcda0e65c
-  Apexy: a9bfb8db4277c3b97d9063cbee34a28c87074c20
+  Apexy: 984a2c615adf4b5af3432859d768a7a3dec51907
 
 PODFILE CHECKSUM: f86a90e7590ccb3aa7caeceaf315abe256650c66
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.12.1

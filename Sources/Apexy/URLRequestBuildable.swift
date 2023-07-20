@@ -28,7 +28,7 @@ public extension URLRequestBuildable {
             return URLRequest(url: url)
         }
         
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: false)
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)
         components?.queryItems = queryItems
         
         guard let queryURL = components?.url else {
