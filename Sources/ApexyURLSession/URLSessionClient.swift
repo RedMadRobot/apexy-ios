@@ -18,17 +18,20 @@ open class URLSessionClient: Client, CombineClient {
     /// - Parameters:
     ///   - baseURL: Base `URL`.
     ///   - configuration: The configuration used to construct the managed session.
+    ///   - delegate: The delegate of URLSession.
     ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
     ///   - responseObserver: The closure to be called after each response.
     public convenience init(
         baseURL: URL,
         configuration: URLSessionConfiguration = .default,
+        delegate: URLSessionDelegate? = nil,
         completionQueue: DispatchQueue = .main,
         responseObserver: ResponseObserver? = nil) {
         
         self.init(
             requestAdapter: BaseRequestAdapter(baseURL: baseURL),
             configuration: configuration,
+            delegate: delegate,
             completionQueue: completionQueue,
             responseObserver: responseObserver)
     }
@@ -38,16 +41,18 @@ open class URLSessionClient: Client, CombineClient {
     /// - Parameters:
     ///   - requestAdapter: RequestAdapter used to adapt a `URLRequest`.
     ///   - configuration: The configuration used to construct the managed session.
+    ///   - delegate: The delegate of URLSession.
     ///   - completionQueue: The serial operation queue used to dispatch all completion handlers. `.main` by default.
     ///   - responseObserver: The closure to be called after each response.
     public init(
         requestAdapter: RequestAdapter,
         configuration: URLSessionConfiguration = .default,
+        delegate: URLSessionDelegate? = nil,
         completionQueue: DispatchQueue = .main,
         responseObserver: ResponseObserver? = nil) {
         
         self.requestAdapter = requestAdapter
-        self.session = URLSession(configuration: configuration)
+        self.session = URLSession(configuration: configuration, delegate: delegate, delegateQueue: nil)
         self.completionQueue = completionQueue
         self.responseObserver = responseObserver
     }
