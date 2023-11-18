@@ -20,7 +20,7 @@ extension URLSession {
     ///    - delegate: Delegate to get events about request (NOT WORKING💀)
     /// - Returns: Tuple with Data and URLResponse
     public func data(
-        for request: URLRequest,
+        forRequest request: URLRequest,
         delegate: URLSessionTaskDelegate? = nil) async throws -> (Data, URLResponse) {
             return try await AsyncAwaitHelper.adaptToAsync(dataTaskClosure: { continuation in
                 let task = dataTask(with: request) { data, response, error in
