@@ -30,8 +30,6 @@ class ViewController: UIViewController {
     @IBAction private func performRequest() {
         activityView.isHidden = false
         
-        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { performLegacyRequest(); return }
-        
         task = Task {
             do {
                 let books = try await bookService.fetchBooks()
@@ -43,25 +41,9 @@ class ViewController: UIViewController {
         }
     }
     
-    private func performLegacyRequest() {
-        progress = bookService.fetchBooks() { [weak self] result in
-            guard let self = self else { return }
-            self.activityView.isHidden = true
-            switch result {
-            case .success(let books):
-                self.show(books: books)
-            case .failure(let error):
-                self.show(error: error)
-            }
-        }
-    }
-    
-    
     @IBAction private func upload() {
         guard let file = Bundle.main.url(forResource: "Info", withExtension: "plist") else { return }
         activityView.isHidden = false
-     
-        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { legacyUpload(with: file); return }
         
         task = Task {
             do {
@@ -73,26 +55,11 @@ class ViewController: UIViewController {
             activityView.isHidden = true
         }
     }
-    
-    private func legacyUpload(with file: URL) {
-        progress = fileService.upload(file: file) { [weak self] result in
-            guard let self = self else { return }
-            self.activityView.isHidden = true
-            switch result {
-            case .success:
-                self.showOKUpload()
-            case .failure(let error):
-                self.show(error: error)
-            }
-        }
-    }
-    
+        
     @IBAction private func uploadStream() {
         let streamer = Streamer()
         self.streamer = streamer
         activityView.isHidden = false
-        
-        guard #available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *) else { legacyUploadStream(with: streamer); return }
         
         streamer.run()
         
@@ -102,30 +69,6 @@ class ViewController: UIViewController {
             } catch {
                 show(error: error)
                 self.streamer = nil
-            }
-        }
-    }
-    
-    private func legacyUploadStream(with streamer: Streamer) {
-        progress = fileService.upload(
-            stream: streamer.boundStreams.input,
-            size: streamer.totalDataSize) { [weak self] result in
-                guard let self = self else { return }
-                self.activityView.isHidden = true
-                switch result {
-                case .success:
-                    self.showOKUpload()
-                case .failure(let error):
-                    self.show(error: error)
-                    self.streamer = nil
-                }
-            }
-        streamer.run()
-        
-        observation = progress?.observe(\.fractionCompleted, options: [.new]) { [weak self] (progress, value) in
-            DispatchQueue.main.async {
-                let percent = (value.newValue ?? 0) * 100
-                self?.resultLabel.text = "Progress: \(String(format: "%.0f", percent))%"
             }
         }
     }
