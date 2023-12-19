@@ -11,14 +11,13 @@ enum AsyncAwaitHelper {
 
     public static func adaptToAsync<T>(dataTaskClosure: (ContentContinuation<T>) -> Progress) async throws -> T {
         let progressWrapper = ProgressWrapper()
-        return try await withTaskCancellationHandler(handler: {
-            progressWrapper.cancel()
-        }, operation: {
+        return try await withTaskCancellationHandler(operation: {
             try Task.checkCancellation()
             return try await withCheckedThrowingContinuation { (continuation: ContentContinuation<T>) in
-                let progress = dataTaskClosure(continuation)
-                progressWrapper.progress = progress
+                progressWrapper.progress = dataTaskClosure(continuation)
             }
+        }, onCancel: {
+            progressWrapper.cancel()
         })
     }
 }
