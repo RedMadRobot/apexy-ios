@@ -285,7 +285,7 @@ public struct FileUploadEndpoint: UploadEndpoint {
 
 ## Требования
 
-- iOS 11.0+ / macOS 10.13+ / tvOS 11.0+ / watchOS 4.0+
+- iOS 13.0+ / macOS 10.15+ / tvOS 13.0+ / watchOS 6.0+
 - Xcode 12+
 - Swift 5.3+
 

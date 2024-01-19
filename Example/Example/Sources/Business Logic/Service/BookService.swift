@@ -12,29 +12,18 @@ import ExampleAPI
 typealias Book = ExampleAPI.Book
 
 protocol BookService {
-    
-    @discardableResult
-    func fetchBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress
-    
-    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func fetchBooks() async throws -> [Book]
 }
 
 
 final class BookServiceImpl: BookService {
     
-    let apiClient: Client
+    let apiClient: ConcurrencyClient
     
-    init(apiClient: Client) {
+    init(apiClient: ConcurrencyClient) {
         self.apiClient = apiClient
     }
     
-    func fetchBooks(completion: @escaping (Result<[Book], Error>) -> Void) -> Progress {
-        let endpoint = BookListEndpoint()
-        return apiClient.request(endpoint, completionHandler: completion)
-    }
-    
-    @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
     func fetchBooks() async throws -> [Book] {
         let endpoint = BookListEndpoint()
         return try await apiClient.request(endpoint)
