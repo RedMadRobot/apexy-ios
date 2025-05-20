@@ -43,6 +43,7 @@ open class AlamofireClient: Client, CombineClient {
         configuration: URLSessionConfiguration,
         completionQueue: DispatchQueue = .main,
         publicKeys: [String: [SecKey]] = [:],
+        evaluateAllHostsForTrust: Bool = true,
         responseObserver: ResponseObserver? = nil,
         eventMonitors: [EventMonitor] = []) {
 
@@ -52,7 +53,7 @@ open class AlamofireClient: Client, CombineClient {
             let evaluators = publicKeys.mapValues { keys in
                 return PublicKeysTrustEvaluator(keys: keys, performDefaultValidation: true, validateHost: true)
             }
-            securityManager = ServerTrustManager(evaluators: evaluators)
+            securityManager = ServerTrustManager(allHostsMustBeEvaluated: evaluateAllHostsForTrust, evaluators: evaluators)
         }
 
         self.completionQueue = completionQueue
@@ -79,6 +80,7 @@ open class AlamofireClient: Client, CombineClient {
         configuration: URLSessionConfiguration,
         completionQueue: DispatchQueue = .main,
         publicKeys: [String: [SecKey]] = [:],
+        evaluateAllHostsForTrust: Bool = true,
         responseObserver: ResponseObserver? = nil,
         eventMonitors: [EventMonitor] = []) {
         self.init(
@@ -86,6 +88,7 @@ open class AlamofireClient: Client, CombineClient {
             configuration: configuration,
             completionQueue: completionQueue,
             publicKeys: publicKeys,
+            evaluateAllHostsForTrust: evaluateAllHostsForTrust,
             responseObserver: responseObserver,
             eventMonitors: eventMonitors)
     }
