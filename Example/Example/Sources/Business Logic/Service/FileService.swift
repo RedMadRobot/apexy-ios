@@ -17,9 +17,9 @@ protocol FileService {
 
 final class FileServiceImpl: FileService {
     
-    let apiClient: ConcurrencyClient
+    let apiClient: Client
     
-    init(apiClient: ConcurrencyClient) {
+    init(apiClient: Client) {
         self.apiClient = apiClient
     }
         

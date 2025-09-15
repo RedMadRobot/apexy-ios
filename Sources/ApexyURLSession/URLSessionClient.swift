@@ -1,6 +1,7 @@
 import Apexy
 import Foundation
 
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 open class URLSessionClient: Client, CombineClient {
 
     let session: URLSession
@@ -57,38 +58,81 @@ open class URLSessionClient: Client, CombineClient {
         self.responseObserver = responseObserver
     }
     
-    open func request<T>(
-        _ endpoint: T,
-        completionHandler: @escaping (APIResult<T.Content>) -> Void) -> Progress where T : Endpoint {
+    func observeResponse(
+        request: URLRequest?,
+        responseResult: Result<(data: Data, response: URLResponse), Error>) {
+            let tuple = try? responseResult.get()
+            self.responseObserver?(
+                request,
+                tuple?.response as? HTTPURLResponse,
+                tuple?.data,
+                responseResult.error)
+        }
+    
+    open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
         
-        var request: URLRequest
+        var request = try endpoint.makeRequest()
+        request = try requestAdapter.adapt(request)
+        var responseResult: Result<(data: Data, response: URLResponse), Error>
+        
         do {
-            request = try endpoint.makeRequest()
-            request = try requestAdapter.adapt(request)
-        } catch {
-            completionHandler(.failure(error))
-            return Progress()
-        }
-        
-        let task = session.dataTask(with: request) { (data, response, error) in
-            let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                if let httpResponse = response as? HTTPURLResponse {
-                    try endpoint.validate(request, response: httpResponse, data: data)
-                }
-                let data = data ?? Data()
-                if let error = error {
-                    throw error
-                }
-                return try endpoint.content(from: response, with: data)
-            })
-            self.completionQueue.async {
-                self.responseObserver?(request, response as? HTTPURLResponse, data, error)
-                completionHandler(result)
+            let response: (data: Data, response: URLResponse) = try await session.data(for: request)
+            
+            if let httpResponse = response.response as? HTTPURLResponse {
+                try endpoint.validate(request, response: httpResponse, data: response.data)
             }
+            
+            responseResult = .success(response)
+        } catch let someError {
+            responseResult = .failure(someError)
         }
-        task.resume()
+                        
+        Task.detached { [weak self, request, responseResult] in
+            self?.observeResponse(request: request, responseResult: responseResult)
+        }
         
-        return task.progress
+        return try responseResult.flatMap { tuple in
+            do {
+                return .success(try endpoint.content(from: tuple.response, with: tuple.data))
+            } catch {
+                return .failure(error)
+            }
+        }.get()
+    }
+    
+    open func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
+        
+        var request: (request: URLRequest, body: UploadEndpointBody) = try endpoint.makeRequest()
+        request.request = try requestAdapter.adapt(request.request)
+        var responseResult: Result<(data: Data, response: URLResponse), Error>
+        
+        do {
+            let response: (data: Data, response: URLResponse)
+            switch request {
+            case (_, .data(let data)):
+                response = try await session.upload(for: request.request, from: data)
+            case (_, .file(let url)):
+                response = try await session.upload(for: request.request, fromFile: url)
+            case (_, .stream):
+                throw URLSessionClientError.uploadStreamUnimplemented
+            }
+            
+            responseResult = .success(response)
+        } catch let someError {
+            responseResult = .failure(someError)
+        }
+        
+        Task.detached { [weak self, request, responseResult] in
+            self?.observeResponse(request: request.request, responseResult: responseResult)
+        }
+        
+        return try responseResult.flatMap { tuple in
+            do {
+                return .success(try endpoint.content(from: tuple.response, with: tuple.data))
+            } catch {
+                return .failure(error)
+            }
+        }.get()
     }
 }
 

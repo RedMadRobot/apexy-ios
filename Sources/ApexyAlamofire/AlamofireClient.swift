@@ -10,6 +10,7 @@ import Apexy
 import Foundation
 
 /// API Client.
+@available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 open class AlamofireClient: Client, CombineClient {
 
     /// Session network manager.
@@ -93,43 +94,72 @@ open class AlamofireClient: Client, CombineClient {
             eventMonitors: eventMonitors)
     }
 
-    /// Send request to specified endpoint.
-    ///
-    /// - Parameters:
-    ///   - endpoint: endpoint of remote content.
-    ///   - completionHandler: The completion closure to be executed when request is completed.
-    /// - Returns: The progress of fetching the response data from the server for the request.
-    open func request<T>(
-        _ endpoint: T,
-        completionHandler: @escaping (APIResult<T.Content>) -> Void
-    ) -> Progress where T: Endpoint {
-
+    func observeResponse(
+        dataResponse: DataResponse<Data, AFError>,
+        error: Error?) {
+            self.responseObserver?(
+                dataResponse.request,
+                dataResponse.response,
+                dataResponse.data,
+                error)
+        }
+    
+    open func request<T>(_ endpoint: T) async throws -> T.Content where T : Endpoint {
+        
         let anyRequest = AnyRequest(create: endpoint.makeRequest)
         let request = sessionManager.request(anyRequest)
             .validate { request, response, data in
                 Result(catching: { try endpoint.validate(request, response: response, data: data) })
-            }.responseData(
-                queue: responseQueue,
-                completionHandler: { (response: DataResponse<Data, AFError>) in
+            }
 
-                    let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                        do {
-                            let data = try response.result.get()
-                            return try endpoint.content(from: response.response, with: data)
-                        } catch {
-                            throw error.unwrapAlamofireValidationError()
-                        }
-                    })
+        let dataResponse = await request.serializingData().response
+        let result = APIResult<T.Content>(catching: { () throws -> T.Content in
+            do {
+                let data = try dataResponse.result.get()
+                return try endpoint.content(from: dataResponse.response, with: data)
+            } catch {
+                throw error.unwrapAlamofireValidationError()
+            }
+        })
 
-                    self.completionQueue.async {
-                        self.responseObserver?(response.request, response.response, response.data, result.error)
-                        completionHandler(result)
-                    }
-            })
+        Task.detached { [weak self, dataResponse, result] in
+            self?.observeResponse(dataResponse: dataResponse, error: result.error)
+        }
 
-        let progress = request.downloadProgress
-        progress.cancellationHandler = { [weak request] in request?.cancel() }
-        return progress
+        return try result.get()
+    }
+    
+    open func upload<T>(_ endpoint: T) async throws -> T.Content where T : UploadEndpoint {
+        
+        let urlRequest: URLRequest
+        let body: UploadEndpointBody
+        (urlRequest, body) = try endpoint.makeRequest()
+        
+        let request: UploadRequest
+        switch body {
+        case .data(let data):
+            request = sessionManager.upload(data, with: urlRequest)
+        case .file(let url):
+            request = sessionManager.upload(url, with: urlRequest)
+        case .stream(let stream):
+            request = sessionManager.upload(stream, with: urlRequest)
+        }
+
+        let dataResponse = await request.serializingData().response
+        let result = APIResult<T.Content>(catching: { () throws -> T.Content in
+            do {
+                let data = try dataResponse.result.get()
+                return try endpoint.content(from: dataResponse.response, with: data)
+            } catch {
+                throw error.unwrapAlamofireValidationError()
+            }
+        })
+
+        Task.detached { [weak self, dataResponse, result] in
+            self?.observeResponse(dataResponse: dataResponse, error: result.error)
+        }
+
+        return try result.get()
     }
 
 }
