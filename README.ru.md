@@ -94,20 +94,20 @@ public struct BookEndpoint: Endpoint {
     }
 }
 
-let client = Client ...
+let client: Client = ...
 
 let endpoint = BookEndpoint(id: "1")
-client.request(endpoint) { (result: Result<Book, Error>)
-    print(result)
-}
+let book = try await client.request(endpoint)
+print(book)
 ```
 
 ## Client
 
-`Client` - объект с одним методом способный выполнить `Endpoint`.
-- Легко мокается, так как у него один метод.
+`Client` - объект с методами для выполнения `Endpoint` используя современный синтаксис async/await.
+- Легко мокается, так как у него простой интерфейс.
 - Легко отправить через него несколько разных `Endpoint`.
 - Легко оборачивается в декораторы или адаптеры. Например можно обернуть в `Combine` и вам не придется делать обертки для каждого запроса.
+- Поддерживает как `request`, так и `upload` операции с async/await.
 
 Разделение на `Client` и `Endpoint` позволяет разделить асинхронный код в `Client` от синхронного кода в `Endpoint`. Таким образом сайд эффекты изолированы в одном месте `Client`, а чистые функции в немутабельных `Endpoint`.
 
@@ -115,15 +115,7 @@ client.request(endpoint) { (result: Result<Book, Error>)
 
 `CombineClient` - отдельный протокол, который содержит релизацию сетевый вызовов через Combine.
 
-### ConcurrencyClient
-
-`ConcurrencyClient` - отдельный протокол, который содержит релизацию сетевый вызовов через Async/Await.
-
-* По умолчанию, новые методы релизованы как надстройки над существующими методами с замыканиями. 
-* Для `ApexyAlamofire` методы уже реализованы через методы `Alamofire`.
-* Для `URLSession` добавлены через реализацию системных методов через Async/Await для версий ниже iOS 15.
-
-`Client`, `CombineClient` и `ConcurrenyClient` - независимые протоколы. В зависимости от удобного для вас способа работы асинхронностью, вы можете выбрать конкретный протокол.
+`Client` и `CombineClient` - независимые протоколы. В зависимости от удобного для вас способа работы асинхронностью, вы можете выбрать конкретный протокол.
 
 ## Getting Started
 
@@ -223,7 +215,7 @@ public struct DeleteBookEndpoint: VoidEndpoint, URLRequestBuildable {
 
 ### Отправка данных на сервер
 
-Для отправки файлов или больших объемов данных вы можете использовать `UploadEndpoint`. В методе `makeRequest()` необходимо вернуть `URLRequest` и загружаемые данные, это может быть файл `.file(URL)`, данные `.data(Data)` или поток `.stream(InputStream)`. Для выполнения запроса вызовите метод `Client.upload(endpoint:, completionHandler:)`. С помощью объекта `Progress` вы сможете отслеживать прогресс загрузки данных либо отменить запрос.
+Для отправки файлов или больших объемов данных вы можете использовать `UploadEndpoint`. В методе `makeRequest()` необходимо вернуть `URLRequest` и загружаемые данные, это может быть файл `.file(URL)`, данные `.data(Data)` или поток `.stream(InputStream)`. Для выполнения запроса вызовите метод `Client.upload(endpoint:)` используя async/await.
 
 ```swift
 public struct FileUploadEndpoint: UploadEndpoint {
@@ -248,6 +240,11 @@ public struct FileUploadEndpoint: UploadEndpoint {
         return (request, .file(fileUrl))
     }
 }
+
+// Использование с async/await
+let client: Client = ...
+let endpoint = FileUploadEndpoint(fileUrl: fileURL)
+try await client.upload(endpoint)
 ```
 
 ## Организация сетевого слоя
