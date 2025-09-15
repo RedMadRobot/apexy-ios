@@ -90,45 +90,6 @@ open class URLSessionClient: Client, CombineClient {
         
         return task.progress
     }
-    
-    open func upload<T>(_ endpoint: T, completionHandler: @escaping (APIResult<T.Content>) -> Void) -> Progress where T : UploadEndpoint {
-        var request: (URLRequest, UploadEndpointBody)
-        do {
-            request = try endpoint.makeRequest()
-            request.0 = try requestAdapter.adapt(request.0)
-        } catch {
-            completionHandler(.failure(error))
-            return Progress()
-        }
-        
-        let handler: (Data?, URLResponse?, Error?) -> Void = { (data, response, error) in
-            let result = APIResult<T.Content>(catching: { () throws -> T.Content in
-                let data = data ?? Data()
-                if let error = error {
-                    throw error
-                }
-                return try endpoint.content(from: response, with: data)
-            })
-            self.completionQueue.async {
-                self.responseObserver?(request.0, response as? HTTPURLResponse, data, error)
-                completionHandler(result)
-            }
-        }
-        
-        let task: URLSessionUploadTask
-        switch request {
-        case (let request, .data(let data)):
-            task = session.uploadTask(with: request, from: data, completionHandler: handler)
-        case (let request, .file(let url)):
-            task = session.uploadTask(with: request, fromFile: url, completionHandler: handler)
-        case (_, .stream):
-            completionHandler(.failure(URLSessionClientError.uploadStreamUnimplemented))
-            return Progress()
-        }
-        task.resume()
-        
-        return task.progress
-    }
 }
 
 enum URLSessionClientError: LocalizedError {
