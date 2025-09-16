@@ -9,28 +9,40 @@ public protocol CombineClient: AnyObject {
     ///    - endpoint: endpoint of remote content.
     /// - Returns: Publisher which you can subscribe to
     func request<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: Endpoint
+    
+    /// Upload data to specified endpoint.
+    /// - Parameters:
+    ///    - endpoint: endpoint of remote content.
+    /// - Returns: Publisher which you can subscribe to
+    func upload<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: UploadEndpoint
 }
 
 @available(macOS 10.15, iOS 13, watchOS 6, tvOS 13, *)
 public extension Client where Self: CombineClient {
     func request<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: Endpoint {
-        Deferred<AnyPublisher<T.Content, Error>> {
-            let subject = PassthroughSubject<T.Content, Error>()
-            
-            let progress = self.request(endpoint) { (result: Result<T.Content, Error>) in
-                switch result {
-                case .success(let content):
-                    subject.send(content)
-                    subject.send(completion: .finished)
-                case .failure(let error):
-                    subject.send(completion: .failure(error))
+        Future<T.Content, Error> { promise in
+            Task {
+                do {
+                    let content = try await self.request(endpoint)
+                    promise(.success(content))
+                } catch {
+                    promise(.failure(error))
                 }
             }
-            
-            return subject.handleEvents(receiveCancel: {
-                progress.cancel()
-                subject.send(completion: .finished)
-            }).eraseToAnyPublisher()
+        }
+        .eraseToAnyPublisher()
+    }
+    
+    func upload<T>(_ endpoint: T) -> AnyPublisher<T.Content, Error> where T: UploadEndpoint {
+        Future<T.Content, Error> { promise in
+            Task {
+                do {
+                    let content = try await self.upload(endpoint)
+                    promise(.success(content))
+                } catch {
+                    promise(.failure(error))
+                }
+            }
         }
         .eraseToAnyPublisher()
     }
