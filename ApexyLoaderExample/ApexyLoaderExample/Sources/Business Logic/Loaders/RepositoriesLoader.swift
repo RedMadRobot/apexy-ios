@@ -12,14 +12,12 @@ protocol RepoLoading: ContentLoading {
     var state: LoadingState<[Repository]> { get }
 }
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 final class RepositoriesLoader: WebLoader<[Repository]>, RepoLoading {
     func load() {
         guard startLoading() else { return }
-        request(RepositoriesEndpoint()) { result in
-            // imitation of waiting for the request for 5 seconds
-            DispatchQueue.main.asyncAfter(deadline: .now() + 5.0) {
-                self.finishLoading(result)
-            }
+        Task {
+            await request(RepositoriesEndpoint())
         }
     }
 }
