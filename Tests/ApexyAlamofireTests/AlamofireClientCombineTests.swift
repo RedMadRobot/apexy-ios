@@ -28,11 +28,10 @@ final class AlamofireClientCombineTests: XCTestCase {
         
         let exp = expectation(description: "wait for response")
         exp.expectedFulfillmentCount = 2
-        let request = client.request(endpoint)
         
-        // First subscription
+        // First request
         var firstRequestContent: Data?
-        request
+        client.request(endpoint)
             .sink(
                 receiveCompletion: { _ in },
                 receiveValue: { content in
@@ -42,9 +41,9 @@ final class AlamofireClientCombineTests: XCTestCase {
             )
             .store(in: &cancellables)
         
-        // Second subscription
+        // Second request
         var secondRequestContent: Data?
-        request
+        client.request(endpoint)
             .sink(
                 receiveCompletion: { _ in },
                 receiveValue: { content in
@@ -54,8 +53,8 @@ final class AlamofireClientCombineTests: XCTestCase {
             )
             .store(in: &cancellables)
         
-        // Third subscription which will be cancelled at once
-        request
+        // Third request which will be cancelled at once
+        client.request(endpoint)
             .sink(
                 receiveCompletion: { _ in },
                 receiveValue: { _ in }
