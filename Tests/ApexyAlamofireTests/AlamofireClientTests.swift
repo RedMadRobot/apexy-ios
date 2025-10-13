@@ -22,7 +22,8 @@ final class AlamofireClientTests: XCTestCase {
         client = AlamofireClient(baseURL: url, configuration: config)
     }
     
-    func testClientRequest() {
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func testClientRequest() async throws {
         let endpoint = EmptyEndpoint()
         let data = "Test".data(using: .utf8)!
         MockURLProtocol.requestHandler = { request in
@@ -30,20 +31,16 @@ final class AlamofireClientTests: XCTestCase {
             return (response, data)
         }
         
-        let exp = expectation(description: "wait for response")
-        _ = client.request(endpoint) { result in
-            switch result {
-            case .success(let content):
-                XCTAssertEqual(content, data)
-            case .failure:
-                XCTFail("Expected result: .success, actual result: .failure")
-            }
-            exp.fulfill()
+        do {
+            let content = try await client.request(endpoint)
+            XCTAssertEqual(content, data)
+        } catch {
+            XCTFail("Expected result: .success, actual result: .failure")
         }
-        wait(for: [exp], timeout: 1)
     }
     
-    func testClientUpload() {
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func testClientUpload() async throws {
         let data = "apple".data(using: .utf8)!
         let endpoint = SimpleUploadEndpoint(data: data)
         MockURLProtocol.requestHandler = { request in
@@ -51,17 +48,12 @@ final class AlamofireClientTests: XCTestCase {
             return (response, data)
         }
         
-        let exp = expectation(description: "wait for response")
-        _ = client.upload(endpoint, completionHandler: { result in
-            switch result {
-            case .success(let content):
-                XCTAssertEqual(content, data)
-            case .failure:
-                XCTFail("Expected result: .success, actual result: .failure")
-            }
-            exp.fulfill()
-        })
-        wait(for: [exp], timeout: 1)
+        do {
+            let content = try await client.upload(endpoint)
+            XCTAssertEqual(content, data)
+        } catch {
+            XCTFail("Expected result: .success, actual result: .failure")
+        }
     }
 }
 
