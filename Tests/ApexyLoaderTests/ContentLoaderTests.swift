@@ -164,4 +164,61 @@ final class ContentLoaderTests: XCTestCase {
             [.initial, .success(content: 1)],
             "The state didn't changed and the handler didn't triggered")
     }
+    
+    // MARK: - Async/Await Tests
+    
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func testAsyncStateChanges() async {
+        // Test that async state changes trigger observations
+        let expectation = XCTestExpectation(description: "State change observed")
+        
+        // Set up observation
+        let observation = contentLoader.observe {
+            expectation.fulfill()
+        }
+        
+        // Change state asynchronously
+        Task {
+            contentLoader.state = .success(content: 42)
+        }
+        
+        // Wait for observation to be triggered
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        // Verify state
+        switch contentLoader.state {
+        case .success(let content):
+            XCTAssertEqual(content, 42)
+        default:
+            XCTFail("Expected success state")
+        }
+        
+        // Clean up
+        _ = observation
+    }
+    
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    func testAsyncStateChangesCombine() async {
+        // Test that async state changes trigger Combine publishers
+        let expectation = XCTestExpectation(description: "State change published")
+        
+        // Set up publisher
+        let cancellable = contentLoader.statePublisher
+            .sink { state in
+                if case .success(let content) = state, content == 42 {
+                    expectation.fulfill()
+                }
+            }
+        
+        // Change state asynchronously
+        Task {
+            contentLoader.state = .success(content: 42)
+        }
+        
+        // Wait for publisher to emit
+        await fulfillment(of: [expectation], timeout: 1.0)
+        
+        // Clean up
+        cancellable.cancel()
+    }
 }
