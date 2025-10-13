@@ -22,10 +22,13 @@ protocol UserProfileLoading: ContentLoading {
     var state: LoadingState<UserProfile> { get }
 }
 
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 final class UserProfileLoader: WebLoader<UserProfile>, UserProfileLoading {
     func load() {
         guard startLoading() else { return }
-        request(UserProfileEndpoint())
+        Task {
+            await request(UserProfileEndpoint())
+        }
     }
 }
 ```

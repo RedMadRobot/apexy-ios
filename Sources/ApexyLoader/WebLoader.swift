@@ -2,9 +2,9 @@ import Apexy
 import Foundation
 
 /// Loads content by network.
+@available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
 open class WebLoader<Content>: ContentLoader<Content> {
     private let apiClient: Client
-    public private(set) var progress: Progress?
     
     /// Creates an instance of `WebLoader` to load content by network using specified `Client`.
     /// - Parameter apiClient: An instance of the `Client` protocol. Use `AlamofireClient` or `URLSessionClient`.
@@ -12,18 +12,17 @@ open class WebLoader<Content>: ContentLoader<Content> {
         self.apiClient = apiClient
     }
 
-    deinit {
-        progress?.cancel()
-    }
-
     /// Sends requests to the network.
     ///
     /// - Warning: You must call `startLoading` before calling this method!
     /// - Parameter endpoint: An object representing request.
-    public func request<T>(_ endpoint: T) where T: Endpoint, T.Content == Content {
-        progress = apiClient.request(endpoint) { [weak self] result in
-            self?.progress = nil
-            self?.finishLoading(result)
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func request<T>(_ endpoint: T) async where T: Endpoint, T.Content == Content {
+        do {
+            let content = try await apiClient.request(endpoint)
+            finishLoading(.success(content))
+        } catch {
+            finishLoading(.failure(error))
         }
     }
 
@@ -32,10 +31,13 @@ open class WebLoader<Content>: ContentLoader<Content> {
     /// - Parameters:
     ///   - endpoint: An object representing request.
     ///   - transform: A closure that transforms successfull result.
-    public func request<T>(_ endpoint: T, transform: @escaping (T.Content) -> Content) where T: Endpoint {
-        progress = apiClient.request(endpoint) { [weak self] result in
-            self?.progress = nil
-            self?.finishLoading(result.map(transform))
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func request<T>(_ endpoint: T, transform: @escaping (T.Content) -> Content) async where T: Endpoint {
+        do {
+            let content = try await apiClient.request(endpoint)
+            finishLoading(.success(transform(content)))
+        } catch {
+            finishLoading(.failure(error))
         }
     }
     
@@ -43,10 +45,14 @@ open class WebLoader<Content>: ContentLoader<Content> {
     /// - Parameters:
     ///   - endpoint: An object representing request.
     ///   - completion: A completion handler.
-    public func request<T>(_ endpoint: T, completion: @escaping (Result<T.Content, Error>) -> Void) where T: Endpoint {
-        progress = apiClient.request(endpoint) { [weak self] result in
-            self?.progress = nil
-            completion(result)
+    @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)
+    public func request<T>(_ endpoint: T, completion: @escaping (Result<T.Content, Error>) -> Void) async where T: Endpoint {
+        do {
+            let content = try await apiClient.request(endpoint)
+            completion(.success(content))
+        } catch {
+            completion(.failure(error))
         }
     }
+    
 }
